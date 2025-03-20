@@ -1,0 +1,67 @@
+// fonts
+$font-family-head: 'Archivo', Tahoma, Merriweather, Lato;
+
+// colors
+$body-color: #000000;
+$link-color: #0073AE ;
+$code-color: #0073AE;
+$head-color: #005C8B;
+$author-color: #026994;
+
+// size
+$h1-title-font-size: 3em !default;
+$h1-font-size: 2em !default;
+$h2-font-size: 1.3em !default;
+$h3-font-size: 2em !default;
+$text-font-size: 0.7em !default;
+
+/*-- scss:rules --*/
+
+.reveal h1 {
+  font-family: $font-family-head;
+  font-size: $h1-title-font-size;
+  color: $head-color;
+}
+
+.reveal h2 {
+  font-family: $font-family-head;
+  font-size: $h2-font-size;
+  color: $head-color;
+  padding-bottom: 40px;
+}
+
+.reveal .slide-number {
+  font-family: $font-family-head;
+  font-size: 0.8em !important; /* Aumenta a numeração do slide */
+  color: $head-color;
+  bottom: 15px; /* Ajusta a posição */
+}
+
+.reveal blockquote {
+  border-left: 5px solid $head-color;
+  padding: 1rem;
+  margin: 1rem 0;
+  background-color: rgba(0, 92, 139, 0.1); // Fundo levemente azulado;
+  color: $body-color;
+  /* font-style: italic */
+  font-size: 2rem;
+}
+
+.reveal p {
+  font-size: $text-font-size;
+  color: $body-color;
+  text-align: justify;
+}
+
+.custom-slide {
+  background-color: $head-color !important;
+  color: #FFFFFF !important;
+  /* text-align: center; */
+  padding: 20px;
+}
+
+.reveal strong {
+  color: $head-color;
+}
+
+

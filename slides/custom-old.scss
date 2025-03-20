@@ -1,0 +1,125 @@
+/*-- scss:defaults --*/
+
+// fonts
+$font-family-head: 'Archivo', Tahoma, Merriweather, Lato;
+
+// colors
+$body-color: #000000;
+$link-color: #0073AE ;
+$code-color: #0073AE;
+$head-color: #005C8B;
+$author-color: #026994;
+
+// size
+$h1-title-font-size: 1.6em !default;
+$subtitle-font-size: 0.8em !default;
+$h2-font-size: 1.5em !default;
+$h3-font-size: 1.3em !default;
+$author-font-size: 0.8em;
+$footer-font-size: 1em;
+
+
+
+// align
+
+
+
+/*-- scss:rules --*/
+
+.reveal h1.title {
+  font-family: $font-family-head;
+  font-size: $h1-title-font-size;
+  color: $head-color;
+  /* padding-top: 80px; */
+  padding-bottom: 20px;
+}
+
+#title-slide .subtitle, div.reveal div.slides section.quarto-title-block .subtitle {
+  font-family: $font-family-head;
+  font-size: $subtitle-font-size;
+  color: $head-color;
+  /* padding-bottom: 50px; */
+  text-align: left;
+}
+
+
+.reveal .slide-number {
+  font-family: $font-family-head;
+  font-size: 0.6em;
+  color: $head-color;
+  /* padding-bottom: 425px; // provisório */
+}
+
+.reveal h2 {
+  font-family: $font-family-head;
+  font-size: $h2-font-size;
+  color: $head-color;
+  padding-bottom: 20px;
+}
+
+.blue {
+  color: $head-color;
+}
+
+.blue-link {
+  color: $link-color;
+}
+
+.reveal .footer > * {
+  text-align: center;
+  font-size: 12px;
+}
+
+.reveal .slide ul li, .reveal .slide ol li {
+  font-size: 25px;
+  line-height: 1.3;
+  text-align: justify;
+}
+
+.reveal p, .reveal .slides section, .reveal .slides section>section {
+  font-size: 25px;
+  line-height: 1.3;
+  // text-align: justify;
+}
+
+.reveal table th, .reveal table td {
+  font-size: 20px;
+  text-align: center;
+}
+
+.table-title {
+  text-align: center;
+  font-size: 15px;
+}
+
+.thank {
+  color: $link-color;
+  font-family: $font-family-head;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.contato {
+  color: $link-color;
+  font-family: $font-family-head;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.reveal .title-slide h1 {
+  color: $head-color;
+}
+
+.reveal .slide-logo {
+  max-width: unset !important;
+  max-height: 1.5em !important;
+}
+
+.reveal .footer a {
+color: #0073ae;
+font-size: 1em;
+}
+
+hr{
+ border-color: #0073AE;
+}

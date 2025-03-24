@@ -47,17 +47,16 @@ xaringanthemer::style_duo_accent(
 # xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"))
 
 xaringanExtra::use_clipboard()
-
 xaringanExtra::use_fit_screen()
-
 xaringanExtra::use_extra_styles(
   hover_code_line = TRUE,         #<<
   mute_unhighlighted_code = TRUE  #<<
 )
-
 xaringanExtra::use_share_again()
-
 xaringanExtra::use_scribble()
+xaringanExtra::use_tile_view()
+xaringanExtra::use_tachyons()
+xaringanExtra::use_panelset()
 ```
 
 # Sumário
@@ -923,9 +922,638 @@ vetor_numerico - 1 # subtrai todos os elementos do vetor por 1
 
 ---
 
+### Vetores
+
+**Vetorização:**
+
+Também é possível fazer operações que envolvem mais de um vetor:
+
+```{r}
+vetor1 <- c(1, 2, 3)
+
+vetor2 <- c(10, 20, 30)
+
+vetor1 + vetor2
+```
+
+<br>
+
+O **R** vai alinhar os dois vetores e somar os elementos que estão na mesma posição.
+
+---
+
+### Vetores
+
+**Reciclagem:**
+
+Ocorre quando os dois vetores não possuem o mesmo tamanho:
+
+```{r}
+vetor1 <- c(1, 2)
+
+vetor2 <- c(10, 20, 30, 40)
+
+vetor1 + vetor2
+```
+
+<br>
+
+O **R** alinhou os dois vetores e, como eles não possuem o mesmo tamanho, os elementos do `vetor1` foram repetidos para ficar do mesmo tamanho do `vetor2`. É como se o primeiro vetor fosse `c(1, 2, 1, 2)`.
+
+---
+
+### Vetores 
+
+**Reciclagem:**
+
+Um caso interessante ocorre quando o comprimento dos vetores não são múltiplos um do outro:
+
+```{r warning=TRUE, message=TRUE}
+vetor1 <- c(1, 2, 3)
+
+vetor2 <- c(10, 20, 30, 40, 50)
+
+vetor1 + vetor2
+```
+
+O **R** realizou a operação, repetindo cada valor do primeiro vetor até que os dois tivessem o mesmo tamanho. Na realidade, a operação realizada foi `c(1, 2, 3, 1, 2) + c(10, 20, 30, 40, 50)`.
+
+Como essa operação não é intuitiva, o **R** devolveu um aviso dizendo que o comprimento do primeiro vetor não é múltiplo do comprimento do segundo vetor.
+
+---
+
+### Vetores
+
+**Filtro:**
+
+```{r}
+numeros <- c(-3, -1, 3, 5, 7, 10, 15)
+numeros > 3
+```
+
+Na primeira operação, o **R** fez uso da **Reciclagem**. Ele transformou o valor 3 em um vetor `c(3, 3, 3, 3, 3, 3, 3)` e testou (comparou) se `c(-3, -1, 3, 5, 7, 10, 15) > c(3, 3, 3, 3, 3, 3, 3)`.
+
+```{r}
+numeros[numeros > 3]
+```
+
+A segunda operação retornou as posições que receberam `TRUE` e não retornou os valores que receberam `FALSE`. Portanto, a segunda operação é equivalente a:
+
+```{r}
+numeros[c(FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)]
+```
+
+---
+
+### Matrizes
+
+São estruturas que correspondem às matrizes matemáticas, conjuntos bidimensionais contendo elementos dispostos em linhas e colunas. Assim como os vetores, todos os seus elementos são do mesmo tipo. São criadas utilizando a função `matrix()`:
+
+```{r}
+matriz1 <- matrix(c(1:12), nrow = 3, ncol = 4)
+
+matriz1
+
+class(matriz1)
+
+dim(matriz1)
+```
+
+---
+
+### Matrizes
+
+É possível alterar a ordem de preenchimento da matriz (linhas ao invés de colunas)
+
+```{r}
+matriz2 <- matrix(c(1:12), nrow = 3, ncol = 4, byrow = TRUE)
+
+matriz2
+
+class(matriz2)
+
+dim(matriz2)
+```
+
+---
+
+### Matrizes
+
+Também é possível adicionar colunas com `cbind()` e linhas com `rbind()`
+
+```{r}
+cbind(matriz1, rep(99, 3))
+
+rbind(matriz1, rep(99, 4))
+```
+
+---
+
+### Matrizes
+
+**Operações com Matrizes:**
+
+```{r}
+# multiplica cada elemento da matriz por 2 (multiplicação escalar)
+
+matriz1 * 2 
+
+# retorna o resto da divisão de cada elemento da matriz1 pelo correspondente em matriz2
+
+matriz1 %% matriz2 
+```
+
+---
+
+### Listas
+
+São um tipo especial de vetor que podem conter uma **coleção de diferentes classes**. Possuem uma **estrutura unidimensional**, contando apenas o número de elementos integrantes. São criados usando a função `list()`
+
+```{r}
+lista <- list(a = 1:10, b = c("T1", "T2", "T3", "T4"), TRUE, 2 + 2)
+
+lista
+```
+
+- Os dois primeiros elementos têm nomes (`$a` e `$b`), enquanto os dois últimos são acessados por índices (`[[3]]` e `[[4]]`) pois não foram nomeados.
+
+---
+
+### Listas
+
+```{r}
+class(lista)
+```
+
+- A estrutura é realmente uma **lista**.
+
+```{r}
+dim(lista)
+```
+
+- O resultado **NULL** é esperado pois as listas no R não têm "dimensões" como vetores ou matrizes. Elas são estruturas mais gerais.
+
+```{r}
+length(lista)
+```
+
+- A lista apresenta 4 elementos, mesmo que alguns deles contenham vetores maiores por dentro.
+
+---
+
+## Data Frame
+
+São tabelas **bidimensionais** (linhas e colunas), em que cada coluna pode ser de uma classe diferente. São criados com a função `data.frame()`:
+
+```{r, echo=FALSE}
+mtcars |> 
+  head(n = 10) |> 
+  knitr::kable()
+```
+
+---
+
+### Data Frame
+
+```{r}
+# retorna a classe
+class(mtcars)
+
+# retorna o número de colunas
+ncol(mtcars)
+
+# retorna o número de linhas
+nrow(mtcars)
+
+# retorna a dimensão do dataframe — o número de linhas e de colunas
+dim(mtcars)
+```
+
+---
+
+### Data Frame
+
+```{r}
+# retorna a estrutura interna do objeto mtcars, como: tipo do objeto, 
+# número de observações (linhas) e variáveis (colunas), nome de cada variável, 
+# tipo (classe) de cada variável e os primeiros valores de cada variável
+
+str(mtcars)
+```
+
+---
+
+### Data Frame
+
+```{r}
+# retorna as seis primeiras linhas de uma tabela
+head(mtcars)
+
+# retorna as seis últimas linhas de uma tabela
+tail(mtcars)
+```
+
+---
+
+### Data Frame
+
+**Selecionando as Colunas:**
+
+Para selecionar as colunas de um dataframe, utilizamos o operador `$`:
+
+.bg-lightest-blue.b-dark-blue.bw2.br3.ph4.mt2.-m[
+📌 &nbsp;&nbsp;&nbsp;&nbsp; **Dica:** após escrever o `nome_do_dataframe$`, pressione a tecla `TAB` para ver as colunas disponíveis.
+]
+
+```{r}
+mtcars$cyl
+
+mtcars$gear
+
+mtcars$mpg
+```
+
+---
+
+### Data Frame
+
+**Subsetting:**
+
+Seleciona **elemento(s)** de um `data.frame` usando colchetes `[]`:&nbsp;&nbsp;&nbsp;&nbsp;`data_frame[linha, coluna]`
+
+```{r}
+# retorna o elemento presente na segunda linha da terceira coluna
+mtcars[2, 3]
+
+# retorna todas as linhas da coluna 1
+mtcars[, 1]
+
+# retorna todas as colunas da linha 1
+mtcars[1, ]
+```
+
+---
+
+### Data Frame
+
+**Subsetting:** 
+
+Seleção de **múltiplas colunas** de um `data.frame`:&nbsp;&nbsp;&nbsp;&nbsp;`data_frame[, c(coluna1, coluna2, ..., colunaN)]`
+
+Há duas formas de fazer isso:
+
+.pull-left[
+```{r}
+mtcars[, c(1, 2, 4)]
+```
+]
+
+.pull-right[
+```{r}
+mtcars[, c("mpg", "cyl", "hp")]
+```
+]
+
+---
+
+### Data Frame
+
+**Filtrando colunas:**
+
+.panelset[
+
+.panel[.panel-name[Exemplo 1]
+```{r}
+# seleciona apenas as linhas onde a coluna mpg é exatamente igual a é maior que 20
+
+mtcars[mtcars$mpg > 20, ]
+```
+]
+
+.panel[.panel-name[Exemplo 2]
+```{r}
+# seleciona apenas as linhas onde a coluna cyl 'é exatamente igual a 4
+
+mtcars[mtcars$cyl == 4, ]
+```
+]
+
+.panel[.panel-name[Exemplo 3]
+```{r}
+# seleciona apenas as linhas onde a coluna hp é menor que 100
+
+mtcars[mtcars$hp < 100, ]
+```
+]
+
+]
+
+---
+
+### Data Frame
+
+É possível aplicar funções diretamente nas colunas de um `data.frame`:
+
+```{r}
+# valor mínimo da coluna mpg
+min(mtcars$mpg)
+
+# valor máximo da coluna mpg
+max(mtcars$mpg)
+
+# valor médio da coluna mpg
+mean(mtcars$mpg)
+
+# valor da mediana da coluna mpg
+median(mtcars$mpg)
+```
+
+---
+
+### Funções
+
+Enquanto os objetos são nomes que armazenam valores, as **funções** são nomes que armazenam um **conjunto de instruções** em R. Sempre que uma função é executada, o código que ela contém roda automaticamente, e um resultado é devolvido.
+
+As funções permitem **automatizar tarefas** e **evitar repetição de código**, de forma muito mais eficiente do que copiar e colar.
+
+Na prática, as funções são tão comuns e intuitivas que você provavelmente já usou várias delas sem perceber. Aqui vão alguns exemplos que aparecem em seções anteriores:
+
+- `c()` — cria vetores;
+
+- `class()` — mostra a classe de um objeto;
+
+- `dim()` — retorna as dimensões de um `data.frame` ou de uma `matriz`;
+
+- `mean()` — calcula a média de um vetor;
+
+- `max()` — retorna o valor máximo de um vetor.
+
+---
+
+### Funções
+
+**Estrutura de uma Função:**
+
+Uma função é composta por três partes principais:
+
+- **Nome:** é como ela será identificada e chamada no ambiente R;
+
+- **Argumentos:** são os valores (parâmetros) que a função recebe para funcionar;
+
+- **Corpo:** o conjunto de instruções que será executado.
+
+<br>
+
+```{r, eval=FALSE, include=TRUE}
+# estrutura para criar uma função
+nome_da_funcao <- function(argumentos) {
+  corpo da função
+}
+
+# para usar a função
+nome_da_funcao(argumentos = ...)
+```
+
+---
+
+### Funções
+
+**Argumentos:**
+
+Diferente dos objetos, as funções podem **receber argumentos** — valores colocados entre parênteses e que são usados internamente pela função para executar suas tarefas.
+
+Por exemplo, a função `c()` precisa saber **quais valores formarão o vetor** que ela irá criar:
+
+<br>
+
+```{r}
+c(1, 5, 10)
+```
+
+<br>
+
+Nesse caso, os valores `1`, `5` e `10` são os **argumentos** passados para a função `c()`.
+
+.bg-lightest-blue.b-dark-blue.bw2.br3.ph4.mt2.-m[
+📌 &nbsp;&nbsp;&nbsp;&nbsp; **Dica:** os argumentos de uma função são sempre **separados por vírgulas**.
+]
+
+---
+
+### Funções
+
+**Argumentos:**
+
+Cada função em R pode funcionar de forma diferente, mesmo quando realiza tarefas semelhantes. 
+
+Por exemplo, a função `sum()` soma os valores passados como argumentos:
+
+```{r}
+sum(1, 3)
+```
+
+Também é possível passar um **vetor como argumento**, e o resultado será o mesmo:
+
+```{r}
+sum(c(1, 3))
+```
+
+Ou seja, a função `sum()` sabe lidar tanto com **valores separados** quanto com **vetores** como entrada.
+
+---
+
+### Funções
+
+**Argumentos:**
+
+Algumas funções exigem que os valores sejam passados de forma específica.
+
+A função `mean()`, por exemplo, **espera um vetor como argumento** para calcular a média corretamente.
+
+Veja a diferença:
+
+```{r}
+# só considera o primeiro número
+mean(1, 3)
+
+# considera os dois valores dentro de um vetor
+mean(c(1, 3))
+```
+
+Ou seja, ao contrário de `sum()`, que aceita múltiplos argumentos separados, a `mean()` precisa receber **um único vetor** como entrada.
+
+---
+
+### Funções
+
+**Argumentos:** 
+
+Os argumentos de uma função também têm **nomes**, que podem (ou não) ser usados na hora de chamar a função.
+
+Por exemplo, a função `seq()` possui (entre outros) os argumentos `from`, `to` e `by`:
+
+```{r}
+seq(from = 4, to = 10, by = 2)
+```
+
+Essa chamada cria uma **sequência numérica** que começa em `4` (`from`), vai até `10` (`to`), aumentando de `2` em `2` (`by`).
+
+Também é possúvel usar a função **sem nomear os argumentos**, desde que os valores estejam na **ordem correta**:
+
+```{r}
+seq(4, 10, 2)
+```
+
+Ou seja, usar os nomes dos argumentos torna o código **mais legível** — mas não é obrigatório, se a ordem for respeitada.
+
+---
+
+### Funções
+
+**Argumentos:** 
+
+Quando é **especificado o nome dos argumentos**, a ordem deles **não importa**:
+
+```{r}
+seq(by = 2, to = 10, from = 4)
+```
+
+Mas, se **não usar os nomes dos argumentos**, a **ordem importa**, por o R vai associar os valores na sequência padrão (`from`, `to`, `by`):
+
+```{r}
+seq(2, 10, 4)
+```
+
+Ou seja:
+
+- `r emo::ji("white_check_mark")` &nbsp;&nbsp; **com nomes:** a ordem pode ser trocada;
+
+
+
+- `r emo::ji("x")` &nbsp;&nbsp; **sem nomes:** a ordem correta deve ser seguida para obter o resultado esperado.
+
+---
+
+### Funções
+
+**Algumas Funções importantes do R base:**
+
+<br>
+
+| **Função**   |       **O que retorna?**      | **Função**   | **O que retorna?** |
+|:-------------|:-----------------------------:|:------------:|:------------------:|
+|   `head()`   |       6 primeiras linhas      |    `sum()`   |        soma        |
+|   `tail()`   |        6 últimas linhas       |   `mean()`   |        média       |
+|    `dim()`   |   número de linhas e colunas  |  `median()`  |       mediana      |
+|   `names()`  | nomes das colunas (variáveis) |    `var()`   |      variância     |
+|    `str()`   |    estrutura do data frame    |    `sd()`    |    desvio-padrão   |
+|   `cbind()`  |      acopla duas tabelas      |    `max()`   |    valor máximo    |
+|   `rbind()`  |      empilha duas tabelas     |    `min()`   |    valor mínimo    |
+|   `class()`  |        classe do objeto       |   `round()`  |  valor arredondado |
+
+---
+
+### Pacotes
+
+Pacotes são **coleções de funções, dados e documentação** que estendem as funcionalidades do R base.
+
+Para usá-los, é preciso primeiro **instalar** e depois **carregar** o pacote.
+
+Um dos pacotes mais populares e poderosos do R é o `tidyverse`, que reúne diversas ferramentas para ciências de dados.
+
+```{r, fig.align='center', echo=FALSE, out.width='400px', dpi=300}
+knitr::include_graphics("img/17-icon-packages.jpg")
+```
+
+---
+
+### Pacotes
+
+**Instalação dos Pacotes:**
+
+<br>
+
+- Via CRAN (*Comprehensive R Archive Network*):
+
+`install.packages("nome_do_pacote")`
+
+```{r, include=TRUE, eval=FALSE}
+install.packages("tidyverse")
+```
+
+<br><br>
+
+- Via GitHub:
+
+`devtools::install_github("nome-do-repositorio/nome_do_pacote")`
+
+```{r, include=TRUE, eval=FALSE}
+devtools::install_github("tidyverse/dplyr")
+```
+
+---
+
+### Pacotes
+
+`library(nome_do_pacote)`
+
+```{r, include=TRUE, eval=FALSE}
+library(tidyverse)
+```
+
+Também há outra opção: `nome_do_pacote::nome_da_funcao()`.
+
+```{r, include=TRUE, eval=FALSE}
+dplyr::glimpse()
+```
+
+<br>
+
+----
+
+<br>
+
+**Dicas sobre os Pacotes:**
+
+1. Só é necessário **instalar** um pacote **uma vez**, mas é necessário **carregá-lo sempre que iniciar uma nova sessão**.
+
+2. Para **instalar** um pactore, use aspas: &nbsp;&nbsp; `install.packages("nome_do_pacote")`.
+
+3. Para **carregar** um pacote, não use aspas: &nbsp;&nbsp; `library(nome_do_pacote)`.
+
+---
+
+## Continue aprendendo!
+
+.panelset[
+
+.panel[.panel-name[Em Português]
+.pull-left[
+- [Material da Curso-R](https://livro.curso-r.com/)
+
+<a href="http://material.curso-r.com/">
+```{r echo=FALSE, out.width="45%", fig.align='center'}
+knitr::include_graphics("img/18-cursor.png")
+```
+</a>
+]
+
+.pull-right[
+- [R para Ciência de Dados (2ª edição)](https://pt.r4ds.hadley.nz)
+
+<a href="https://pt.r4ds.hadley.nz">
+```{r echo=FALSE, out.width="55%", fig.align='center'}
+knitr::include_graphics("img/19-r4ds.jpg")
+```
+</a>
+]
+]
+
+]
 
 
 ---
+
 
 ---
 

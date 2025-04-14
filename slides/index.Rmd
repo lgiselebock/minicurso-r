@@ -63,6 +63,8 @@ xaringanExtra::use_panelset()
 
 1. [R e RStudio](#r-rstudio)
 2. [Introdução](#introducao)
+3. [Projetos](#projetos)
+4. [Importação de dados](#importacao)
 
 ---
 
@@ -300,7 +302,7 @@ help(sum)
 
 O **RStudio** disponibiliza algumas 'folhas de cola', as **Cheat Sheets**. Elas trazem um resumo de como utilizar diversos pacotes e até o próprio RStudio. Para acessá-las, basta clicar no menu `Help` e então em `Cheat Sheets`, ou através do site da [**Posit**](https://posit.co/resources/cheatsheets/).
 
-[![Cheat Sheets](img/14-cheatsheet-rstudio.png)](https://posit.co/resources/cheatsheets/)
+[![Cheat Sheets](img/14-cheatsheet-rstudio.png)](https://rstudio.github.io/cheatsheets/rstudio-ide.pdf)
 
 ---
 
@@ -1551,337 +1553,764 @@ knitr::include_graphics("img/19-r4ds.jpg")
 
 ]
 
-
 ---
 
-
----
-
-## Typography
-
-Text can be **bold**, _italic_, ~~strikethrough~~, or `inline code`.
-
-[Link to another slide](#colors).
-
-### Lorem Ipsum
-
-Dolor imperdiet nostra sapien scelerisque praesent curae metus facilisis dignissim tortor. 
-Lacinia neque mollis nascetur neque urna velit bibendum. 
-Himenaeos suspendisse leo varius mus risus sagittis aliquet venenatis duis nec.
-
-- Dolor cubilia nostra nunc sodales
-
-- Consectetur aliquet mauris blandit
-
-- Ipsum dis nec porttitor urna sed
-
----
-name: colors
-
-## Colors
-
-.left-column[
-Text color
-
-[Link Color](#3)
-
-**Bold Color**
-
-_Italic Color_
-
-`Inline Code`
-]
-
-.right-column[
-Lorem ipsum dolor sit amet, [consectetur adipiscing elit (link)](#3), 
-sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-Erat nam at lectus urna.
-Pellentesque elit ullamcorper **dignissim cras tincidunt (bold)** lobortis feugiat. 
-_Eros donec ac odio tempor_ orci dapibus ultrices. 
-Id porta nibh venenatis cras sed felis eget velit aliquet.
-Aliquam id diam maecenas ultricies mi.
-Enim sit amet 
-`code_color("inline")`
-venenatis urna cursus eget nunc scelerisque viverra.
-]
-
----
-
-# Big Topic or Inverse Slides `#`
-
-## Slide Headings `##`
-
-### Sub-slide Headings `###`
-
-#### Bold Call-Out `####`
-
-This is a normal paragraph text. Only use header levels 1-4.
-
-##### Possible, but not recommended `#####`
-
-###### Definitely don't use h6 `######`
-
----
-
-# Left-Column Headings
-
-.left-column[
-## First
-
-## Second
-
-## Third
-]
-
-.right-column[
-Dolor quis aptent mus a dictum ultricies egestas.
-
-Amet egestas neque tempor fermentum proin massa!
-
-Dolor elementum fermentum pharetra lectus arcu pulvinar.
-]
-
----
 class: inverse center middle
+name: projetos
 
-# Topic Changing Interstitial
+# Projetos 
 
---
+---
 
+## Projetos
+
+Um Projeto é uma pasta no computador que reúne todos os arquivos necessários para realizar uma análise de dados.
+
+A principal razão para a utilização dos Projetos é a **organização**. Com eles, é muito mais fácil importar bases de dados para dentro do `R`, criar análises reprodutíveis e compartilhar o trabalho com outras pessoas.
+
+<br>
+
+<div style="text-align: center;">
+  <strong style="font-size: 150%;">Habitue-se, desde cedo, a criar um projeto para cada nova análise.</strong>
+</div>
+
+<br>
+
+Para **criar um projeto**, clique em `New Project` no menu `File`. Na janela que se abrir, escolha `New Directory` para criar o projeto em uma nova pasta, ou `Existing Directory` para usar uma pasta que já existe.
+
+Ao criar um projeto, o `RStudio` cria um arquivo `nome-do-projeto.Rproj` na pasta escolhida. Esse arquivo guarda as configurações do projeto e pode ser usado para abrir o `RStudio` diretamente nele.
+
+.footnote[Com o `Git` instalado, pode usar projetos para conectar com repositórios remotos e versionar o código ([GitHub](https://github.com], por exemplo). Para isso, basta clicar em `Version Control`. Para maiores informações, acesse o [Zen do R](https://blog.curso-r.com/posts/2019-07-23-zen-do-r-4/) e o <i>workshop</i> [Introdução a utilização do Git e Github no RStudio](https://www.youtube.com/watch?v=uQL6NOSd9cc) da [Beatriz Milz](https://twitter.com/BeaMilz).]
+
+---
+
+### Projetos
+
+**Criando um novo Projeto:**
+
+```{r, echo=FALSE, out.width="80%", fig.align='center'}
+knitr::include_graphics("img/20-criar-projeto.gif")
 ```
+
+---
+
+### Projetos
+
+**RStudio com um Projeto aberto:**
+
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics("img/21-exemplo-projeto-aberto.png")
+```
+
+---
+
+### Projetos
+
+**Navegando entre os Projetos:**
+
+```{r, echo=FALSE, out.width="70%", fig.align='center'}
+knitr::include_graphics("img/22-exemplo-lista-projetos.png")
+```
+
+---
+
+### Pacote: `tidyverse`
+
+É uma coleção de pacotes de `R` desenvolvidos para a Ciência de Dados. 
+
+Os pacotes do `tidyverse` compartilham uma mesma filosofia de desenvolvimento, sintaxe e estruturas de dados. 
+
+Embora o `tidyverse` instale diversos outros pacotes, apenas esses são carrregados: 
+
+<br>
+
+
+|     **Pacote**    |                      **Função**                      |
+|:-----------------:|:----------------------------------------------------:|
+|      `tibble`     |               _data frames_ repaginados              |
+|      `readr`      | leitura e importação de dados (e.g. `.csv` e `.txt`) |
+| `tidyr` e `dplyr` |           arrumação e manipulação de dados           |
+|     `stringr`     |                  trabalha com textos                 |
+|     `forcats`     |                 trabalha com fatores                 |
+|      `purrr`      |                 programação funcional                |
+|     `ggplot2`     |           visualização de dados (gráficos)           |
+
+---
+
 class: inverse center middle
-```
+name: importacao
 
----
-layout: true
-
-## Blocks
+# Importação de dados
 
 ---
 
-### Blockquote
+### Caminhos
 
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
+É importante na tarefa de **importação de dados** saber onde está o arquivo que se quer importar. Toda função de importação vai exigir um **caminho** (uma _string_) que representa o endereço do arquivo no computador.
 
----
+<br>
 
-### Code Blocks
+----
 
-#### R Code
+**Diretório de trabalho (_working directory_):**
 
-```{r eval=FALSE}
-ggplot(gapminder) +
-  aes(x = gdpPercap, y = lifeExp, size = pop, color = country) +
-  geom_point() +
-  facet_wrap(~year)
-```
+É a pasta em que o **R** vai procurar os arquivos na hora de ler as informações ou gravar os arquivos na hora de salvar os objetos.
 
-#### JavaScript
+Se está dentro de um Projeto, o diretório de trabalho será, por padrão, a pasta raiz do Projeto (é a pasta que contém o arquivo `.Rproj`).
 
-```js
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
-}
-```
+Se não estiver usando um Projeto ou não souber qual é o diretório de trabalho, é possível descobri-lo usando a função `getwd()`. Ela vai devolver uma _string_ com o caminho do diretório de trabalho.
+
+A função `setwd()` pode ser utilizada para mudar o diretório de trabalho. Como argumento, ela recebe o caminho para o novo diretório.
 
 ---
 
-### More R Code
+### Caminhos
 
-```{r eval=FALSE}
-dplyr::starwars %>% dplyr::slice_sample(n = 4)
+**Caminhos absolutos:**
+
+São aqueles que têm início na pasta raiz do computador/usuário. Por exemplo: `/Users/luisagisele/Repositorio/workshop-r`.
+
+**Caminhos absolutos** são uma **má prática**. Se você trocar de computador ou passar o _script_ para outra pessoa, o código não vai funcionar. Isso ocorre porque o caminho absoluto de um arquivo, muito provavelmente, será diferente entre os computadores.
+
+<br>
+
+----
+
+**Caminhos relativos:**
+
+São aqueles que têm início no diretório de trabalho da sessão. Usando o exemplo de caminho absoluto acima, o caminho relativo é: `workshop-r`.
+
+O uso de **caminhos relativos** dentro de um projeto é considerado uma **boa prática**, pois quando a pasta do projeto for compartilhado com alguém, todos os caminhos existentes no código continuarão funcionando em qualquer computador.
+
+---
+
+## Tibbles
+
+São uma evolução da classe `data.frame`.
+
+As funções do **`tidyverse`** para importação, arrumação e manipulação de bases devolvem sempre `tibbles` em vez de `data.frames`.
+
+Embora existam outras diferenças entre as classes, a mais importante é a forma como a tabela é mostrada no _console_.
+
+Quanto a isso, as diferenças são:
+
+- `tibbles` mostram o número de linhas, o número de colunas e a classe das variáveis;
+
+- `tibbles` mostram apenas as 10 primeiras linhas;
+
+- `tibbles` mostram o número de colunas que couber na tela do _console_.
+
+- `tibbles` não nomeiam linhas (`row.names`).
+
+---
+
+### Tibbles
+
+**Exemplo: base `mtcars` como `data.frame`**
+
+```{r, echo=FALSE}
+head(mtcars, n = 15)
 ```
 
 ---
 
-```{r message=TRUE, eval=requireNamespace("cli", quietly = TRUE)}
-cli::cli_alert_success("It worked!")
-```
+### Tibbles
 
---
+**Exemplo: base `mtcars` como `tibble`**
 
-```{r message=TRUE}
-message("Just a friendly message")
-```
-
---
-
-```{r warning=TRUE}
-warning("This could be bad...")
-```
-
---
-
-```{r error=TRUE}
-stop("I hope you're sitting down for this")
-```
-
-
----
-layout: true
-
-## Tables
-
----
-exclude: `r if (requireNamespace("tibble", quietly=TRUE)) "false" else "true"`
-
-```{r eval=requireNamespace("tibble", quietly=TRUE)}
+```{r}
 tibble::as_tibble(mtcars)
 ```
 
+**Perceba que a coluna com os nomes dos modelos dos veículos desaparece na `tibble`.** Isso acontece porque, no `data.frame`, esses nomes fazem parte dos **nomes das linhas (`row.names`)**, e não de uma coluna propriamente dita. Já nas `tibbles`, os nomes das linhas **não são exibidos nem armazenados da mesma forma**, o que pode dar a impressão de que a "coluna" foi excluída.
+
 ---
+
+### Tibbles
+
+**Exemplo: base `mtcars` como `tibble`**
+
+Uma maneira de **preservar os nomes dos modelos dos veículos** como coluna ao converter um `data.frame` em `tibble` é utilizar o argumento `rownames = "nome_da_coluna"` dentro da função `as_tibble()`. Assim, a nova `tibble` terá **12 colunas** — uma a mais que a anterior, pois agora os nomes dos modelos passam a fazer da base como uma variável explícita.
 
 ```{r}
-knitr::kable(head(mtcars), format = 'html')
-```
-
----
-exclude: `r if (requireNamespace("DT", quietly=TRUE)) "false" else "true"`
-
-```{r eval=requireNamespace("DT", quietly=TRUE)}
-DT::datatable(head(mtcars), fillContainer = FALSE, options = list(pageLength = 4))
-```
-
----
-layout: true
-
-## Lists
-
----
-
-.pull-left[
-#### Here is an unordered list:
-
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
-]
-
-.pull-right[
-
-#### And an ordered list:
-
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
-]
-
----
-
-### And a nested list:
-
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-
----
-
-### Nesting an ol in ul in an ol
-
-- level 1 item (ul)
-  1. level 2 item (ol)
-  1. level 2 item (ol)
-    - level 3 item (ul)
-    - level 3 item (ul)
-- level 1 item (ul)
-  1. level 2 item (ol)
-  1. level 2 item (ol)
-    - level 3 item (ul)
-    - level 3 item (ul)
-  1. level 4 item (ol)
-  1. level 4 item (ol)
-    - level 3 item (ul)
-    - level 3 item (ul)
-- level 1 item (ul)
-
----
-layout: true
-
-## Plots
-
----
-
-```{r plot-example, eval=requireNamespace("ggplot2", quietly=TRUE)}
-library(ggplot2)
-(g <- ggplot(mpg) + aes(hwy, cty, color = class) + geom_point())
+tibble::as_tibble(mtcars, rownames = "cars")
 ```
 
 ---
 
-```{r plot-example-themed, eval=requireNamespace("showtext", quietly=TRUE) && requireNamespace("ggplot2", quietly=TRUE)}
-g + xaringanthemer::theme_xaringan(text_font_size = 16, title_font_size = 18) +
-  ggtitle("A Plot About Cars")
+### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
+
+[![Cheat Sheets](img/23-cheatsheet-readr.png)](https://rstudio.github.io/cheatsheets/data-import.pdf)
+
+---
+
+### Importação de arquivos
+
+- Pacote [`readr`](https://readr.tidyverse.org): utilizados para ler arquivos de texto
+
+  - `read_csv()`: lê arquivos `.csv` (valores separados por vírgula)
+  
+  - `read_csv2()`: lê arquivos `.csv` (valores separados por ponto e vírgula)
+  
+  - `read_delim()`: lê arquivos `.txt` (valores separados por tabulação)
+  
+  - `read_rds()`: lê arquivos `.rds` (formato nativo do R)
+
+- Pacote [`readxl`](https://readxl.tidyverse.org): utilizado para ler arquivos do Excel
+
+  - `read_excel()`: lê arquivos `.xls` e `.xlsx`
+  
+- Pacote [`haven`](https://haven.tidyverse.org): utilizado para ler arquivos do SPSS, Stata e SAS
+
+  - `read_sas()`: lê arquivos `.sas7bdat`
+  
+  - `read_spss()`: lê arquivos `.sav`
+  
+  - `read_dta()`: lê arquivos `.dta`
+  
+  - `read_stata()`: lê arquivos `.dta`
+  
+---
+
+### Importação de arquivos
+
+Para ler arquivos de texto (`.csv` ou `.txt`), são utilizadas funções do pacote [`readr`](https://readr.tidyverse.org).
+
+Como exemplo, vamos utilizar a base dos Pinguins, originalmente disponibilizado no pacote [`palmerpenguins`](https://allisonhorst.github.io/palmerpenguins/), que contém dados sobre pinguins da Antártica. 
+
+Essa base também pode ser encontrado traduzido para o português no pacote [`dados`](https://cienciadedatos.github.io/dados/).
+
+Vamos importar essa base para o **R** lendo o arquivo `pinguins.csv` que está dentro da para `dados`. Para isso, utilizamos a função `read_csv()` do pacote `readr`. 
+
+Se o arquivo estiver bem formatado, a função só precisará do caminho até o arquivo para funcionar.
+
+```{r}
+library(readr) # carrega o pacote responsável pela importação
+
+pinguins_csv <- read_csv("dados/pinguins.csv")
 ```
 
-.footnote[Requires `{showtext}`]
-
----
-layout: false
-
-## Square image
-
-<center><img src="https://octodex.github.com/images/labtocat.png" alt="GithHub Octocat" height="400px" /></center>
-
-.footnote[GitHub Octocat]
-
 ---
 
-### Wide image
+### Importação de arquivos
 
-![A wide image with a diagram of branching in git.](https://docs.github.com/assets/images/help/repository/branching.png)
+O objeto resultante será um `tibble`:
 
-.footnote[Wide images scale to 100% slide width]
+```{r}
+pinguins_csv
+```
 
 ---
 
-## Two images
+### Importação de arquivos
 
-.pull-left[
-![A GitHub Octocat, style "mother hubber"](https://octodex.github.com/images/motherhubbertocat.png)
+Em alguns países, como o Brasil, as vírgulas são utilizadas para separar as casas decimais dos números, inviabilizando os arquivos `.csv`.
+
+Nesse caso, os arquivos são separados por ponto-e-vírgula (;). Para ler essas bases no **R**, basta usar a função `read_csv2()` do pacote [`readr`](https://readr.tidyverse.org).
+
+```{r}
+library(readr) # carrega o pacote responsável pela importação
+
+pinguins_csv2 <- read_csv2("dados/pinguins2.csv")
+```
+
+<br>
+
+----
+
+Arquivos `.txt` podem ser lidos com a função `read_delim()`. Nesse caso, além do caminho até o arquivo, é preciso indicar qual é o caractere utilizado para separar as colunas da base.
+
+Um arquivo separado por tabulação, por exemplo, pode ser lido utilizando o argumento `delim = "\t"`. O código `\t` é uma forma textual de representar a tecla `TAB`.
+
+```{r}
+library(readr) # carrega o pacote responsável pela importação
+
+pinguins_txt <- read_delim("dados/pinguins.txt", delim = "\t")
+```
+
+---
+
+### Importação de arquivos
+
+**Arquivos direto da Internet:** 
+
+É possível importar dados diretamente da internet. Para isso, basta colocar o _link_ do arquivo/tabela entre aspas no caminho do arquivo.
+
+```{r eval = FALSE, include = TRUE}
+titanic <- read_csv(
+  "https://raw.githubusercontent.com/beatrizmilz/2020-R-Ladies-SP-Basico/master/docs/data/titanic.csv"
+)
+```
+
+<br>
+
+----
+
+**Arquivos Excel:** 
+
+Para ler planilhas do Excel (arquivos `.xlsx` ou `.xls`) utilizamos a função `read_excel()` do pacote [`readxl`](https://readxl.tidyverse.org). 
+
+Como esse pacote não faz parte do `tidyverse`, é necessário instalá-lo separadamente. 
+
+```{r eval = FALSE, include = TRUE}
+library(readxl) # carrega o pacote
+
+readxl::pinguins_xlsx <- read_excel("dados/pinguins.xlsx")
+```
+
+---
+
+### Importação de arquivos
+
+**Arquivos Excel: argumentos úteis**
+
+Planilhas do Excel são facilmente editáveis — e por isso, é comum recebermos bases de dados **desconfiguradas**, ou seja, em um formato que o **R** não consegue importar diretamente.
+
+Para evitar ter que arrumar "na mão", correndo o risco de cometer erros ou alterar dados sem querer, a função `read_excel()` oferece argumentos que ajudam a importar a base corretamente.
+
+Principais argumentos:
+
+- `sheet =`: indica qual aba da planilha deve ser importada.  _(Padrão: primeira aba)_
+
+- `col_names =`: define se a primeira linha contém os nomes das colunas.  _(Padrão: `TRUE`)_
+
+- `col_types =`: especifica o tipo de dado de cada coluna (ex: `"text"`, `"numeric"` etc).  _(Padrão: `"guess"`)_
+
+- `skip =`: pula um número definido de linhas antes da leitura.  _(Padrão: `0`)_
+
+- `n_max =`: define quantas linhas devem ser lidas.  _(Padrão: `Inf`)_
+
+- `NA =`: indica quais valores devem ser interpretados como `NA`.  _(Padrão: `""`)_
+
+---
+
+### Exportação de arquivos
+
+Exportar objetos do **R** significa gravar as bases (ou objetos) em um arquivo no disco rígido (HD) do computador.
+
+De forma geral, para cada função `read_*()` usada na importação, existe uma função correspondente `write_*()` para exportação.
+
+Essas funções são simples: você precisa informar **o objeto que deseja salvar** e o **caminho com o nome do arquivo** (incluindo a extensão!).
+
+```{r eval = FALSE, include = TRUE}
+library(readr)  # funções write_csv, write_csv2, write_delim
+
+# CSV com vírgula
+write_csv(pinguins, "dados/pinguins.csv")
+# CSV com ponto-e-vírgula (mais comum em PT-BR)
+write_csv2(pinguins, "dados/pinguins2.csv")
+
+# Arquivo TXT com tabulação
+write_delim(pinguins, "dados/pinguins.txt", delim = "\t")
+```
+
+Para salvar arquivos em formato **Excel** `.xlsx`, usamos a função `write_xlsx()` do pacote [`writexl`](https://writexl.tidyverse.org), que precisa ser carregado separadamente.
+
+```{r eval = FALSE, include = TRUE}
+library(writexl) # carrega o pacote
+
+write_xlsx(pinguins, "dados/pinguins.xlsx")
+```
+
+---
+
+### Importação e exportação de arquivos
+
+**Extensão `.rds`**
+
+A extensão `.rds` representa uma estrutura binária de arquivo nativa do R.  
+Ela pode ser usada para salvar **qualquer objeto** — não apenas data frames ou tibbles — no disco rígido (HD).
+
+Quando aplicada a conjuntos de dados, essa estrutura binária permite **compactação**, gerando arquivos significativamente menores em comparação com formatos como `.csv`.
+
+Para criar e ler arquivos `.rds`, utilizamos as funções `write_rds()` e `read_rds()`, ambas do pacote [`readr`](https://readr.tidyverse.org).
+
+```{r eval = FALSE, include = TRUE}
+library(readr)  # pacote necessário
+
+# escrevendo SEM compactação
+write_rds(pinguins, "dados/pinguins.rds")
+
+# escrevendo COM compactação
+write_rds(pinguins, "dados/pinguins.rds", compress = "gz")
+
+# lendo a base diretamente
+read_rds("dados/pinguins.rds")
+
+# importando para um objeto
+pinguins_rds <- read_rds("dados/pinguins.rds")
+```
+
+---
+  
+### Visualização de um objeto
+  
+**Para visualizar um objeto em aba separada:**
+
+É possível visualizar os dados (ou parte deles) de forma mais confortável clicando no nome do objeto no painel `Global Environment` (aba `Environment`) do RStudio.
+
+Outra opção é usar a função `View(nome_da_base)` diretamente:
+
+```{r eval = FALSE, include = TRUE}
+View(pinguins_csv)
+```
+
+Isso abrirá o conteúdo do objeto em uma nova aba, com aparência de planilha.
+
+```{r echo=FALSE, out.width="100%", fig.align='center'}
+knitr::include_graphics("img/24-view-pinguins.png")
+```
+
+---
+
+### Visualização de um objeto
+
+**Para visualizar uma base no _Console_:**
+
+É possível "espiar" os dados de uma forma rápida usando a função `glimpse()` do pacote [`dplyr`](https://dplyr.tidyverse.org). 
+
+Essa função mostra: 
+
+- o número de observações (linhas) e variáveis (colunas), 
+- os nomes e tipos das colunas, 
+- e alguns valores iniciais de cada variável.
+
+```{r}
+library(dplyr)  # carrega o pacote necessário
+
+glimpse(pinguins_csv)
+```
+
+---
+
+### <span style='color:#34a15a'>BASE DOS DADOS</span>
+
+A <span style='color:#34a15a'><b>Base dos Dados</b></span> é uma organização não governamental, sem fins lucrativos e <span style='color:#34a15a'><b>open source</b></span>, que atua para universalizar o acesso a <span style='color:#34a15a'><b>dados públicos de qualidade</b></span>.
+
+Em seu repositório, você encontra <span style='color:#34a15a'><b>dados brasileiros já tratados, limpos e padronizados</b></span>, prontos para serem importados diretamente para o **R** por meio do pacote [`basedosdados`](https://basedosdados.org/blog/como-acessar-dados-publicos-em-r).
+
+Além disso, os responsáveis pela <span style='color:#34a15a'><b>Base dos Dados</b></span> mantêm um repositório com os códigos das análises que publicam em _workshops_, redes sociais, artigos e tutoriais.
+
+[![GitHub da Base dos Dados](img/25-base-dos-dados-github.png)](https://github.com/basedosdados/analises)
+
+---
+
+### <span style='color:#34a15a'>BASE DOS DADOS</span>
+
+É possível realizar o _download_ de arquivos `.csv` completos diretamente pelo site.
+
+Entretanto, esse tipo de acesso <span style='color:#34a15a'><b>não está disponível para arquivos muito grandes</b></span>.
+
+----
+
+Para esses casos, utiliza-se o <span style='color:#34a15a'><font size='5'><b>BigQuery:</b></font></span>
+
+Um serviço de banco de dados em nuvem da Google, que permite realizar consultar em linguagem `SQL` diretamente do navegador, com:
+
+- <span style='color:#34a15a'><b>Rapidez:</b></span> mesmo _queries_ complexas são processadas em poucos minutos;
+
+- <span style='color:#34a15a'><b>Escalabilidade:</b></span> o BigQuery se ajusta automaticamente, podendo lidar com volumes gigantescos (até <span style='color:#34a15a'><b>exabytes</b></span>, se necessário);
+
+- <span style='color:#34a15a'><b>Economia:</b></span> todo usuário tem direito a <span style='color:#34a15a'><b>1 TB gratuito por mês</b></span> em consultas.
+
+<br>
+
+<div style="text-align: center;">
+  <strong style="font-size: 130%; color: #34a15a;">
+    O uso do BigQuery é gratuito até 1 TB/mês. Acima disso, há cobrança por volume de dados processados.
+  </strong>
+</div>
+
+---
+
+### <span style='color:#34a15a'>BASE DOS DADOS</span>
+
+<span style='color:#34a15a'><b>Como criar um projeto no BigQuery:</b></span>
+
+Para criar um Projeto no _Google Cloud_, basta ter uma conta de e-mail do Google.
+
+Mesmo que você pretenda carregar dados próprios, é necessário criar um Projeto (mesmo vazio) para poder executar _queries_ no _datalake_ público da <span style='color:#34a15a'>Base dos Dados</span>.
+
+1. [Acesse o Google Cloud](https://console.cloud.google.com/projectselector2/home/dashboard). Se for sua primeira vez, aceite os Termos de Serviço.
+
+2. Clique em `Create Project` / `Criar Projeto` e escolha um nome bacana para o projeto.
+
+3. Confirme em `Create` / `Criar`.
+
+Para mais detalhes, consulte a [documentação oficial](https://cloud.google.com/bigquery/docs/sandbox/?hl=pt).
+
+.footnote[
+<span style='color:#34a15a'><b>Por que é preciso criar um projeto no Google Cloud?</b></span>
+A Google oferece <span style='color:#34a15a'><b>1 TB gratuito por mês</b></span> de uso do BigQuery <span style='color:#34a15a'><b>para cada projeto</b></span>. Você <span style='color:#34a15a'><b>não precisa cadastrar cartão de crédito</b></span> — o BigQuery inicia automaticamente no modo _Sandbox_, que permite usar os recursos <span style='color:#34a15a'><b>sem configurar forma de pagamento</b></span>.
 ]
 
-.pull-right[
-![A GitHub Octocat, style "dinotcat"](https://octodex.github.com/images/dinotocat.png)
-]
+---
+
+### <span style='color:#34a15a'>BASE DOS DADOS</span>
+
+<span style='color:#34a15a'><b>Como criar um projeto no BigQuery</b></span>
+
+<span style='color:#34a15a'><b>Habilitar o projeto no R:</b></span>
+
+```r
+install.packages("basedosdados")  # instala o pacote
+
+library(basedosdados)  # carrega o pacote
+
+# identifique o projeto sempre que iniciar uma nova sessão no R
+set_billing_id("id-do-projeto")
+```
+
+Na primeira vez que acessar o _Google Cloud_ pelo **R**, uma página do Google será aberta solicitando a autorização para vincular sua conta ao pacote [`basedosdados`](https://basedosdados.org/blog/como-acessar-dados-publicos-em-r).
+
+----
+
+No canal da [Base dos Dados](https://www.youtube.com/@BasedosDados) no Youtube, há um _Workshop_ ensinando a acessar os dados públicos em **R**: [acesse aqui](https://www.youtube.com/watch?v=M9ayiseIjvI).
+
+No blog da [Base dos Dados](https://dev.to/basedosdados), há um tutorial de como usar a biblioteca [`basedosdados`](https://basedosdados.org/blog/como-acessar-dados-publicos-em-r) no **R**: [acesse aqui](https://dev.to/basedosdados/como-usar-a-biblioteca-basedosdados-no-r-capitulo-1-46kb).
+
 
 ---
 
-### Definition lists can be used with HTML syntax.
+### <span style='color:#34a15a'>BASE DOS DADOS</span>
 
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
+<span style='color:#34a15a'><b>Como criar um projeto no BigQuery</b></span>
+
+```{r echo=FALSE, out.width="85%", fig.align='center'}
+knitr::include_graphics("img/26-big-query-projeto-r.gif")
+```
 
 ---
-class: center, middle
 
-# Thanks!
+### <span style='color:#34a15a'>BASE DOS DADOS</span>
 
-Slides created via the R packages:
+<span style='color:#34a15a'><b>Como fixar o projeto da Base dos Dados (BD) no seu BigQuery:</b></span>
 
-[**xaringan**](https://github.com/yihui/xaringan)<br>
-[gadenbuie/xaringanthemer](https://github.com/gadenbuie/xaringanthemer)
+```{r echo=FALSE, out.width="80%", fig.align='center'}
+knitr::include_graphics("img/27-fixa-bd-no-bigquery.gif")
+```
 
-The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com).
+---
+
+### <span style='color:#34a15a'>BASE DOS DADOS — SQL</span>
+
+**SQL** (_Structured Query Language_, ou _Linguagem de Consulta Estruturada_) é a linguagem padrão para **consultas em bancos de dados relacionais**.
+
+Ela permite selecionar, filtrar, agrupar e combinar dados de forma declarativa — ou seja, dizendo o que você quer, e não como fazer.
+
+----
+
+<span style='color:#34a15a'><b>Principais cláusulas (palavras-chave):</b></span>
+
+  - **SELECT**: seleciona as colunas desejadas (é o comando principal do SQL)  
+
+  - **FROM**: especifica a tabela de onde os dados serão extraídos  
+
+  - **WHERE**: define condições (filtros) para os dados selecionados  
+
+  - **GROUP BY**: agrupa os dados com base em uma ou mais colunas  
+
+  - **HAVING**: filtra os grupos criados pelo `GROUP BY`  
+
+  - **ORDER BY**: ordena os dados com base em uma ou mais colunas  
+
+  - **DISTINCT**: remove valores duplicados da seleção  
+
+  - **UNION**: combina os resultados de duas consultas SQL em uma só tabela
+
+---
+
+### <span style='color:#34a15a'>BASE DOS DADOS — SQL</span>
+
+<span style='color:#34a15a'><b>Palavras-chave – Operadores Lógicos:</b></span>
+
+- **AND**: retorna verdadeiro se **todas as condições** forem verdadeiras  
+
+- **OR**: retorna verdadeiro se **pelo menos uma condição** for verdadeira  
+
+- **NOT**: inverte o resultado lógico da condição (retorna o oposto)
+
+----
+
+<span style='color:#34a15a'><b>Palavras-chave – Funções de Agregação:</b></span>
+
+- **AVG**: calcula a média dos valores em um campo  
+
+- **COUNT**: retorna o número de registros selecionados  
+
+- **SUM**: soma os valores de um campo  
+
+- **MAX**: retorna o maior valor em um campo  
+
+- **MIN**: retorna o menor valor em um campo  
+
+- **STDDEV**: calcula o desvio padrão dos valores  
+
+- **VARIANCE**: calcula a variância dos valores
+
+---
+
+### <span style='color:#34a15a'>BASE DOS DADOS — SQL</span>
+
+<span style='color:#34a15a'><b>Palavras-chave – Operadores relacionais:</b></span>
+
+- **<** (_MENOR_): seleciona registros com valores **menores do que** a condição especificada  
+
+- **>** (_MAIOR_): seleciona registros com valores **maiores do que** a condição especificada  
+
+- **<=** (_MENOR OU IGUAL_): seleciona registros com valores **menores ou iguais a** determinada condição  
+
+- **>=** (_MAIOR OU IGUAL_): seleciona registros com valores **maiores ou iguais a** determinada condição  
+
+- **=** (_IGUAL_): seleciona registros com valores **iguais a** determinada condição  
+
+- **<>** (_DIFERENTE_): seleciona registros com valores **diferentes de** determinada condição
+
+<br>
+
+- **BETWEEN**: seleciona registros com valores **dentro de um intervalo fechado** (inclui os limites)  
+
+- **LIKE**: seleciona registros que **correspondem a um padrão de texto**  
+
+- **IN**: seleciona registros cujo valor **está presente em uma lista definida**
+
+---
+
+### <span style='color:#34a15a'>BASE DOS DADOS — SQL</span>
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">Ex. Fictício</div>
+
+```{sql eval = FALSE, include = TRUE}
+-- consulta sem filtro
+
+SELECT coluna1, coluna2, coluna3,
+       coluna4 AS apelido_da_coluna
+FROM `tabela`
+```
+
+Imagine que a base seja muito grande e você não irá utilizar todos os dados.
+
+É recomendado <span style='color:#34a15a'><b>filtrar</b></span> os dados ainda na consulta, antes de importá-los para o **R**.
+
+```{sql eval = FALSE, include = TRUE}
+-- consulta com filtro
+
+SELECT coluna1, coluna2, coluna3,
+       coluna4 AS apelido_da_coluna
+FROM `tabela`
+WHERE coluna1 = valor AND coluna2 = valor
+```
+
+</div>
+
+<div class="panel">
+<div class="panel-name">Ex. Real (sem filtro)</div>
+
+```{sql eval = FALSE, include = TRUE}
+-- Consulta selecionando colunas específicas
+
+SELECT id_municipio, nome_regiao
+FROM `basedosdados.br_bd_diretorios_brasil.municipio`
+```
+
+<br>
+
+Para selecionar <span style='color:#34a15a'><b>todas as colunas</b></span> de uma tabela, use `*` após o `SELECT`.
+
+``` {sql eval = FALSE, include = TRUE}
+-- Consulta selecionando todas as colunas
+
+SELECT *
+FROM `basedosdados.br_bd_diretorios_brasil.municipio`
+```
+
+</div>
+
+<div class="panel">
+<div class="panel-name">Ex. Real (com filtro)</div>
+
+```{sql eval = FALSE, include = TRUE}
+-- Média da taxa de aprovação e IDEB por município e ensino
+
+SELECT id_municipio, ano,
+       AVG(taxa_aprovacao) AS tx_aprov,
+       ensino,
+       AVG(ideb) AS ideb
+FROM `basedosdados.br_inep_ideb.municipio`
+WHERE ano = 2021
+GROUP BY id_municipio, ano, ensino
+```
+
+</div>
+
+<div class="panel">
+<div class="panel-name">Ex. com JOIN</div>
+
+```{sql eval = FALSE, include = TRUE}
+-- Junção entre PIB e população por município
+
+SELECT pib.id_municipio, pib.ano,
+       pop.id_municipio, pop.populacao
+FROM `basedosdados.br_ibge_pib.municipio` AS pib
+LEFT JOIN `basedosdados.br_ibge_populacao.municipio` AS pop
+ON pib.id_municipio = pop.id_municipio
+```
+
+<br>
+
+<span style='color:#34a15a'><b>Palavras-Chave:</b></span>
+
+- **AS:** define um "apelido" para a coluna e/ou para a tabela
+
+- **LEFT JOIN:** une duas tabelas em uma mesma base de dados
+
+- **ON:** define a "chave" que liga as duas tabelas
+
+</div>
+
+</div>
+
+---
+
+### <span style='color:#34a15a'>BASE DOS DADOS — SQL</span>
+
+```{r echo=FALSE, out.width="90%", fig.align='center'}
+knitr::include_graphics("img/28-ex-download-bigquery-r.gif")
+```
+
+---
+
+### <span style='color:#34a15a'>BASE DOS DADOS — SQL</span>
+
+Para que o **R** consiga importar os dados da consulta `SQL`, é necessário utilizar a função `read_sql()` do pacote [`basedosdados`](https://basedosdados.org/blog/como-acessar-dados-publicos-em-r) ao final da _query_.
+
+Existem duas formas de fazer isso:
+
+<span style='color:#34a15a'><b>1. Criando um objeto intermediário com a consulta `SQL` e, depois, o objeto final com os dados:</b></span>
+
+```{r eval=FALSE, include=TRUE}
+library(basedosdados) # pacote necessário
+
+obj_intermediario <- "SELECT id_municipio, nome_regiao
+FROM `basedosdados.br_bd_diretorios_brasil.municipio`"
+
+base_final <- basedosdados::read_sql(obj_intermediario)
+```
+
+
+<span style='color:#34a15a'><b>2. Utilizando o operador `pipe` (`%>%` ou `|>`) para encadear a consulta diretamente à função `read_sql()`:</b></span>
+
+```{r eval=FALSE, include=TRUE}
+library(basedosdados) # pacote necessário
+
+base_final <- "SELECT id_municipio, nome_regiao
+FROM `basedosdados.br_bd_diretorios_brasil.municipio`" |> 
+  read_sql()
+```
+
+---
+
+

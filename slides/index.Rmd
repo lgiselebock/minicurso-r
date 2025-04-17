@@ -65,6 +65,7 @@ xaringanExtra::use_panelset()
 2. [Introdução](#introducao)
 3. [Projetos](#projetos)
 4. [Importação de dados](#importacao)
+5. [Manipulação de dados](#manipulacao)
 
 ---
 
@@ -1642,6 +1643,8 @@ name: importacao
 
 # Importação de dados
 
+.center[(Acompanhe no arquivo `02-importacao.R`)]
+
 ---
 
 ### Caminhos
@@ -2313,4 +2316,1035 @@ FROM `basedosdados.br_bd_diretorios_brasil.municipio`" |>
 
 ---
 
+class: inverse center middle
+name: manipulacao
+
+# Manipulação de dados
+
+.center[(Acompanhe no arquivo `04-manipulacao.R`)]
+
+---
+
+### Pipe: `%>%` ou `|>`
+
+- `CTRL` + `SHIFT` + `M`: cria o `%>%` &nbsp; (ou `|>`).
+
+Pense no operador `pipe` como uma forma de **escrever uma receita de bolo**:
+
+```{r, eval = FALSE, include = TRUE}
+esfrie(
+  asse(
+    coloque(
+      bata(
+        acrescente(
+          recipiente(rep("farinha", 2), "água", 
+                     "fermento", "leite", "óleo"), 
+          "farinha", até = "macio"), 
+        duração = "3min"), 
+      lugar = "forma", tipo = "grande", 
+      untada = TRUE), duração = "50min"), 
+  "geladeira", "20min")
+```
+
+Aqui, precisamos ler **de dentro para fora**: o primeiro comando executado é `recipiente()`, mas o primeiro que aparece é `esfrie()` — justamente o último a ser feito. Confuso, né?
+
+Agora veja como a mesma receita é escrita usando o operador `|>`:
+
+
+.footnote[Para MacOs, use `CMD` + `SHIFT` + `M` para inserir o pipe `|>`.]
+
+---
+
+### Pipe: `%>%` ou `|>`
+
+- `CTRL` + `SHIFT` + `M`: cria o `%>%` &nbsp; (ou `|>`).
+
+Veja como a **mesma receita** fica muito mais clara com o uso do `|>`:
+
+```{r, eval = FALSE, include = TRUE}
+recipiente(rep("farinha", 2), "água", "fermento", "leite", "óleo") %>%
+  acrescente("farinha", até = "macio") %>%
+  bata(duração = "3min") %>%
+  coloque(lugar = "forma", tipo = "grande", untada = TRUE) %>%
+  asse(duração = "50min") %>%
+  esfrie("geladeira", "20min")
+```
+
+Agora a leitura do código segue **de cima para baixo**, como uma lista de etapas — exatamente como uma receita de verdade!
+
+<div style="text-align: center;">
+  <strong style="font-size: 110%;">O operador <code>|></code> passa o resultado da operação à esquerda como primeiro argumento da função à direita. Isso torna o código mais limpo, encadeado e fácil de entender.</strong>
+</div>
+
+.footnote[
+O `%>%` vem do pacote `{magrittr}` e funciona como o `|>`, mas com algumas diferenças. Ainda é muito usado em pacotes como o `{dplyr}`. Quer saber mais? Dá uma olhada:  [magrittr: Ceci n’est pas un pipe](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html)  [R 4.1: novidades e o pipe nativo `|>`](https://www.jumpingrivers.com/blog/new-features-r410-pipe-anonymous-functions/)
+]
+
+---
+
+Os exemplos apresentados aqui serão das base abaixo:
+
+```{r}
+library(tidyverse)
+
+pinguins <- read_csv("dados/pinguins.csv")
+pinguins_raw <- read_csv("dados/pinguins_raw.csv")
+```
+
+----
+
+```{r echo=FALSE}
+head(pinguins, n = 3)
+```
+
+```{r echo=FALSE}
+head(pinguins_raw, n = 3)
+```
+
+---
+
+### Pacote &nbsp; `dplyr`
+
+O `{dplyr}` é um dos **pacotes mais importantes** para a **manipulação de dados** no R. Ele oferece funções simples e poderosas para transformar linhas e colunas de uma base de dados.
+
+As principais funções são:
+
+- `filter()`: filtra linhas com base em uma condição
+
+- `select()`: seleciona colunas específicas
+
+- `arrange()`: ordena as linhas com base em uma ou mais colunas
+
+- `mutate()`: cria ou modifica colunas
+
+- `group_by()`: agrupa os dados por uma ou mais variáveis
+
+- `summarise()`: resumo os dados (ex: média, mediana, soma, etc.)
+
+- `left_join()`: junta duas tabelas com base em uma chave comum
+
+Essas funções seguem um padrão simples:
+
+  - Sempre recebem uma `tibble` como primeiro argumento;
+  - Sempre retornam uma `tibble` como resultado.
+  
+---
+
+### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
+
+[![Cheat Sheets](img/29-cheatsheet-dplyr.png)](https://rstudio.github.io/cheatsheets/data-transformation.pdf)
+
+---
+
+### Selecionando Colunas:  &nbsp; `select()`
+
+A função `select()` é usada para escolher colunas específicas de uma base de dados.
+
+- O **primeiro argumento** é o nome da base (ex: `pinguins`)
+
+- Os **demais argumentos** são os nomes das colunas que você quer manter
+
+_Não é necessário usar aspas para os nomes das colunas!_
+
+```{r}
+select(pinguins, species)
+```
+
+---
+
+### Selecionando Colunas:  &nbsp; `select()`
+
+Você também pode selecionar **várias colunas ao mesmo tempo**, separando os nomes por vírgulas:
+
+```{r}
+select(pinguins, species, sex, body_mass_g)
+```
+
+Esse exemplo retorna apenas as colunas `species`, `sex` e `body_mass_g` da base `pinguins`.
+
+---
+
+### Selecionando Colunas:  &nbsp; `select()`
+
+O operador `:` é útil para selecionar **colunas consecutivas** — ou seja, de uma coluna até outra, seguindo a ordem da base:
+
+```{r}
+select(pinguins, island:body_mass_g)
+```
+
+Esse código seleciona todas as colunas de `island` até `body_mass_g`, na ordem em que aparecem na base.
+
+---
+
+### Selecionando Colunas:  &nbsp; `select()`
+
+O `{dplyr}` oferece algumas **funções auxiliares** muito úteis para selecionar colunas com base em partes do nome:
+
+- `starts_with("texto")`: seleciona colunas que **começam** com o texto especificado
+
+- `ends_with("texto")`: seleciona colunas que **terminam** com o texto especificado
+
+- `contains("texto")`: seleciona colunas que **contêm** o texto especificado
+
+```{r}
+select(pinguins, ends_with("mm"))
+```
+
+---
+
+### Selecionando Colunas:  &nbsp; `select()`
+
+Você pode **remover colunas** usando o sinal de menos (`—`) antes do nome da coluna:
+
+```{r}
+select(pinguins, -year)
+```
+
+Esse código retorna todas as colunas da base `pinguins`, exceto a coluna `year`.
+
+---
+
+### Selecionando Colunas:  &nbsp; `select()`
+
+Para remover **mais de uma coluna**, basta usar o sinal de menos (`—`) junto com a função `c()`:
+
+```{r}
+select(pinguins, -c(year, sex))
+```
+
+Esse código retorna todas as colunas da base `pinguins`, exceto as colunas `year` e `sex`.
+
+---
+
+### Ordenando linhas: &nbsp; `arrange()`
+
+A função `arrange()` serve para **ordenar as linhas** da base de dados.
+
+- O **primeiro argumento** é a base (ex: `pinguins`)
+
+- Os **demais argumentos** são as colunas usadas como critério de ordenação.
+
+Por padrão, a ordenação é feita em ordem **crescente**.
+
+```{r}
+arrange(pinguins, body_mass_g)
+```
+
+---
+
+### Ordenando linhas: &nbsp; `arrange()`
+
+Para ordenar de forma **descrescente**, basta usar a função `desc()` dentro do `arrange()`.
+
+No exemplo abaixo, os pinguins são organizados da **maior para a menor massa corporal**:
+
+```{r}
+arrange(pinguins, desc(body_mass_g))
+```
+
+---
+
+### Ordenando linhas: &nbsp; `arrange()`
+
+Você também pode ordenar por **duas ou mais colunas** ao mesmo tempo.
+
+No exemplo abaixo, as linhas são ordenadas:
+
+- **Primeiro** pelo **comprimento do bico** (`bill_length_mm`), em **ordem descrescente**
+
+- **Depois**, em caso de empate, pela **profundidade do bico** (`bill_depth_mm`), em **ordem crescente**.
+
+```{r}
+arrange(pinguins, desc(bill_length_mm), bill_depth_mm)
+```
+
+---
+
+### Aplicando mais de uma função
+
+Em muitos casos, queremos aplicar **várias transformações** em sequência em uma base de dados.
+
+Por exemplo, imagine que você quer uma tabela com a **espécie** dos pinguins e a **massa corporal**, ordenada em ordem crescente:
+
+```{r eval=FALSE}
+arrange(select(pinguins, species, body_mass_g), body_mass_g)
+```
+
+Esse código funciona, mas fica um pouco difícil de ler — precisamos interpretar **de dentro para fora**.
+
+A solução para tornar esse tipo de operação mais clara é usar o operador **pipe** (`|>`):
+
+```{r eval=FALSE}
+pinguins |> 
+  select(species, body_mass_g) |>
+  arrange(body_mass_g)
+```
+
+O que está acontecendo aqui?
+
+- Na **segunda linha**, aplicamos a função `select()` na base `pinguins`
+
+- Na **terceira linha**, aplicamos a função `arrange()` na saída da função `select()`.
+
+O código fica mais **intuitivo**, com as operações organizadas em sequência lógica.
+
+---
+
+### Filtrando linhas: &nbsp; `filter()`
+
+A função `filter()` é usada para **selecionar linhas** que atendem a uma determinada condição.
+
+No exemplo abaixo, são filtradas apenas as observações em que o **comprimento da nadadeira** (`flipper_length_mm`) é **maior que 140 mm**:
+
+```{r}
+filter(pinguins, flipper_length_mm > 140)
+```
+
+---
+
+### Filtrando linhas: &nbsp; `filter()`
+
+Você pode combinar `select()` e `filter()` para trabalhar apenas com as **colunas e linhas de interesse**.
+
+No exemplo abaixo:
+
+- Primeiro, selecionamos as colunas `species` e `flipper_length_mm`
+
+- Depois, filtramos apenas os pinguins com **nadadeiras maiores que 140 mm**.
+
+```{r}
+pinguins |> 
+  select(species, flipper_length_mm) |>
+  filter(flipper_length_mm > 140)
+```
+
+---
+
+### Filtrando linhas: &nbsp; `filter()`
+
+Você pode aplicar **dois ou mais filtros** ao mesmo tempo, separando as condições por vírgula dentro do `filter()`.
+
+No exemplo abaixo, o código retorna apenas os pinguins que:
+
+- Estão na ilha de **Torgersen**
+
+- Têm **profundidade de bico maior que 15 mm**.
+
+```{r}
+pinguins |> 
+  filter(island == "Torgersen", bill_depth_mm > 15)
+```
+
+---
+
+### Filtrando linhas: &nbsp; `filter()`
+
+Você também pode fazer **operações diretamente dentro do `filter()`**, comparando os valores das colunas com cálculos feitos na hora.
+
+No exemplo abaixo, o código retorna apenas os pinguins cuja **massa corporal** é **maior que a média da base**:
+
+```{r}
+pinguins |> 
+  filter(body_mass_g > mean(body_mass_g, na.rm = TRUE))
+```
+
+O argumento `na.rm = TRUE` serve para ignorar valores ausentes (`NA`) no cálculo da média.
+
+---
+
+### Criando novas colunas: &nbsp; `mutate()`
+
+A função `mutate()` é usada para:
+
+- **Criar uma nova coluna**
+
+- Ou **modificar uma coluna existente**
+
+No exemplo abaixo, os valores da coluna `bill_length_mm` são divididos por 10, convertendo a unidade de **milímetros (mm)** para **centímetros (cm)**:
+
+```{r}
+pinguins |> 
+  mutate(bill_length_mm = bill_length_mm / 10)
+```
+
+---
+
+### Criando novas colunas: &nbsp; `mutate()`
+
+Você também pode usar `mutate()` para **criar uma nova coluna**, mantendo a variável original intacta.
+
+No exemplo abaixo, é criada a coluna `bill_length_cm`, que converte o comprimento do bico de **milímetros para centímetros**:
+
+```{r}
+pinguins |> 
+  mutate(bill_length_cm = bill_length_mm / 10)
+```
+
+A nova coluna será adicionada **no final da tabela**.
+
+---
+
+### Criando novas colunas: &nbsp; `mutate()`
+
+Com `mutate()`, você também pode realizar **qualquer operação** com uma ou mais colunas.
+
+A única regra é que o resultado de cada operação:
+
+- tenha **o mesmo número de linhas** da base original
+
+- ou **um único valor** (que será repetido em todas as linhas)
+
+Também é possível **criar ou modificar várias colunas ao mesmo tempo** dentro de um mesmo `mutate()`.
+
+```{r}
+pinguins |> 
+  mutate(mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),
+         country = "Antarctica") |> 
+  select(species, island, bill_length_mm, mean_bill_length_mm, country)
+```
+
+---
+
+### Sumarizando colunas: &nbsp; `summarise()`
+
+A **sumarização** é uma forma de **resumir um conjunto de dados** usando alguma medida de interesse.
+
+Exemplos comuns incluem: média, mediana, variância, contagem, proporção etc.
+
+Essas métricas ajudam a entender melhor o comportamento de uma variável.
+
+O exemplo abaixo calcula a **média da massa corporal** dos pinguins:
+
+
+```{r}
+pinguins |> 
+  summarise(mean_body_mass_g = mean(body_mass_g, na.rm = TRUE))
+```
+
+.footnote[Também pode ser usado a função `summarize()` — ambas as formas funcionam.]
+
+---
+
+### Sumarizando colunas: &nbsp; `summarise()`
+
+Você pode calcular **várias estatísticas ao mesmo tempo** dentro de um único `summarise()`.
+
+Cada métrica calculada se transforma em uma **coluna da nova base**:
+
+```{r}
+pinguins |> 
+  summarise(
+    mean_flipper_length_mm = mean(flipper_length_mm, na.rm = TRUE),
+    median_flipper_length_mm = median(flipper_length_mm, na.rm = TRUE),
+    dp_flipper_length_mm = sd(flipper_length_mm, na.rm = TRUE)
+  )
+```
+
+.footnote[Também pode ser usado a função `summarize()` — ambas as formas funcionam.]
+
+---
+
+### Sumarizando colunas: &nbsp; `summarise()`
+
+Você também pode calcular **resumos de colunas diferentes** dentro de um mesmo `summarise()`.
+
+```{r}
+pinguins |>  
+  summarise(
+    mean_flipper_length_mm = mean(flipper_length_mm, na.rm = TRUE),
+    mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),
+    median_bill_depth_mm = median(bill_depth_mm, na.rm = TRUE)
+  )
+```
+
+Neste exemplo, calculamos a **média ou mediana** de diferentes variáveis numéricas da base.
+
+.footnote[Também pode ser usado a função `summarize()` — ambas as formas funcionam.]
+
+---
+
+### Sumarizando colunas agrupadas: &nbsp; `group_by()`
+
+A função `group_by()` **não altera os dados da base**, mas indica que as operações seguintes devem ser feitas **por grupo**.
+
+No exemplo abaixo, a base `pinguins` é agrupada pela coluna `island`:
+
+```{r}
+pinguins |> 
+  group_by(island)
+```
+
+<!-- .footnote[Essa marcação só tem efeito real quando combinada com funções como `summarise()`.] -->
+
+---
+
+### Sumarizando colunas agrupadas: &nbsp; `group_by()`
+
+Você também pode agrupar por **mais de uma variável ao mesmo tempo**.
+
+```{r}
+pinguins |> 
+  group_by(island, species)
+```
+
+Neste caso, os dados são agrupados **por combinação de `island` e `species`** — ou seja, cada grupo representa uma espécie dentro de uma determinada ilha.
+
+<!-- .footnote[Essa marcação só tem efeito real quando combinada com funções como `summarise()`.] -->
+
+---
+
+### Sumarizando colunas agrupadas
+
+Em muitos casos, queremos **resumir uma variável numérica** para **cada categoria** de uma outra coluna.
+
+Para isso, usamos `summarise()` em conjunto com `group_by()`.
+
+No exemplo abaixo, o código calcula a **média da massa corporal** (`body_mass_g`) para cada ilha (`island`):
+
+```{r}
+pinguins |> 
+  group_by(island) |> 
+  summarise(mean_body_mass_g = mean(body_mass_g, na.rm = TRUE)) |> 
+  arrange(desc(mean_body_mass_g))
+```
+
+Ou seja, **agrupamos os dados por ilha**, **calculamos a média da massa corporal em cada grupo** e, por fim, **ordenamos do maior para o menor valor**.
+
+.footnote[Também pode ser usado a função `summarize()` — ambas as formas funcionam.]
+
+---
+
+### Ordenando colunas:  &nbsp;  `relocate()`
+
+A função `relocate()` permite **mudar a ordem das colunas** de uma base, colocando-as em outra posição — seja com base no nome ou na posição de outra coluna.
+
+Você pode usar o argumento `.after` para **colocar uma ou mais colunas logo após** uma coluna de referência:
+
+```{r}
+pinguins |> 
+  relocate(sex, year, .after = island)
+```
+
+No exemplo abaixo, as colunas `sex` e `year` foram movidas para **aparecer logo após** a coluna `island`.
+
+---
+
+### Ordenando colunas:  &nbsp;  `relocate()`
+
+Da mesma forma, é possível usar o argumento `.before` para **mover colunas para antes** de outra coluna específica:
+
+```{r}
+pinguins |> 
+  relocate(sex, year, .before = island)
+```
+
+Nesse exemplo, as colunas `species` e `island` foram movidas para **aparecer logo antes** da coluna `island`.
+
+---
+
+### Renomeando colunas: &nbsp; `rename()`
+
+A função `rename()` serve para **alterar os nomes das colunas** de uma base de dados.
+
+- O **primeiro argumento** é o **novo nome** desejado
+
+- O **segundo argumento** é o **nome atual** da coluna
+
+```{r}
+pinguins |>  
+  rename(
+    comprimento_bico_mm = bill_length_mm,
+    profundidade_bico_mm = bill_depth_mm,
+    comprimento_nadadeira_mm = flipper_length_mm,
+    massa_corporal_g = body_mass_g
+  )
+```
+
+---
+
+### Selecionando linhas: &nbsp; `slice_head()`
+
+A função `slice_head()` é usada para **extrair as primeiras linhas** de uma tabela, de forma controlada.
+
+Ela é útil quando queremos visualizar apenas o início de uma base ou analisar os primeiros registros de cada grupo (quando combinada com `group_by()`).
+
+- O argumento `n = ` define **quantas linhas serão retornadas**.
+
+```{r}
+pinguins |> 
+  slice_head(n = 8)
+```
+
+Neste exemplo, são retornadas as **8 primeiras linhas** da base `pinguins`.
+
+---
+
+### Selecionando linhas: &nbsp; `slice_tail()`
+
+A função `slice_tail()` é usada para **extrair as últimas linhas** de uma tabela.
+
+Ela funciona de forma semelhante ao `slice_head()`, mas retorna os **últimos registros** em vez dos primeiros.
+
+- O argumento `n = ` define **quantas linhas serão retornadas**.
+
+```{r}
+pinguins |>  
+  slice_tail(n = 5)
+```
+
+Neste exemplo, são retornada s as **5 últimas linhas** da base `pinguins`.
+
+---
+
+### Selecionando linhas: &nbsp; `slice_max()`
+
+A função `slice_max()` seleciona as **linhas com os maiores valores** de uma coluna numérica específica.
+
+- O argumento `n = ` define **quantas linhas serão retornadas**.
+
+- Se `n` não for informado, retorna **apenas a linha com o maior valor**.
+
+- Em caso de empate, o número de linhas retornadas pode ser **maior que `n`**.
+
+```{r}
+pinguins |> 
+  slice_max(bill_depth_mm, n = 5)
+```
+
+Neste exemplo, são retornadas as **5 linhas com maior profundidade de bico** (`bill_depth_mm`) da base `pinguins`.
+
+---
+
+### Selecionando linhas: &nbsp; `slice_min()`
+
+A função `slice_min()` seleciona as **linhas com os menores valores** de uma coluna numérica específica.
+
+- O argumento `n = ` define **quantas linhas serão retornadas**.
+
+- Se `n` não for informado, retorna **apenas a linha com o menor valor**.
+
+- Em caso de empate, o número de linhas retornadas pode ser **maior que `n`**.
+
+```{r}
+pinguins |> 
+  slice_min(flipper_length_mm, n = 5)
+```
+
+Neste exemplo, são retornadas as **5 linhas com menor comprimento de nadadeira** (`flipper_length_mm`) da base `pinguins`.
+
+---
+
+### Selecionando linhas: &nbsp; `slice_sample()`
+
+A função `slice_sample()` é usada para **selecionar linhas aleatoriamente** de uma base.
+
+- O argumento `n = ` define **quantas linhas serão sorteadas e retornadas**.
+
+- É útil para criar **amostras aleatórias** simples, testes ou visualizações rápidas.
+
+```{r}
+pinguins |> 
+  slice_sample(n = 12)
+```
+
+Neste exemplo, são retornadas **12 linhas aleatórias** da base `pinguins`.
+
+---
+
+### Limpando a tabela: &nbsp; `distinct()`
+
+A função `distinct()` remove **linhas duplicadas**, considerando os valores de um ou mais colunas.
+
+- Por padrão, retorna **apenas as colunas informadas**
+
+- Com `.keep_all = TRUE`, mantém **todas as colunas** da base original.
+
+```{r}
+pinguins |> 
+  distinct(body_mass_g, .keep_all = TRUE)
+```
+
+Neste exemplo, a base retorna **apenas uma linha para cada valor distinto de `body_mass_g`**, mantendo as demais colunas associadas à primeira ocorrência de cada valor.
+
+---
+
+### Contando valores: &nbsp; `count()`
+
+A função `count()` é usada para **contar a frequência de valores** de cada categoria em uma coluna — especialmente útil para variáveis categóricas.
+
+.pull-left[
+```{r}
+pinguins |> 
+  count(species)
+```
+
+Nesse exemplo, o código retorna **quantas observações existem para cada espécie** de pinguim na base de dados.
+]
+
+.pull-right[
+```{r}
+pinguins |> 
+  count(species, island)
+```
+
+Neste exemplo, o código retorna a **quantidade de pinguins por espécie em cada ilha**, ou seja, uma contagem para cada combinação de `species` e `island`.
+]
+
+---
+
+### Combinando dados: &nbsp; `bind_rows()`
+
+A função `bind_rows()` serve para **juntar objetos pela linha** — ou seja, ela empilha os dados, mesmo que tenham colunas diferentes.
+
+- O argumento `.id =` cria uma nova coluna que indica a origem de cada linha (útil para identificar de onde veio cada pedaço da base).
+
+<!-- Neste exemplo, as tabelas são unidas **por linha**, e a coluna `id` identifica se a linha veio de `pinguins_01` ou `pinguins_02`. -->
+
+
+```{r}
+# seleciona algumas linhas e colunas de duas partes da base
+pinguins_01 <- slice(pinguins, 1:5) |> select(1:3)
+pinguins_02 <- slice(pinguins, 51:55) |> select(4:6)
+# junta as linhas das duas tabelas
+bind_rows(pinguins_01, pinguins_02, .id = "id")
+```
+
+---
+
+### Combinando dados: &nbsp; `bind_cols()`
+
+A função `bind_cols()` é usada para **juntar objetos lado a lado**, ou seja, **por colunas**.
+
+- As bases precisam ter o **mesmo número de linhas**
+- O argumento `.name_repair = "unique"` garante que, se houver colunas com nomes repetidos, elas sejam renomeadas automaticamente
+
+```{r}
+# seleciona 5 linhas diferentes da base original
+pinguins_01 <- slice(pinguins, 1:5)
+pinguins_02 <- slice(pinguins, 51:55)
+# junta as colunas das duas tabelas
+bind_cols(pinguins_01, pinguins_02, .name_repair = "unique")
+```
+
+<!-- Neste exemplo, os dados são combinados **horizontalmente**, formando uma nova tabela com mais colunas. -->
+
+---
+
+### Unindo bases: &nbsp; `*_join()`
+
+Combina pares de bases de dados **com base em uma ou mais chaves** — colunas em comum entre elas.
+
+.left-column[
+
+<br>
+<br>
+<br>
+```{r echo=FALSE, out.width="90%"}
+knitr::include_graphics("img/30-joins.png")
+```
+
+]
+
+.right-column[
+
+**Junções de mutação**
+
+Adicionam informações de uma base à outra:
+
+- `left_join(x, y)`: mantém todas as observações em **x**
+- `right_join(x, y)`: mantém todas as observações em **y**
+- `inner_join(x, y)`: mantém apenas as observações **com correspondência em x e y**
+- `full_join(x, y)`: mantém **todas** as observações em x e em y
+
+**Junções de filtragem**
+
+Selecionam linhas de x com base na existência de correspondência em y:
+
+- `semi_join(x, y)`: mantém as observações de **x que têm correspondência em y**
+- `anti_join(x, y)`: mantém as observações de **x que não têm correspondência em y**
+
+]
+
+---
+
+### Unindo bases: &nbsp; `*_join()`
+
+.pull-left[
+
+```{r echo=FALSE, out.width="70%"}
+knitr::include_graphics("img/31-left-join.gif")
+```
+
+
+```{r echo=FALSE, out.width="70%"}
+knitr::include_graphics("img/32-inner-join.gif")
+```
+
+]
+
+.pull-right[
+
+```{r echo=FALSE, out.width="70%"}
+knitr::include_graphics("img/33-right-join.gif")
+```
+
+
+```{r echo=FALSE, out.width="70%"}
+knitr::include_graphics("img/34-full-join.gif")
+```
+
+]
+
+---
+
+### Unindo bases: &nbsp; `*_join()` — Exemplo
+
+Vamos criar uma nova tabela com **as coordenadas geográficas das ilhas** e, em seguida, fazer a **junção** com a base `pinguins`.
+
+<div class="panelset">
+<div class="panel">
+<div class="panel-name">1. Criando a base auxiliar</div>
+
+```{r}
+# Coordenadas geográficas das ilhas
+pinguins_ilhas <- tibble(
+  ilha = c("Torgersen", "Biscoe", "Dream", "Alpha"),
+  longitude = c(-64.083333, -63.775636, -64.233333, -63),
+  latitude = c(-64.766667, -64.818569, -64.733333, -64.316667)
+)
+
+pinguins_ilhas
+```
+
+</div>
+
+<div class="panel">
+<div class="panel-name">2. Unindo as bases — <code>left_join()</code></div>
+
+Agora, usamos `left_join()` para **adicionar as colunas de latitude e longitude** à base `pinguins`, com base no nome da ilha.
+
+```{r}
+pinguins_left_join <- left_join(pinguins, pinguins_ilhas, by = c("island" = "ilha"))
+glimpse(pinguins_left_join)
+```
+
+<!-- A base resultante contém todas as colunas originais da `pinguins` $+$ as coordenadas geográficas da ilha correspondente. -->
+
+</div>
+</div>
+
+---
+
+### Operações de conjuntos e comparações de dados
+
+.pull-left[
+
+<br>
+<br>
+
+<!-- <center> -->
+  <b><font size = 6>Operações para comparar dos dados:</font></b>
+<!-- </center> -->
+
+- **`union(x, y)`**: retorna todas as linhas que estão em **x**, **y** ou em ambos
+
+- **`interesect(x, y)`**: retorna apenas as linhas que estão em **x** _e_ em **y**
+
+- **`setdiff(x, y)`**: retorna as linhas que estão em **x**, mas **não** em **y**
+
+- **`setequal(x, y)`**: verifica se **x** e **y** são iguais (independentemente da ordem)
+
+]
+
+.pull-right[
+<br>
+<br>
+```{r echo=FALSE, out.width="85%"}
+knitr::include_graphics("img/35-operacoes.png")
+```
+
+]
+
+---
+
+### Pacote &nbsp; `tidyr`
+
+**O que são dados organizados (_tidy data_)?**
+
+```{r echo=FALSE, out.width="85%", fig.align='center'}
+knitr::include_graphics("img/36-tidy-data.png")
+```
+
+Dados organizados seguem uma **estrutura padrão**, que facilita a análise e a manipulação dos dados. Em um conjunto de dados _tidy_:
+
+- Cada **coluna** representa uma **variável**
+
+- Cada **linha** representa uma **observação**
+
+- Cada **célula** contém **um único valor**
+
+---
+
+### Pacote &nbsp; `tidyr`
+
+O pacote `{tidyr}` é responsável por **organizar os dados no formato _tidy_**, deixando-os mais fáceis de trabalhar.
+
+<br>
+
+Principais funções:
+
+- `unite()`: junta o conteúdo de várias colunas em uma só
+
+- `separate()`: divide o conteúdo de uma coluna em várias
+
+- `separate_rows()`: divide em várias colunas e linhas
+
+- `drop_na()`: remove linhas com valores ausentes (`NA`)
+
+- `replace_na()`: substitui valores ausentes (`NA`) por outro valor específico
+
+- `pivot_wider()`: transforma dados do formato longo para o formato largo
+
+- `pivot_longer()`: transforma dados do formato largo para o formato longo
+
+---
+
+### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
+
+[![Cheat Sheets](img/37-cheatsheet-tidyr.png)](https://rstudio.github.io/cheatsheets/tidyr.pdf)
+
+---
+
+### União de colunas: &nbsp; `unite()`
+
+A função `unite()` combina o conteúdo de duas ou mais colunas em uma **única coluna de texto**.
+
+No exemplo abaixo, as colunas `species` e `island` são unidas em uma nova coluna chamada `species_island`, separadas por um caractere de sublinhado (`-`).
+
+```{r}
+especie_ilha_unido <- pinguins |> 
+  unite(
+    col = "especie_ilha",     # novo nome da coluna
+    species:island,           # colunas a serem unidas
+    sep = " - "               # separador entre os valores
+  )
+
+head(especie_ilha_unido)
+```
+
+---
+
+### Separação de colunas: &nbsp; `separate()`
+
+A função `separate()` divide o conteúdo de uma coluna em **duas ou mais colunas**, com base em um separador.
+
+No exemplo abaixo, a coluna `especie_ilha` é separada em duas colunas: `especie` e `ilha`, usando `" - "` como separador:
+
+```{r}
+especie_ilha_separado <- especie_ilha_unido |> 
+  separate(
+    col = especie_ilha,             # coluna a ser separada
+    into = c("especie", "ilha"),    # nomes das novas colunas
+    sep = " - "                     # separador utilizado
+  )
+
+head(especie_ilha_separado)
+```
+
+---
+
+### Remove NAs: &nbsp; `drop_na()`
+
+A função `drop_na()` remove todas as **linhas que contêm valores ausentes (`NA`)**. 
+
+<div class="panelset">
+<div class="panel">
+<div class="panel-name">Removendo em <b>todas as colunas</b></div>
+
+Por padrão, ela verifica **todas as colunas** da base:
+
+```{r}
+pinguins |> 
+  drop_na() # remove em todas as colunas
+```
+
+</div>
+
+<div class="panel">
+<div class="panel-name">Removendo em <b>colunas específicas</b></div>
+
+Também pode especificar **quais colunas** deseja considerar ao remover os `NAs`:
+
+```{r}
+pinguins |> 
+  drop_na(sex) # remove apenas quando `sex` estiver ausente
+```
+
+</div>
+</div>
+
+---
+
+### Pivotar os dados: &nbsp; `pivot_*()`
+
+.pull-left[
+
+**`pivot_longer()`**
+
+Transforma os dados em formato **mais longo**, ou seja, com **mais linhas** e **menos colunas**.
+
+É útil para organizar bases que foram estruturadas para entrada ou visualização, e não para análise — algo comum em planilhas.
+
+<br>
+
+**`pivot_wider()`**
+
+Transforma os dados em formato **mais largo**, ou seja, com **mais colunas** e **menos linhas**.
+
+Apesar de menos comum em dados _tidy_, é útil para criar **tabelas resumo** ou preparar dados para ferramentas específicas.
+
+]
+
+.pull-right[
+
+```{r echo=FALSE, out.width="100%", fig.align='center'}
+knitr::include_graphics("img/38-original-dfs-tidy.png")
+```
+
+]
+
+---
+
+### Larga para longa: &nbsp; `pivot_longer()`
+
+Transforma um banco de dados **do farmato largo para o formato longo** — ou seja, o número de **linhas aumenta** e o número de **colunas diminui**. Os principais argumentos da função `pivot_longer()` são:
+
+- `cols`: colunas que serão _"derretidas"_ em uma única coluna
+- `names_to`: nome da nova coluna que irá conter os **nomes originais das colunas** (variáveis)
+- `values_to`: nome da nova coluna que irá conter os **valores das colunas originais** (variáveis)
+
+.tiny[
+```{r}
+pivot_longer(data = pinguins_raw[, c(2, 3, 10:13)], 
+             cols = `Culmen Length (mm)`:`Body Mass (g)`, 
+             names_to = "medidas", 
+             values_to = "valores")
+```
+]
+
+---
+
+### Longa para larga: &nbsp; `pivot_wider()`
+
+Transforma um banco de dados **do formato longo para o formato largo** — ou seja, o número de **colunas aumenta** e o número de **linhas diminui**. Os principais argumentos da função `pivot_wider()` são:
+
+- `names_from`: variável categórica que irá formar os **nomes das novas colunas**
+- `values_from`: variável que irá preencher os **valores das novas colunas**
+- `values_fill`: _(opcional)_ valor a ser usado para preencher os `NAs`, quando não houver correspondência
+
+```{r}
+pivot_wider(data = pinguins_raw[, c(2, 3, 13)], 
+            names_from = Species, 
+            values_from = `Body Mass (g)`)
+```
 

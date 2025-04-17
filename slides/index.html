@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="Yihui Xie" />
     <meta name="author" content="Garrick Aden-Buie" />
-    <meta name="date" content="2025-04-14" />
+    <meta name="date" content="2025-04-16" />
     <script src="index_files/header-attrs/header-attrs.js"></script>
     <script src="index_files/clipboard/clipboard.min.js"></script>
     <link href="index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
@@ -46,7 +46,7 @@ class: center, middle, inverse, title-slide
 ### Garrick Aden-Buie
 ]
 .date[
-### 2025-04-14
+### 2025-04-16
 ]
 
 ---
@@ -64,6 +64,7 @@ class: center, middle, inverse, title-slide
 2. [Introdução](#introducao)
 3. [Projetos](#projetos)
 4. [Importação de dados](#importacao)
+5. [Manipulação de dados](#manipulacao)
 
 ---
 
@@ -2547,6 +2548,8 @@ name: importacao
 
 # Importação de dados
 
+.center[(Acompanhe no arquivo `02-importacao.R`)]
+
 ---
 
 ### Caminhos
@@ -3312,6 +3315,1757 @@ FROM `basedosdados.br_bd_diretorios_brasil.municipio`" |&gt;
 
 ---
 
+class: inverse center middle
+name: manipulacao
+
+# Manipulação de dados
+
+.center[(Acompanhe no arquivo `04-manipulacao.R`)]
+
+---
+
+### Pipe: `%&gt;%` ou `|&gt;`
+
+- `CTRL` + `SHIFT` + `M`: cria o `%&gt;%` &amp;nbsp; (ou `|&gt;`).
+
+Pense no operador `pipe` como uma forma de **escrever uma receita de bolo**:
+
+
+``` r
+esfrie(
+  asse(
+    coloque(
+      bata(
+        acrescente(
+          recipiente(rep("farinha", 2), "água", 
+                     "fermento", "leite", "óleo"), 
+          "farinha", até = "macio"), 
+        duração = "3min"), 
+      lugar = "forma", tipo = "grande", 
+      untada = TRUE), duração = "50min"), 
+  "geladeira", "20min")
+```
+
+Aqui, precisamos ler **de dentro para fora**: o primeiro comando executado é `recipiente()`, mas o primeiro que aparece é `esfrie()` — justamente o último a ser feito. Confuso, né?
+
+Agora veja como a mesma receita é escrita usando o operador `|&gt;`:
+
+
+.footnote[Para MacOs, use `CMD` + `SHIFT` + `M` para inserir o pipe `|&gt;`.]
+
+---
+
+### Pipe: `%&gt;%` ou `|&gt;`
+
+- `CTRL` + `SHIFT` + `M`: cria o `%&gt;%` &amp;nbsp; (ou `|&gt;`).
+
+Veja como a **mesma receita** fica muito mais clara com o uso do `|&gt;`:
+
+
+``` r
+recipiente(rep("farinha", 2), "água", "fermento", "leite", "óleo") %&gt;%
+  acrescente("farinha", até = "macio") %&gt;%
+  bata(duração = "3min") %&gt;%
+  coloque(lugar = "forma", tipo = "grande", untada = TRUE) %&gt;%
+  asse(duração = "50min") %&gt;%
+  esfrie("geladeira", "20min")
+```
+
+Agora a leitura do código segue **de cima para baixo**, como uma lista de etapas — exatamente como uma receita de verdade!
+
+&lt;div style="text-align: center;"&gt;
+  &lt;strong style="font-size: 110%;"&gt;O operador &lt;code&gt;|&gt;&lt;/code&gt; passa o resultado da operação à esquerda como primeiro argumento da função à direita. Isso torna o código mais limpo, encadeado e fácil de entender.&lt;/strong&gt;
+&lt;/div&gt;
+
+.footnote[
+O `%&gt;%` vem do pacote `{magrittr}` e funciona como o `|&gt;`, mas com algumas diferenças. Ainda é muito usado em pacotes como o `{dplyr}`. Quer saber mais? Dá uma olhada:  [magrittr: Ceci n’est pas un pipe](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html)  [R 4.1: novidades e o pipe nativo `|&gt;`](https://www.jumpingrivers.com/blog/new-features-r410-pipe-anonymous-functions/)
+]
+
+---
+
+Os exemplos apresentados aqui serão das base abaixo:
+
+
+``` r
+library(tidyverse)
+
+pinguins &lt;- read_csv("dados/pinguins.csv")
+pinguins_raw &lt;- read_csv("dados/pinguins_raw.csv")
+```
+
+----
+
+
+```
+## # A tibble: 3 × 8
+##   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##   &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+## 1 Adelie  Torgersen           39.1          18.7               181        3750
+## 2 Adelie  Torgersen           39.5          17.4               186        3800
+## 3 Adelie  Torgersen           40.3          18                 195        3250
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+
+```
+## # A tibble: 3 × 17
+##   studyName `Sample Number` Species          Region Island Stage `Individual ID`
+##   &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;          
+## 1 PAL0708                 1 Adelie Penguin … Anvers Torge… Adul… N1A1           
+## 2 PAL0708                 2 Adelie Penguin … Anvers Torge… Adul… N1A2           
+## 3 PAL0708                 3 Adelie Penguin … Anvers Torge… Adul… N2A1           
+## # ℹ 10 more variables: `Clutch Completion` &lt;chr&gt;, `Date Egg` &lt;date&gt;,
+## #   `Culmen Length (mm)` &lt;dbl&gt;, `Culmen Depth (mm)` &lt;dbl&gt;,
+## #   `Flipper Length (mm)` &lt;dbl&gt;, `Body Mass (g)` &lt;dbl&gt;, Sex &lt;chr&gt;,
+## #   `Delta 15 N (o/oo)` &lt;dbl&gt;, `Delta 13 C (o/oo)` &lt;dbl&gt;, Comments &lt;chr&gt;
+```
+
+---
+
+### Pacote &amp;nbsp; `dplyr`
+
+O `{dplyr}` é um dos **pacotes mais importantes** para a **manipulação de dados** no R. Ele oferece funções simples e poderosas para transformar linhas e colunas de uma base de dados.
+
+As principais funções são:
+
+- `filter()`: filtra linhas com base em uma condição
+
+- `select()`: seleciona colunas específicas
+
+- `arrange()`: ordena as linhas com base em uma ou mais colunas
+
+- `mutate()`: cria ou modifica colunas
+
+- `group_by()`: agrupa os dados por uma ou mais variáveis
+
+- `summarise()`: resumo os dados (ex: média, mediana, soma, etc.)
+
+- `left_join()`: junta duas tabelas com base em uma chave comum
+
+Essas funções seguem um padrão simples:
+
+  - Sempre recebem uma `tibble` como primeiro argumento;
+  - Sempre retornam uma `tibble` como resultado.
+  
+---
+
+### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
+
+[![Cheat Sheets](img/29-cheatsheet-dplyr.png)](https://rstudio.github.io/cheatsheets/data-transformation.pdf)
+
+---
+
+### Selecionando Colunas:  &amp;nbsp; `select()`
+
+A função `select()` é usada para escolher colunas específicas de uma base de dados.
+
+- O **primeiro argumento** é o nome da base (ex: `pinguins`)
+
+- Os **demais argumentos** são os nomes das colunas que você quer manter
+
+_Não é necessário usar aspas para os nomes das colunas!_
+
+
+``` r
+select(pinguins, species)
+```
+
+```
+## # A tibble: 344 × 1
+##    species
+##    &lt;chr&gt;  
+##  1 Adelie 
+##  2 Adelie 
+##  3 Adelie 
+##  4 Adelie 
+##  5 Adelie 
+##  6 Adelie 
+##  7 Adelie 
+##  8 Adelie 
+##  9 Adelie 
+## 10 Adelie 
+## # ℹ 334 more rows
+```
+
+---
+
+### Selecionando Colunas:  &amp;nbsp; `select()`
+
+Você também pode selecionar **várias colunas ao mesmo tempo**, separando os nomes por vírgulas:
+
+
+``` r
+select(pinguins, species, sex, body_mass_g)
+```
+
+```
+## # A tibble: 344 × 3
+##    species sex    body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt;
+##  1 Adelie  male          3750
+##  2 Adelie  female        3800
+##  3 Adelie  female        3250
+##  4 Adelie  &lt;NA&gt;            NA
+##  5 Adelie  female        3450
+##  6 Adelie  male          3650
+##  7 Adelie  female        3625
+##  8 Adelie  male          4675
+##  9 Adelie  &lt;NA&gt;          3475
+## 10 Adelie  &lt;NA&gt;          4250
+## # ℹ 334 more rows
+```
+
+Esse exemplo retorna apenas as colunas `species`, `sex` e `body_mass_g` da base `pinguins`.
+
+---
+
+### Selecionando Colunas:  &amp;nbsp; `select()`
+
+O operador `:` é útil para selecionar **colunas consecutivas** — ou seja, de uma coluna até outra, seguindo a ordem da base:
+
+
+``` r
+select(pinguins, island:body_mass_g)
+```
+
+```
+## # A tibble: 344 × 5
+##    island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Torgersen           39.1          18.7               181        3750
+##  2 Torgersen           39.5          17.4               186        3800
+##  3 Torgersen           40.3          18                 195        3250
+##  4 Torgersen           NA            NA                  NA          NA
+##  5 Torgersen           36.7          19.3               193        3450
+##  6 Torgersen           39.3          20.6               190        3650
+##  7 Torgersen           38.9          17.8               181        3625
+##  8 Torgersen           39.2          19.6               195        4675
+##  9 Torgersen           34.1          18.1               193        3475
+## 10 Torgersen           42            20.2               190        4250
+## # ℹ 334 more rows
+```
+
+Esse código seleciona todas as colunas de `island` até `body_mass_g`, na ordem em que aparecem na base.
+
+---
+
+### Selecionando Colunas:  &amp;nbsp; `select()`
+
+O `{dplyr}` oferece algumas **funções auxiliares** muito úteis para selecionar colunas com base em partes do nome:
+
+- `starts_with("texto")`: seleciona colunas que **começam** com o texto especificado
+
+- `ends_with("texto")`: seleciona colunas que **terminam** com o texto especificado
+
+- `contains("texto")`: seleciona colunas que **contêm** o texto especificado
+
+
+``` r
+select(pinguins, ends_with("mm"))
+```
+
+```
+## # A tibble: 344 × 3
+##    bill_length_mm bill_depth_mm flipper_length_mm
+##             &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;
+##  1           39.1          18.7               181
+##  2           39.5          17.4               186
+##  3           40.3          18                 195
+##  4           NA            NA                  NA
+##  5           36.7          19.3               193
+##  6           39.3          20.6               190
+##  7           38.9          17.8               181
+##  8           39.2          19.6               195
+##  9           34.1          18.1               193
+## 10           42            20.2               190
+## # ℹ 334 more rows
+```
+
+---
+
+### Selecionando Colunas:  &amp;nbsp; `select()`
+
+Você pode **remover colunas** usando o sinal de menos (`—`) antes do nome da coluna:
+
+
+``` r
+select(pinguins, -year)
+```
+
+```
+## # A tibble: 344 × 7
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.5          17.4               186        3800
+##  3 Adelie  Torgersen           40.3          18                 195        3250
+##  4 Adelie  Torgersen           NA            NA                  NA          NA
+##  5 Adelie  Torgersen           36.7          19.3               193        3450
+##  6 Adelie  Torgersen           39.3          20.6               190        3650
+##  7 Adelie  Torgersen           38.9          17.8               181        3625
+##  8 Adelie  Torgersen           39.2          19.6               195        4675
+##  9 Adelie  Torgersen           34.1          18.1               193        3475
+## 10 Adelie  Torgersen           42            20.2               190        4250
+## # ℹ 334 more rows
+## # ℹ 1 more variable: sex &lt;chr&gt;
+```
+
+Esse código retorna todas as colunas da base `pinguins`, exceto a coluna `year`.
+
+---
+
+### Selecionando Colunas:  &amp;nbsp; `select()`
+
+Para remover **mais de uma coluna**, basta usar o sinal de menos (`—`) junto com a função `c()`:
+
+
+``` r
+select(pinguins, -c(year, sex))
+```
+
+```
+## # A tibble: 344 × 6
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.5          17.4               186        3800
+##  3 Adelie  Torgersen           40.3          18                 195        3250
+##  4 Adelie  Torgersen           NA            NA                  NA          NA
+##  5 Adelie  Torgersen           36.7          19.3               193        3450
+##  6 Adelie  Torgersen           39.3          20.6               190        3650
+##  7 Adelie  Torgersen           38.9          17.8               181        3625
+##  8 Adelie  Torgersen           39.2          19.6               195        4675
+##  9 Adelie  Torgersen           34.1          18.1               193        3475
+## 10 Adelie  Torgersen           42            20.2               190        4250
+## # ℹ 334 more rows
+```
+
+Esse código retorna todas as colunas da base `pinguins`, exceto as colunas `year` e `sex`.
+
+---
+
+### Ordenando linhas: &amp;nbsp; `arrange()`
+
+A função `arrange()` serve para **ordenar as linhas** da base de dados.
+
+- O **primeiro argumento** é a base (ex: `pinguins`)
+
+- Os **demais argumentos** são as colunas usadas como critério de ordenação.
+
+Por padrão, a ordenação é feita em ordem **crescente**.
+
+
+``` r
+arrange(pinguins, body_mass_g)
+```
+
+```
+## # A tibble: 344 × 8
+##    species   island   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Chinstrap Dream              46.9          16.6               192        2700
+##  2 Adelie    Biscoe             36.5          16.6               181        2850
+##  3 Adelie    Biscoe             36.4          17.1               184        2850
+##  4 Adelie    Biscoe             34.5          18.1               187        2900
+##  5 Adelie    Dream              33.1          16.1               178        2900
+##  6 Adelie    Torgers…           38.6          17                 188        2900
+##  7 Chinstrap Dream              43.2          16.6               187        2900
+##  8 Adelie    Biscoe             37.9          18.6               193        2925
+##  9 Adelie    Dream              37.5          18.9               179        2975
+## 10 Adelie    Dream              37            16.9               185        3000
+## # ℹ 334 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+---
+
+### Ordenando linhas: &amp;nbsp; `arrange()`
+
+Para ordenar de forma **descrescente**, basta usar a função `desc()` dentro do `arrange()`.
+
+No exemplo abaixo, os pinguins são organizados da **maior para a menor massa corporal**:
+
+
+``` r
+arrange(pinguins, desc(body_mass_g))
+```
+
+```
+## # A tibble: 344 × 8
+##    species island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Gentoo  Biscoe           49.2          15.2               221        6300
+##  2 Gentoo  Biscoe           59.6          17                 230        6050
+##  3 Gentoo  Biscoe           51.1          16.3               220        6000
+##  4 Gentoo  Biscoe           48.8          16.2               222        6000
+##  5 Gentoo  Biscoe           45.2          16.4               223        5950
+##  6 Gentoo  Biscoe           49.8          15.9               229        5950
+##  7 Gentoo  Biscoe           48.4          14.6               213        5850
+##  8 Gentoo  Biscoe           49.3          15.7               217        5850
+##  9 Gentoo  Biscoe           55.1          16                 230        5850
+## 10 Gentoo  Biscoe           49.5          16.2               229        5800
+## # ℹ 334 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+---
+
+### Ordenando linhas: &amp;nbsp; `arrange()`
+
+Você também pode ordenar por **duas ou mais colunas** ao mesmo tempo.
+
+No exemplo abaixo, as linhas são ordenadas:
+
+- **Primeiro** pelo **comprimento do bico** (`bill_length_mm`), em **ordem descrescente**
+
+- **Depois**, em caso de empate, pela **profundidade do bico** (`bill_depth_mm`), em **ordem crescente**.
+
+
+``` r
+arrange(pinguins, desc(bill_length_mm), bill_depth_mm)
+```
+
+```
+## # A tibble: 344 × 8
+##    species   island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;     &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Gentoo    Biscoe           59.6          17                 230        6050
+##  2 Chinstrap Dream            58            17.8               181        3700
+##  3 Gentoo    Biscoe           55.9          17                 228        5600
+##  4 Chinstrap Dream            55.8          19.8               207        4000
+##  5 Gentoo    Biscoe           55.1          16                 230        5850
+##  6 Gentoo    Biscoe           54.3          15.7               231        5650
+##  7 Chinstrap Dream            54.2          20.8               201        4300
+##  8 Chinstrap Dream            53.5          19.9               205        4500
+##  9 Gentoo    Biscoe           53.4          15.8               219        5500
+## 10 Chinstrap Dream            52.8          20                 205        4550
+## # ℹ 334 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+---
+
+### Aplicando mais de uma função
+
+Em muitos casos, queremos aplicar **várias transformações** em sequência em uma base de dados.
+
+Por exemplo, imagine que você quer uma tabela com a **espécie** dos pinguins e a **massa corporal**, ordenada em ordem crescente:
+
+
+``` r
+arrange(select(pinguins, species, body_mass_g), body_mass_g)
+```
+
+Esse código funciona, mas fica um pouco difícil de ler — precisamos interpretar **de dentro para fora**.
+
+A solução para tornar esse tipo de operação mais clara é usar o operador **pipe** (`|&gt;`):
+
+
+``` r
+pinguins |&gt; 
+  select(species, body_mass_g) |&gt;
+  arrange(body_mass_g)
+```
+
+O que está acontecendo aqui?
+
+- Na **segunda linha**, aplicamos a função `select()` na base `pinguins`
+
+- Na **terceira linha**, aplicamos a função `arrange()` na saída da função `select()`.
+
+O código fica mais **intuitivo**, com as operações organizadas em sequência lógica.
+
+---
+
+### Filtrando linhas: &amp;nbsp; `filter()`
+
+A função `filter()` é usada para **selecionar linhas** que atendem a uma determinada condição.
+
+No exemplo abaixo, são filtradas apenas as observações em que o **comprimento da nadadeira** (`flipper_length_mm`) é **maior que 140 mm**:
+
+
+``` r
+filter(pinguins, flipper_length_mm &gt; 140)
+```
+
+```
+## # A tibble: 342 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.5          17.4               186        3800
+##  3 Adelie  Torgersen           40.3          18                 195        3250
+##  4 Adelie  Torgersen           36.7          19.3               193        3450
+##  5 Adelie  Torgersen           39.3          20.6               190        3650
+##  6 Adelie  Torgersen           38.9          17.8               181        3625
+##  7 Adelie  Torgersen           39.2          19.6               195        4675
+##  8 Adelie  Torgersen           34.1          18.1               193        3475
+##  9 Adelie  Torgersen           42            20.2               190        4250
+## 10 Adelie  Torgersen           37.8          17.1               186        3300
+## # ℹ 332 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+---
+
+### Filtrando linhas: &amp;nbsp; `filter()`
+
+Você pode combinar `select()` e `filter()` para trabalhar apenas com as **colunas e linhas de interesse**.
+
+No exemplo abaixo:
+
+- Primeiro, selecionamos as colunas `species` e `flipper_length_mm`
+
+- Depois, filtramos apenas os pinguins com **nadadeiras maiores que 140 mm**.
+
+
+``` r
+pinguins |&gt; 
+  select(species, flipper_length_mm) |&gt;
+  filter(flipper_length_mm &gt; 140)
+```
+
+```
+## # A tibble: 342 × 2
+##    species flipper_length_mm
+##    &lt;chr&gt;               &lt;dbl&gt;
+##  1 Adelie                181
+##  2 Adelie                186
+##  3 Adelie                195
+##  4 Adelie                193
+##  5 Adelie                190
+##  6 Adelie                181
+##  7 Adelie                195
+##  8 Adelie                193
+##  9 Adelie                190
+## 10 Adelie                186
+## # ℹ 332 more rows
+```
+
+---
+
+### Filtrando linhas: &amp;nbsp; `filter()`
+
+Você pode aplicar **dois ou mais filtros** ao mesmo tempo, separando as condições por vírgula dentro do `filter()`.
+
+No exemplo abaixo, o código retorna apenas os pinguins que:
+
+- Estão na ilha de **Torgersen**
+
+- Têm **profundidade de bico maior que 15 mm**.
+
+
+``` r
+pinguins |&gt; 
+  filter(island == "Torgersen", bill_depth_mm &gt; 15)
+```
+
+```
+## # A tibble: 51 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.5          17.4               186        3800
+##  3 Adelie  Torgersen           40.3          18                 195        3250
+##  4 Adelie  Torgersen           36.7          19.3               193        3450
+##  5 Adelie  Torgersen           39.3          20.6               190        3650
+##  6 Adelie  Torgersen           38.9          17.8               181        3625
+##  7 Adelie  Torgersen           39.2          19.6               195        4675
+##  8 Adelie  Torgersen           34.1          18.1               193        3475
+##  9 Adelie  Torgersen           42            20.2               190        4250
+## 10 Adelie  Torgersen           37.8          17.1               186        3300
+## # ℹ 41 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+---
+
+### Filtrando linhas: &amp;nbsp; `filter()`
+
+Você também pode fazer **operações diretamente dentro do `filter()`**, comparando os valores das colunas com cálculos feitos na hora.
+
+No exemplo abaixo, o código retorna apenas os pinguins cuja **massa corporal** é **maior que a média da base**:
+
+
+``` r
+pinguins |&gt; 
+  filter(body_mass_g &gt; mean(body_mass_g, na.rm = TRUE))
+```
+
+```
+## # A tibble: 149 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Adelie  Torgersen           39.2          19.6               195        4675
+##  2 Adelie  Torgersen           42            20.2               190        4250
+##  3 Adelie  Torgersen           34.6          21.1               198        4400
+##  4 Adelie  Torgersen           42.5          20.7               197        4500
+##  5 Adelie  Dream               39.8          19.1               184        4650
+##  6 Adelie  Dream               44.1          19.7               196        4400
+##  7 Adelie  Dream               39.6          18.8               190        4600
+##  8 Adelie  Biscoe              40.1          18.9               188        4300
+##  9 Adelie  Biscoe              41.3          21.1               195        4400
+## 10 Adelie  Torgersen           41.8          19.4               198        4450
+## # ℹ 139 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+O argumento `na.rm = TRUE` serve para ignorar valores ausentes (`NA`) no cálculo da média.
+
+---
+
+### Criando novas colunas: &amp;nbsp; `mutate()`
+
+A função `mutate()` é usada para:
+
+- **Criar uma nova coluna**
+
+- Ou **modificar uma coluna existente**
+
+No exemplo abaixo, os valores da coluna `bill_length_mm` são divididos por 10, convertendo a unidade de **milímetros (mm)** para **centímetros (cm)**:
+
+
+``` r
+pinguins |&gt; 
+  mutate(bill_length_mm = bill_length_mm / 10)
+```
+
+```
+## # A tibble: 344 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Adelie  Torgersen           3.91          18.7               181        3750
+##  2 Adelie  Torgersen           3.95          17.4               186        3800
+##  3 Adelie  Torgersen           4.03          18                 195        3250
+##  4 Adelie  Torgersen          NA             NA                  NA          NA
+##  5 Adelie  Torgersen           3.67          19.3               193        3450
+##  6 Adelie  Torgersen           3.93          20.6               190        3650
+##  7 Adelie  Torgersen           3.89          17.8               181        3625
+##  8 Adelie  Torgersen           3.92          19.6               195        4675
+##  9 Adelie  Torgersen           3.41          18.1               193        3475
+## 10 Adelie  Torgersen           4.2           20.2               190        4250
+## # ℹ 334 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+---
+
+### Criando novas colunas: &amp;nbsp; `mutate()`
+
+Você também pode usar `mutate()` para **criar uma nova coluna**, mantendo a variável original intacta.
+
+No exemplo abaixo, é criada a coluna `bill_length_cm`, que converte o comprimento do bico de **milímetros para centímetros**:
+
+
+``` r
+pinguins |&gt; 
+  mutate(bill_length_cm = bill_length_mm / 10)
+```
+
+```
+## # A tibble: 344 × 9
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.5          17.4               186        3800
+##  3 Adelie  Torgersen           40.3          18                 195        3250
+##  4 Adelie  Torgersen           NA            NA                  NA          NA
+##  5 Adelie  Torgersen           36.7          19.3               193        3450
+##  6 Adelie  Torgersen           39.3          20.6               190        3650
+##  7 Adelie  Torgersen           38.9          17.8               181        3625
+##  8 Adelie  Torgersen           39.2          19.6               195        4675
+##  9 Adelie  Torgersen           34.1          18.1               193        3475
+## 10 Adelie  Torgersen           42            20.2               190        4250
+## # ℹ 334 more rows
+## # ℹ 3 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;, bill_length_cm &lt;dbl&gt;
+```
+
+A nova coluna será adicionada **no final da tabela**.
+
+---
+
+### Criando novas colunas: &amp;nbsp; `mutate()`
+
+Com `mutate()`, você também pode realizar **qualquer operação** com uma ou mais colunas.
+
+A única regra é que o resultado de cada operação:
+
+- tenha **o mesmo número de linhas** da base original
+
+- ou **um único valor** (que será repetido em todas as linhas)
+
+Também é possível **criar ou modificar várias colunas ao mesmo tempo** dentro de um mesmo `mutate()`.
+
+
+``` r
+pinguins |&gt; 
+  mutate(mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),
+         country = "Antarctica") |&gt; 
+  select(species, island, bill_length_mm, mean_bill_length_mm, country)
+```
+
+```
+## # A tibble: 344 × 5
+##    species island    bill_length_mm mean_bill_length_mm country   
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;               &lt;dbl&gt; &lt;chr&gt;     
+##  1 Adelie  Torgersen           39.1                43.9 Antarctica
+##  2 Adelie  Torgersen           39.5                43.9 Antarctica
+##  3 Adelie  Torgersen           40.3                43.9 Antarctica
+##  4 Adelie  Torgersen           NA                  43.9 Antarctica
+##  5 Adelie  Torgersen           36.7                43.9 Antarctica
+##  6 Adelie  Torgersen           39.3                43.9 Antarctica
+##  7 Adelie  Torgersen           38.9                43.9 Antarctica
+##  8 Adelie  Torgersen           39.2                43.9 Antarctica
+##  9 Adelie  Torgersen           34.1                43.9 Antarctica
+## 10 Adelie  Torgersen           42                  43.9 Antarctica
+## # ℹ 334 more rows
+```
+
+---
+
+### Sumarizando colunas: &amp;nbsp; `summarise()`
+
+A **sumarização** é uma forma de **resumir um conjunto de dados** usando alguma medida de interesse.
+
+Exemplos comuns incluem: média, mediana, variância, contagem, proporção etc.
+
+Essas métricas ajudam a entender melhor o comportamento de uma variável.
+
+O exemplo abaixo calcula a **média da massa corporal** dos pinguins:
+
+
+
+``` r
+pinguins |&gt; 
+  summarise(mean_body_mass_g = mean(body_mass_g, na.rm = TRUE))
+```
+
+```
+## # A tibble: 1 × 1
+##   mean_body_mass_g
+##              &lt;dbl&gt;
+## 1            4202.
+```
+
+.footnote[Também pode ser usado a função `summarize()` — ambas as formas funcionam.]
+
+---
+
+### Sumarizando colunas: &amp;nbsp; `summarise()`
+
+Você pode calcular **várias estatísticas ao mesmo tempo** dentro de um único `summarise()`.
+
+Cada métrica calculada se transforma em uma **coluna da nova base**:
+
+
+``` r
+pinguins |&gt; 
+  summarise(
+    mean_flipper_length_mm = mean(flipper_length_mm, na.rm = TRUE),
+    median_flipper_length_mm = median(flipper_length_mm, na.rm = TRUE),
+    dp_flipper_length_mm = sd(flipper_length_mm, na.rm = TRUE)
+  )
+```
+
+```
+## # A tibble: 1 × 3
+##   mean_flipper_length_mm median_flipper_length_mm dp_flipper_length_mm
+##                    &lt;dbl&gt;                    &lt;dbl&gt;                &lt;dbl&gt;
+## 1                   201.                      197                 14.1
+```
+
+.footnote[Também pode ser usado a função `summarize()` — ambas as formas funcionam.]
+
+---
+
+### Sumarizando colunas: &amp;nbsp; `summarise()`
+
+Você também pode calcular **resumos de colunas diferentes** dentro de um mesmo `summarise()`.
+
+
+``` r
+pinguins |&gt;  
+  summarise(
+    mean_flipper_length_mm = mean(flipper_length_mm, na.rm = TRUE),
+    mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),
+    median_bill_depth_mm = median(bill_depth_mm, na.rm = TRUE)
+  )
+```
+
+```
+## # A tibble: 1 × 3
+##   mean_flipper_length_mm mean_bill_length_mm median_bill_depth_mm
+##                    &lt;dbl&gt;               &lt;dbl&gt;                &lt;dbl&gt;
+## 1                   201.                43.9                 17.3
+```
+
+Neste exemplo, calculamos a **média ou mediana** de diferentes variáveis numéricas da base.
+
+.footnote[Também pode ser usado a função `summarize()` — ambas as formas funcionam.]
+
+---
+
+### Sumarizando colunas agrupadas: &amp;nbsp; `group_by()`
+
+A função `group_by()` **não altera os dados da base**, mas indica que as operações seguintes devem ser feitas **por grupo**.
+
+No exemplo abaixo, a base `pinguins` é agrupada pela coluna `island`:
+
+
+``` r
+pinguins |&gt; 
+  group_by(island)
+```
+
+```
+## # A tibble: 344 × 8
+## # Groups:   island [3]
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.5          17.4               186        3800
+##  3 Adelie  Torgersen           40.3          18                 195        3250
+##  4 Adelie  Torgersen           NA            NA                  NA          NA
+##  5 Adelie  Torgersen           36.7          19.3               193        3450
+##  6 Adelie  Torgersen           39.3          20.6               190        3650
+##  7 Adelie  Torgersen           38.9          17.8               181        3625
+##  8 Adelie  Torgersen           39.2          19.6               195        4675
+##  9 Adelie  Torgersen           34.1          18.1               193        3475
+## 10 Adelie  Torgersen           42            20.2               190        4250
+## # ℹ 334 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+&lt;!-- .footnote[Essa marcação só tem efeito real quando combinada com funções como `summarise()`.] --&gt;
+
+---
+
+### Sumarizando colunas agrupadas: &amp;nbsp; `group_by()`
+
+Você também pode agrupar por **mais de uma variável ao mesmo tempo**.
+
+
+``` r
+pinguins |&gt; 
+  group_by(island, species)
+```
+
+```
+## # A tibble: 344 × 8
+## # Groups:   island, species [5]
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.5          17.4               186        3800
+##  3 Adelie  Torgersen           40.3          18                 195        3250
+##  4 Adelie  Torgersen           NA            NA                  NA          NA
+##  5 Adelie  Torgersen           36.7          19.3               193        3450
+##  6 Adelie  Torgersen           39.3          20.6               190        3650
+##  7 Adelie  Torgersen           38.9          17.8               181        3625
+##  8 Adelie  Torgersen           39.2          19.6               195        4675
+##  9 Adelie  Torgersen           34.1          18.1               193        3475
+## 10 Adelie  Torgersen           42            20.2               190        4250
+## # ℹ 334 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+Neste caso, os dados são agrupados **por combinação de `island` e `species`** — ou seja, cada grupo representa uma espécie dentro de uma determinada ilha.
+
+&lt;!-- .footnote[Essa marcação só tem efeito real quando combinada com funções como `summarise()`.] --&gt;
+
+---
+
+### Sumarizando colunas agrupadas
+
+Em muitos casos, queremos **resumir uma variável numérica** para **cada categoria** de uma outra coluna.
+
+Para isso, usamos `summarise()` em conjunto com `group_by()`.
+
+No exemplo abaixo, o código calcula a **média da massa corporal** (`body_mass_g`) para cada ilha (`island`):
+
+
+``` r
+pinguins |&gt; 
+  group_by(island) |&gt; 
+  summarise(mean_body_mass_g = mean(body_mass_g, na.rm = TRUE)) |&gt; 
+  arrange(desc(mean_body_mass_g))
+```
+
+```
+## # A tibble: 3 × 2
+##   island    mean_body_mass_g
+##   &lt;chr&gt;                &lt;dbl&gt;
+## 1 Biscoe               4716.
+## 2 Dream                3713.
+## 3 Torgersen            3706.
+```
+
+Ou seja, **agrupamos os dados por ilha**, **calculamos a média da massa corporal em cada grupo** e, por fim, **ordenamos do maior para o menor valor**.
+
+.footnote[Também pode ser usado a função `summarize()` — ambas as formas funcionam.]
+
+---
+
+### Ordenando colunas:  &amp;nbsp;  `relocate()`
+
+A função `relocate()` permite **mudar a ordem das colunas** de uma base, colocando-as em outra posição — seja com base no nome ou na posição de outra coluna.
+
+Você pode usar o argumento `.after` para **colocar uma ou mais colunas logo após** uma coluna de referência:
+
+
+``` r
+pinguins |&gt; 
+  relocate(sex, year, .after = island)
+```
+
+```
+## # A tibble: 344 × 8
+##    species island    sex     year bill_length_mm bill_depth_mm flipper_length_mm
+##    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;  &lt;dbl&gt;          &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;
+##  1 Adelie  Torgersen male    2007           39.1          18.7               181
+##  2 Adelie  Torgersen female  2007           39.5          17.4               186
+##  3 Adelie  Torgersen female  2007           40.3          18                 195
+##  4 Adelie  Torgersen &lt;NA&gt;    2007           NA            NA                  NA
+##  5 Adelie  Torgersen female  2007           36.7          19.3               193
+##  6 Adelie  Torgersen male    2007           39.3          20.6               190
+##  7 Adelie  Torgersen female  2007           38.9          17.8               181
+##  8 Adelie  Torgersen male    2007           39.2          19.6               195
+##  9 Adelie  Torgersen &lt;NA&gt;    2007           34.1          18.1               193
+## 10 Adelie  Torgersen &lt;NA&gt;    2007           42            20.2               190
+## # ℹ 334 more rows
+## # ℹ 1 more variable: body_mass_g &lt;dbl&gt;
+```
+
+No exemplo abaixo, as colunas `sex` e `year` foram movidas para **aparecer logo após** a coluna `island`.
+
+---
+
+### Ordenando colunas:  &amp;nbsp;  `relocate()`
+
+Da mesma forma, é possível usar o argumento `.before` para **mover colunas para antes** de outra coluna específica:
+
+
+``` r
+pinguins |&gt; 
+  relocate(sex, year, .before = island)
+```
+
+```
+## # A tibble: 344 × 8
+##    species sex     year island    bill_length_mm bill_depth_mm flipper_length_mm
+##    &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;
+##  1 Adelie  male    2007 Torgersen           39.1          18.7               181
+##  2 Adelie  female  2007 Torgersen           39.5          17.4               186
+##  3 Adelie  female  2007 Torgersen           40.3          18                 195
+##  4 Adelie  &lt;NA&gt;    2007 Torgersen           NA            NA                  NA
+##  5 Adelie  female  2007 Torgersen           36.7          19.3               193
+##  6 Adelie  male    2007 Torgersen           39.3          20.6               190
+##  7 Adelie  female  2007 Torgersen           38.9          17.8               181
+##  8 Adelie  male    2007 Torgersen           39.2          19.6               195
+##  9 Adelie  &lt;NA&gt;    2007 Torgersen           34.1          18.1               193
+## 10 Adelie  &lt;NA&gt;    2007 Torgersen           42            20.2               190
+## # ℹ 334 more rows
+## # ℹ 1 more variable: body_mass_g &lt;dbl&gt;
+```
+
+Nesse exemplo, as colunas `species` e `island` foram movidas para **aparecer logo antes** da coluna `island`.
+
+---
+
+### Renomeando colunas: &amp;nbsp; `rename()`
+
+A função `rename()` serve para **alterar os nomes das colunas** de uma base de dados.
+
+- O **primeiro argumento** é o **novo nome** desejado
+
+- O **segundo argumento** é o **nome atual** da coluna
+
+
+``` r
+pinguins |&gt;  
+  rename(
+    comprimento_bico_mm = bill_length_mm,
+    profundidade_bico_mm = bill_depth_mm,
+    comprimento_nadadeira_mm = flipper_length_mm,
+    massa_corporal_g = body_mass_g
+  )
+```
+
+```
+## # A tibble: 344 × 8
+##    species island    comprimento_bico_mm profundidade_bico_mm
+##    &lt;chr&gt;   &lt;chr&gt;                   &lt;dbl&gt;                &lt;dbl&gt;
+##  1 Adelie  Torgersen                39.1                 18.7
+##  2 Adelie  Torgersen                39.5                 17.4
+##  3 Adelie  Torgersen                40.3                 18  
+##  4 Adelie  Torgersen                NA                   NA  
+##  5 Adelie  Torgersen                36.7                 19.3
+##  6 Adelie  Torgersen                39.3                 20.6
+##  7 Adelie  Torgersen                38.9                 17.8
+##  8 Adelie  Torgersen                39.2                 19.6
+##  9 Adelie  Torgersen                34.1                 18.1
+## 10 Adelie  Torgersen                42                   20.2
+## # ℹ 334 more rows
+## # ℹ 4 more variables: comprimento_nadadeira_mm &lt;dbl&gt;, massa_corporal_g &lt;dbl&gt;,
+## #   sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+---
+
+### Selecionando linhas: &amp;nbsp; `slice_head()`
+
+A função `slice_head()` é usada para **extrair as primeiras linhas** de uma tabela, de forma controlada.
+
+Ela é útil quando queremos visualizar apenas o início de uma base ou analisar os primeiros registros de cada grupo (quando combinada com `group_by()`).
+
+- O argumento `n = ` define **quantas linhas serão retornadas**.
+
+
+``` r
+pinguins |&gt; 
+  slice_head(n = 8)
+```
+
+```
+## # A tibble: 8 × 8
+##   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##   &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+## 1 Adelie  Torgersen           39.1          18.7               181        3750
+## 2 Adelie  Torgersen           39.5          17.4               186        3800
+## 3 Adelie  Torgersen           40.3          18                 195        3250
+## 4 Adelie  Torgersen           NA            NA                  NA          NA
+## 5 Adelie  Torgersen           36.7          19.3               193        3450
+## 6 Adelie  Torgersen           39.3          20.6               190        3650
+## 7 Adelie  Torgersen           38.9          17.8               181        3625
+## 8 Adelie  Torgersen           39.2          19.6               195        4675
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+Neste exemplo, são retornadas as **8 primeiras linhas** da base `pinguins`.
+
+---
+
+### Selecionando linhas: &amp;nbsp; `slice_tail()`
+
+A função `slice_tail()` é usada para **extrair as últimas linhas** de uma tabela.
+
+Ela funciona de forma semelhante ao `slice_head()`, mas retorna os **últimos registros** em vez dos primeiros.
+
+- O argumento `n = ` define **quantas linhas serão retornadas**.
+
+
+``` r
+pinguins |&gt;  
+  slice_tail(n = 5)
+```
+
+```
+## # A tibble: 5 × 8
+##   species   island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##   &lt;chr&gt;     &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+## 1 Chinstrap Dream            55.8          19.8               207        4000
+## 2 Chinstrap Dream            43.5          18.1               202        3400
+## 3 Chinstrap Dream            49.6          18.2               193        3775
+## 4 Chinstrap Dream            50.8          19                 210        4100
+## 5 Chinstrap Dream            50.2          18.7               198        3775
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+Neste exemplo, são retornada s as **5 últimas linhas** da base `pinguins`.
+
+---
+
+### Selecionando linhas: &amp;nbsp; `slice_max()`
+
+A função `slice_max()` seleciona as **linhas com os maiores valores** de uma coluna numérica específica.
+
+- O argumento `n = ` define **quantas linhas serão retornadas**.
+
+- Se `n` não for informado, retorna **apenas a linha com o maior valor**.
+
+- Em caso de empate, o número de linhas retornadas pode ser **maior que `n`**.
+
+
+``` r
+pinguins |&gt; 
+  slice_max(bill_depth_mm, n = 5)
+```
+
+```
+## # A tibble: 6 × 8
+##   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##   &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+## 1 Adelie  Torgersen           46            21.5               194        4200
+## 2 Adelie  Torgersen           38.6          21.2               191        3800
+## 3 Adelie  Dream               42.3          21.2               191        4150
+## 4 Adelie  Torgersen           34.6          21.1               198        4400
+## 5 Adelie  Dream               39.2          21.1               196        4150
+## 6 Adelie  Biscoe              41.3          21.1               195        4400
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+Neste exemplo, são retornadas as **5 linhas com maior profundidade de bico** (`bill_depth_mm`) da base `pinguins`.
+
+---
+
+### Selecionando linhas: &amp;nbsp; `slice_min()`
+
+A função `slice_min()` seleciona as **linhas com os menores valores** de uma coluna numérica específica.
+
+- O argumento `n = ` define **quantas linhas serão retornadas**.
+
+- Se `n` não for informado, retorna **apenas a linha com o menor valor**.
+
+- Em caso de empate, o número de linhas retornadas pode ser **maior que `n`**.
+
+
+``` r
+pinguins |&gt; 
+  slice_min(flipper_length_mm, n = 5)
+```
+
+```
+## # A tibble: 7 × 8
+##   species   island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##   &lt;chr&gt;     &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+## 1 Adelie    Biscoe              37.9          18.6               172        3150
+## 2 Adelie    Biscoe              37.8          18.3               174        3400
+## 3 Adelie    Torgersen           40.2          17                 176        3450
+## 4 Adelie    Dream               39.5          16.7               178        3250
+## 5 Adelie    Dream               37.2          18.1               178        3900
+## 6 Adelie    Dream               33.1          16.1               178        2900
+## 7 Chinstrap Dream               46.1          18.2               178        3250
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+Neste exemplo, são retornadas as **5 linhas com menor comprimento de nadadeira** (`flipper_length_mm`) da base `pinguins`.
+
+---
+
+### Selecionando linhas: &amp;nbsp; `slice_sample()`
+
+A função `slice_sample()` é usada para **selecionar linhas aleatoriamente** de uma base.
+
+- O argumento `n = ` define **quantas linhas serão sorteadas e retornadas**.
+
+- É útil para criar **amostras aleatórias** simples, testes ou visualizações rápidas.
+
+
+``` r
+pinguins |&gt; 
+  slice_sample(n = 12)
+```
+
+```
+## # A tibble: 12 × 8
+##    species   island   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Gentoo    Biscoe             45.5          13.7               214        4650
+##  2 Adelie    Dream              43.2          18.5               192        4100
+##  3 Gentoo    Biscoe             46.5          14.8               217        5200
+##  4 Chinstrap Dream              50.6          19.4               193        3800
+##  5 Chinstrap Dream              54.2          20.8               201        4300
+##  6 Gentoo    Biscoe             46.2          14.9               221        5300
+##  7 Gentoo    Biscoe             40.9          13.7               214        4650
+##  8 Adelie    Dream              44.1          19.7               196        4400
+##  9 Adelie    Dream              37.3          17.8               191        3350
+## 10 Adelie    Torgers…           42.5          20.7               197        4500
+## 11 Chinstrap Dream              51.3          19.2               193        3650
+## 12 Gentoo    Biscoe             48.2          14.3               210        4600
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+Neste exemplo, são retornadas **12 linhas aleatórias** da base `pinguins`.
+
+---
+
+### Limpando a tabela: &amp;nbsp; `distinct()`
+
+A função `distinct()` remove **linhas duplicadas**, considerando os valores de um ou mais colunas.
+
+- Por padrão, retorna **apenas as colunas informadas**
+
+- Com `.keep_all = TRUE`, mantém **todas as colunas** da base original.
+
+
+``` r
+pinguins |&gt; 
+  distinct(body_mass_g, .keep_all = TRUE)
+```
+
+```
+## # A tibble: 95 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.5          17.4               186        3800
+##  3 Adelie  Torgersen           40.3          18                 195        3250
+##  4 Adelie  Torgersen           NA            NA                  NA          NA
+##  5 Adelie  Torgersen           36.7          19.3               193        3450
+##  6 Adelie  Torgersen           39.3          20.6               190        3650
+##  7 Adelie  Torgersen           38.9          17.8               181        3625
+##  8 Adelie  Torgersen           39.2          19.6               195        4675
+##  9 Adelie  Torgersen           34.1          18.1               193        3475
+## 10 Adelie  Torgersen           42            20.2               190        4250
+## # ℹ 85 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+Neste exemplo, a base retorna **apenas uma linha para cada valor distinto de `body_mass_g`**, mantendo as demais colunas associadas à primeira ocorrência de cada valor.
+
+---
+
+### Contando valores: &amp;nbsp; `count()`
+
+A função `count()` é usada para **contar a frequência de valores** de cada categoria em uma coluna — especialmente útil para variáveis categóricas.
+
+.pull-left[
+
+``` r
+pinguins |&gt; 
+  count(species)
+```
+
+```
+## # A tibble: 3 × 2
+##   species       n
+##   &lt;chr&gt;     &lt;int&gt;
+## 1 Adelie      152
+## 2 Chinstrap    68
+## 3 Gentoo      124
+```
+
+Nesse exemplo, o código retorna **quantas observações existem para cada espécie** de pinguim na base de dados.
+]
+
+.pull-right[
+
+``` r
+pinguins |&gt; 
+  count(species, island)
+```
+
+```
+## # A tibble: 5 × 3
+##   species   island        n
+##   &lt;chr&gt;     &lt;chr&gt;     &lt;int&gt;
+## 1 Adelie    Biscoe       44
+## 2 Adelie    Dream        56
+## 3 Adelie    Torgersen    52
+## 4 Chinstrap Dream        68
+## 5 Gentoo    Biscoe      124
+```
+
+Neste exemplo, o código retorna a **quantidade de pinguins por espécie em cada ilha**, ou seja, uma contagem para cada combinação de `species` e `island`.
+]
+
+---
+
+### Combinando dados: &amp;nbsp; `bind_rows()`
+
+A função `bind_rows()` serve para **juntar objetos pela linha** — ou seja, ela empilha os dados, mesmo que tenham colunas diferentes.
+
+- O argumento `.id =` cria uma nova coluna que indica a origem de cada linha (útil para identificar de onde veio cada pedaço da base).
+
+&lt;!-- Neste exemplo, as tabelas são unidas **por linha**, e a coluna `id` identifica se a linha veio de `pinguins_01` ou `pinguins_02`. --&gt;
+
+
+
+``` r
+# seleciona algumas linhas e colunas de duas partes da base
+pinguins_01 &lt;- slice(pinguins, 1:5) |&gt; select(1:3)
+pinguins_02 &lt;- slice(pinguins, 51:55) |&gt; select(4:6)
+# junta as linhas das duas tabelas
+bind_rows(pinguins_01, pinguins_02, .id = "id")
+```
+
+```
+## # A tibble: 10 × 7
+##    id    species island    bill_length_mm bill_depth_mm flipper_length_mm
+##    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;
+##  1 1     Adelie  Torgersen           39.1          NA                  NA
+##  2 1     Adelie  Torgersen           39.5          NA                  NA
+##  3 1     Adelie  Torgersen           40.3          NA                  NA
+##  4 1     Adelie  Torgersen           NA            NA                  NA
+##  5 1     Adelie  Torgersen           36.7          NA                  NA
+##  6 2     &lt;NA&gt;    &lt;NA&gt;                NA            17.7               186
+##  7 2     &lt;NA&gt;    &lt;NA&gt;                NA            18.9               188
+##  8 2     &lt;NA&gt;    &lt;NA&gt;                NA            17.9               190
+##  9 2     &lt;NA&gt;    &lt;NA&gt;                NA            19.5               200
+## 10 2     &lt;NA&gt;    &lt;NA&gt;                NA            18.1               187
+## # ℹ 1 more variable: body_mass_g &lt;dbl&gt;
+```
+
+---
+
+### Combinando dados: &amp;nbsp; `bind_cols()`
+
+A função `bind_cols()` é usada para **juntar objetos lado a lado**, ou seja, **por colunas**.
+
+- As bases precisam ter o **mesmo número de linhas**
+- O argumento `.name_repair = "unique"` garante que, se houver colunas com nomes repetidos, elas sejam renomeadas automaticamente
+
+
+``` r
+# seleciona 5 linhas diferentes da base original
+pinguins_01 &lt;- slice(pinguins, 1:5)
+pinguins_02 &lt;- slice(pinguins, 51:55)
+# junta as colunas das duas tabelas
+bind_cols(pinguins_01, pinguins_02, .name_repair = "unique")
+```
+
+```
+## # A tibble: 5 × 16
+##   species...1 island...2 bill_length_mm...3 bill_depth_mm...4
+##   &lt;chr&gt;       &lt;chr&gt;                   &lt;dbl&gt;             &lt;dbl&gt;
+## 1 Adelie      Torgersen                39.1              18.7
+## 2 Adelie      Torgersen                39.5              17.4
+## 3 Adelie      Torgersen                40.3              18  
+## 4 Adelie      Torgersen                NA                NA  
+## 5 Adelie      Torgersen                36.7              19.3
+## # ℹ 12 more variables: flipper_length_mm...5 &lt;dbl&gt;, body_mass_g...6 &lt;dbl&gt;,
+## #   sex...7 &lt;chr&gt;, year...8 &lt;dbl&gt;, species...9 &lt;chr&gt;, island...10 &lt;chr&gt;,
+## #   bill_length_mm...11 &lt;dbl&gt;, bill_depth_mm...12 &lt;dbl&gt;,
+## #   flipper_length_mm...13 &lt;dbl&gt;, body_mass_g...14 &lt;dbl&gt;, sex...15 &lt;chr&gt;,
+## #   year...16 &lt;dbl&gt;
+```
+
+&lt;!-- Neste exemplo, os dados são combinados **horizontalmente**, formando uma nova tabela com mais colunas. --&gt;
+
+---
+
+### Unindo bases: &amp;nbsp; `*_join()`
+
+Combina pares de bases de dados **com base em uma ou mais chaves** — colunas em comum entre elas.
+
+.left-column[
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;img src="img/30-joins.png" width="90%" /&gt;
+
+]
+
+.right-column[
+
+**Junções de mutação**
+
+Adicionam informações de uma base à outra:
+
+- `left_join(x, y)`: mantém todas as observações em **x**
+- `right_join(x, y)`: mantém todas as observações em **y**
+- `inner_join(x, y)`: mantém apenas as observações **com correspondência em x e y**
+- `full_join(x, y)`: mantém **todas** as observações em x e em y
+
+**Junções de filtragem**
+
+Selecionam linhas de x com base na existência de correspondência em y:
+
+- `semi_join(x, y)`: mantém as observações de **x que têm correspondência em y**
+- `anti_join(x, y)`: mantém as observações de **x que não têm correspondência em y**
+
+]
+
+---
+
+### Unindo bases: &amp;nbsp; `*_join()`
+
+.pull-left[
+
+&lt;img src="img/31-left-join.gif" width="70%" /&gt;
+
+
+&lt;img src="img/32-inner-join.gif" width="70%" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="img/33-right-join.gif" width="70%" /&gt;
+
+
+&lt;img src="img/34-full-join.gif" width="70%" /&gt;
+
+]
+
+---
+
+### Unindo bases: &amp;nbsp; `*_join()` — Exemplo
+
+Vamos criar uma nova tabela com **as coordenadas geográficas das ilhas** e, em seguida, fazer a **junção** com a base `pinguins`.
+
+&lt;div class="panelset"&gt;
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;1. Criando a base auxiliar&lt;/div&gt;
+
+
+``` r
+# Coordenadas geográficas das ilhas
+pinguins_ilhas &lt;- tibble(
+  ilha = c("Torgersen", "Biscoe", "Dream", "Alpha"),
+  longitude = c(-64.083333, -63.775636, -64.233333, -63),
+  latitude = c(-64.766667, -64.818569, -64.733333, -64.316667)
+)
+
+pinguins_ilhas
+```
+
+```
+## # A tibble: 4 × 3
+##   ilha      longitude latitude
+##   &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;
+## 1 Torgersen     -64.1    -64.8
+## 2 Biscoe        -63.8    -64.8
+## 3 Dream         -64.2    -64.7
+## 4 Alpha         -63      -64.3
+```
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;2. Unindo as bases — &lt;code&gt;left_join()&lt;/code&gt;&lt;/div&gt;
+
+Agora, usamos `left_join()` para **adicionar as colunas de latitude e longitude** à base `pinguins`, com base no nome da ilha.
+
+
+``` r
+pinguins_left_join &lt;- left_join(pinguins, pinguins_ilhas, by = c("island" = "ilha"))
+glimpse(pinguins_left_join)
+```
+
+```
+## Rows: 344
+## Columns: 10
+## $ species           &lt;chr&gt; "Adelie", "Adelie", "Adelie", "Adelie", "Adelie", "A…
+## $ island            &lt;chr&gt; "Torgersen", "Torgersen", "Torgersen", "Torgersen", …
+## $ bill_length_mm    &lt;dbl&gt; 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34.1, …
+## $ bill_depth_mm     &lt;dbl&gt; 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18.1, …
+## $ flipper_length_mm &lt;dbl&gt; 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, 186…
+## $ body_mass_g       &lt;dbl&gt; 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, …
+## $ sex               &lt;chr&gt; "male", "female", "female", NA, "female", "male", "f…
+## $ year              &lt;dbl&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…
+## $ longitude         &lt;dbl&gt; -64.08333, -64.08333, -64.08333, -64.08333, -64.0833…
+## $ latitude          &lt;dbl&gt; -64.76667, -64.76667, -64.76667, -64.76667, -64.7666…
+```
+
+&lt;!-- A base resultante contém todas as colunas originais da `pinguins` `\(+\)` as coordenadas geográficas da ilha correspondente. --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Operações de conjuntos e comparações de dados
+
+.pull-left[
+
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;!-- &lt;center&gt; --&gt;
+  &lt;b&gt;&lt;font size = 6&gt;Operações para comparar dos dados:&lt;/font&gt;&lt;/b&gt;
+&lt;!-- &lt;/center&gt; --&gt;
+
+- **`union(x, y)`**: retorna todas as linhas que estão em **x**, **y** ou em ambos
+
+- **`interesect(x, y)`**: retorna apenas as linhas que estão em **x** _e_ em **y**
+
+- **`setdiff(x, y)`**: retorna as linhas que estão em **x**, mas **não** em **y**
+
+- **`setequal(x, y)`**: verifica se **x** e **y** são iguais (independentemente da ordem)
+
+]
+
+.pull-right[
+&lt;br&gt;
+&lt;br&gt;
+&lt;img src="img/35-operacoes.png" width="85%" /&gt;
+
+]
+
+---
+
+### Pacote &amp;nbsp; `tidyr`
+
+**O que são dados organizados (_tidy data_)?**
+
+&lt;img src="img/36-tidy-data.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+Dados organizados seguem uma **estrutura padrão**, que facilita a análise e a manipulação dos dados. Em um conjunto de dados _tidy_:
+
+- Cada **coluna** representa uma **variável**
+
+- Cada **linha** representa uma **observação**
+
+- Cada **célula** contém **um único valor**
+
+---
+
+### Pacote &amp;nbsp; `tidyr`
+
+O pacote `{tidyr}` é responsável por **organizar os dados no formato _tidy_**, deixando-os mais fáceis de trabalhar.
+
+&lt;br&gt;
+
+Principais funções:
+
+- `unite()`: junta o conteúdo de várias colunas em uma só
+
+- `separate()`: divide o conteúdo de uma coluna em várias
+
+- `separate_rows()`: divide em várias colunas e linhas
+
+- `drop_na()`: remove linhas com valores ausentes (`NA`)
+
+- `replace_na()`: substitui valores ausentes (`NA`) por outro valor específico
+
+- `pivot_wider()`: transforma dados do formato longo para o formato largo
+
+- `pivot_longer()`: transforma dados do formato largo para o formato longo
+
+---
+
+### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
+
+[![Cheat Sheets](img/37-cheatsheet-tidyr.png)](https://rstudio.github.io/cheatsheets/tidyr.pdf)
+
+---
+
+### União de colunas: &amp;nbsp; `unite()`
+
+A função `unite()` combina o conteúdo de duas ou mais colunas em uma **única coluna de texto**.
+
+No exemplo abaixo, as colunas `species` e `island` são unidas em uma nova coluna chamada `species_island`, separadas por um caractere de sublinhado (`-`).
+
+
+``` r
+especie_ilha_unido &lt;- pinguins |&gt; 
+  unite(
+    col = "especie_ilha",     # novo nome da coluna
+    species:island,           # colunas a serem unidas
+    sep = " - "               # separador entre os valores
+  )
+
+head(especie_ilha_unido)
+```
+
+```
+## # A tibble: 6 × 7
+##   especie_ilha  bill_length_mm bill_depth_mm flipper_length_mm body_mass_g sex  
+##   &lt;chr&gt;                  &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;
+## 1 Adelie - Tor…           39.1          18.7               181        3750 male 
+## 2 Adelie - Tor…           39.5          17.4               186        3800 fema…
+## 3 Adelie - Tor…           40.3          18                 195        3250 fema…
+## 4 Adelie - Tor…           NA            NA                  NA          NA &lt;NA&gt; 
+## 5 Adelie - Tor…           36.7          19.3               193        3450 fema…
+## 6 Adelie - Tor…           39.3          20.6               190        3650 male 
+## # ℹ 1 more variable: year &lt;dbl&gt;
+```
+
+---
+
+### Separação de colunas: &amp;nbsp; `separate()`
+
+A função `separate()` divide o conteúdo de uma coluna em **duas ou mais colunas**, com base em um separador.
+
+No exemplo abaixo, a coluna `especie_ilha` é separada em duas colunas: `especie` e `ilha`, usando `" - "` como separador:
+
+
+``` r
+especie_ilha_separado &lt;- especie_ilha_unido |&gt; 
+  separate(
+    col = especie_ilha,             # coluna a ser separada
+    into = c("especie", "ilha"),    # nomes das novas colunas
+    sep = " - "                     # separador utilizado
+  )
+
+head(especie_ilha_separado)
+```
+
+```
+## # A tibble: 6 × 8
+##   especie ilha  bill_length_mm bill_depth_mm flipper_length_mm body_mass_g sex  
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;
+## 1 Adelie  Torg…           39.1          18.7               181        3750 male 
+## 2 Adelie  Torg…           39.5          17.4               186        3800 fema…
+## 3 Adelie  Torg…           40.3          18                 195        3250 fema…
+## 4 Adelie  Torg…           NA            NA                  NA          NA &lt;NA&gt; 
+## 5 Adelie  Torg…           36.7          19.3               193        3450 fema…
+## 6 Adelie  Torg…           39.3          20.6               190        3650 male 
+## # ℹ 1 more variable: year &lt;dbl&gt;
+```
+
+---
+
+### Remove NAs: &amp;nbsp; `drop_na()`
+
+A função `drop_na()` remove todas as **linhas que contêm valores ausentes (`NA`)**. 
+
+&lt;div class="panelset"&gt;
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Removendo em &lt;b&gt;todas as colunas&lt;/b&gt;&lt;/div&gt;
+
+Por padrão, ela verifica **todas as colunas** da base:
+
+
+``` r
+pinguins |&gt; 
+  drop_na() # remove em todas as colunas
+```
+
+```
+## # A tibble: 333 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.5          17.4               186        3800
+##  3 Adelie  Torgersen           40.3          18                 195        3250
+##  4 Adelie  Torgersen           36.7          19.3               193        3450
+##  5 Adelie  Torgersen           39.3          20.6               190        3650
+##  6 Adelie  Torgersen           38.9          17.8               181        3625
+##  7 Adelie  Torgersen           39.2          19.6               195        4675
+##  8 Adelie  Torgersen           41.1          17.6               182        3200
+##  9 Adelie  Torgersen           38.6          21.2               191        3800
+## 10 Adelie  Torgersen           34.6          21.1               198        4400
+## # ℹ 323 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Removendo em &lt;b&gt;colunas específicas&lt;/b&gt;&lt;/div&gt;
+
+Também pode especificar **quais colunas** deseja considerar ao remover os `NAs`:
+
+
+``` r
+pinguins |&gt; 
+  drop_na(sex) # remove apenas quando `sex` estiver ausente
+```
+
+```
+## # A tibble: 333 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.5          17.4               186        3800
+##  3 Adelie  Torgersen           40.3          18                 195        3250
+##  4 Adelie  Torgersen           36.7          19.3               193        3450
+##  5 Adelie  Torgersen           39.3          20.6               190        3650
+##  6 Adelie  Torgersen           38.9          17.8               181        3625
+##  7 Adelie  Torgersen           39.2          19.6               195        4675
+##  8 Adelie  Torgersen           41.1          17.6               182        3200
+##  9 Adelie  Torgersen           38.6          21.2               191        3800
+## 10 Adelie  Torgersen           34.6          21.1               198        4400
+## # ℹ 323 more rows
+## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
+```
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Pivotar os dados: &amp;nbsp; `pivot_*()`
+
+.pull-left[
+
+**`pivot_longer()`**
+
+Transforma os dados em formato **mais longo**, ou seja, com **mais linhas** e **menos colunas**.
+
+É útil para organizar bases que foram estruturadas para entrada ou visualização, e não para análise — algo comum em planilhas.
+
+&lt;br&gt;
+
+**`pivot_wider()`**
+
+Transforma os dados em formato **mais largo**, ou seja, com **mais colunas** e **menos linhas**.
+
+Apesar de menos comum em dados _tidy_, é útil para criar **tabelas resumo** ou preparar dados para ferramentas específicas.
+
+]
+
+.pull-right[
+
+&lt;img src="img/38-original-dfs-tidy.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+### Larga para longa: &amp;nbsp; `pivot_longer()`
+
+Transforma um banco de dados **do farmato largo para o formato longo** — ou seja, o número de **linhas aumenta** e o número de **colunas diminui**. Os principais argumentos da função `pivot_longer()` são:
+
+- `cols`: colunas que serão _"derretidas"_ em uma única coluna
+- `names_to`: nome da nova coluna que irá conter os **nomes originais das colunas** (variáveis)
+- `values_to`: nome da nova coluna que irá conter os **valores das colunas originais** (variáveis)
+
+.tiny[
+
+``` r
+pivot_longer(data = pinguins_raw[, c(2, 3, 10:13)], 
+             cols = `Culmen Length (mm)`:`Body Mass (g)`, 
+             names_to = "medidas", 
+             values_to = "valores")
+```
+
+```
+## # A tibble: 1,376 × 4
+##    `Sample Number` Species                             medidas           valores
+##              &lt;dbl&gt; &lt;chr&gt;                               &lt;chr&gt;               &lt;dbl&gt;
+##  1               1 Adelie Penguin (Pygoscelis adeliae) Culmen Length (m…    39.1
+##  2               1 Adelie Penguin (Pygoscelis adeliae) Culmen Depth (mm)    18.7
+##  3               1 Adelie Penguin (Pygoscelis adeliae) Flipper Length (…   181  
+##  4               1 Adelie Penguin (Pygoscelis adeliae) Body Mass (g)      3750  
+##  5               2 Adelie Penguin (Pygoscelis adeliae) Culmen Length (m…    39.5
+##  6               2 Adelie Penguin (Pygoscelis adeliae) Culmen Depth (mm)    17.4
+##  7               2 Adelie Penguin (Pygoscelis adeliae) Flipper Length (…   186  
+##  8               2 Adelie Penguin (Pygoscelis adeliae) Body Mass (g)      3800  
+##  9               3 Adelie Penguin (Pygoscelis adeliae) Culmen Length (m…    40.3
+## 10               3 Adelie Penguin (Pygoscelis adeliae) Culmen Depth (mm)    18  
+## # ℹ 1,366 more rows
+```
+]
+
+---
+
+### Longa para larga: &amp;nbsp; `pivot_wider()`
+
+Transforma um banco de dados **do formato longo para o formato largo** — ou seja, o número de **colunas aumenta** e o número de **linhas diminui**. Os principais argumentos da função `pivot_wider()` são:
+
+- `names_from`: variável categórica que irá formar os **nomes das novas colunas**
+- `values_from`: variável que irá preencher os **valores das novas colunas**
+- `values_fill`: _(opcional)_ valor a ser usado para preencher os `NAs`, quando não houver correspondência
+
+
+``` r
+pivot_wider(data = pinguins_raw[, c(2, 3, 13)], 
+            names_from = Species, 
+            values_from = `Body Mass (g)`)
+```
+
+```
+## # A tibble: 152 × 4
+##    `Sample Number` `Adelie Penguin (Pygoscelis adeliae)` Gentoo penguin (Pygos…¹
+##              &lt;dbl&gt;                                 &lt;dbl&gt;                   &lt;dbl&gt;
+##  1               1                                  3750                    4500
+##  2               2                                  3800                    5700
+##  3               3                                  3250                    4450
+##  4               4                                    NA                    5700
+##  5               5                                  3450                    5400
+##  6               6                                  3650                    4550
+##  7               7                                  3625                    4800
+##  8               8                                  4675                    5200
+##  9               9                                  3475                    4400
+## 10              10                                  4250                    5150
+## # ℹ 142 more rows
+## # ℹ abbreviated name: ¹​`Gentoo penguin (Pygoscelis papua)`
+## # ℹ 1 more variable: `Chinstrap penguin (Pygoscelis antarctica)` &lt;dbl&gt;
+```
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>

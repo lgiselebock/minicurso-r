@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="Yihui Xie" />
     <meta name="author" content="Garrick Aden-Buie" />
-    <meta name="date" content="2025-04-16" />
+    <meta name="date" content="2025-04-20" />
     <script src="index_files/header-attrs/header-attrs.js"></script>
     <script src="index_files/clipboard/clipboard.min.js"></script>
     <link href="index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
@@ -46,7 +46,7 @@ class: center, middle, inverse, title-slide
 ### Garrick Aden-Buie
 ]
 .date[
-### 2025-04-16
+### 2025-04-20
 ]
 
 ---
@@ -2441,7 +2441,7 @@ dplyr::glimpse()
 
 ---
 
-## Continue aprendendo!
+## Para saber mais!
 
 .panelset[
 
@@ -4460,18 +4460,18 @@ pinguins |&gt;
 ## # A tibble: 12 × 8
 ##    species   island   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
 ##    &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
-##  1 Gentoo    Biscoe             45.5          13.7               214        4650
-##  2 Adelie    Dream              43.2          18.5               192        4100
-##  3 Gentoo    Biscoe             46.5          14.8               217        5200
-##  4 Chinstrap Dream              50.6          19.4               193        3800
-##  5 Chinstrap Dream              54.2          20.8               201        4300
-##  6 Gentoo    Biscoe             46.2          14.9               221        5300
-##  7 Gentoo    Biscoe             40.9          13.7               214        4650
-##  8 Adelie    Dream              44.1          19.7               196        4400
-##  9 Adelie    Dream              37.3          17.8               191        3350
-## 10 Adelie    Torgers…           42.5          20.7               197        4500
-## 11 Chinstrap Dream              51.3          19.2               193        3650
-## 12 Gentoo    Biscoe             48.2          14.3               210        4600
+##  1 Chinstrap Dream              47.6          18.3               195        3850
+##  2 Adelie    Biscoe             40.6          18.8               193        3800
+##  3 Adelie    Biscoe             36.5          16.6               181        2850
+##  4 Chinstrap Dream              49.7          18.6               195        3600
+##  5 Chinstrap Dream              45.7          17.3               193        3600
+##  6 Chinstrap Dream              52            18.1               201        4050
+##  7 Gentoo    Biscoe             50            16.3               230        5700
+##  8 Gentoo    Biscoe             48.7          14.1               210        4450
+##  9 Adelie    Torgers…           37.8          17.1               186        3300
+## 10 Chinstrap Dream              49            19.5               210        3950
+## 11 Adelie    Dream              39.8          19.1               184        4650
+## 12 Chinstrap Dream              46.9          16.6               192        2700
 ## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
 ```
 
@@ -5066,6 +5066,1533 @@ pivot_wider(data = pinguins_raw[, c(2, 3, 13)],
 ## # ℹ abbreviated name: ¹​`Gentoo penguin (Pygoscelis papua)`
 ## # ℹ 1 more variable: `Chinstrap penguin (Pygoscelis antarctica)` &lt;dbl&gt;
 ```
+
+---
+
+class: inverse center middle
+name: visualizacao
+
+# Visualização de dados
+
+.center[(Acompanhe no arquivo `04-visualizacao.R`)]
+
+---
+
+## Para que servem as visualizações?
+
+.pull-left[
+
+&lt;br&gt;
+
+- Visualização de dados é a representação visual de informações por meio de gráficos, tabelas e diagramas compreensíveis para seres humanos.
+
+- Estatísticas puras nem sempre comunicam bem. Por isso, utilizamos formas, cores e estruturas visuais para faciliar a interpretação dos dados.
+
+- Boas visualizações ajudam a revelar padrões, tendências e relações que seriam difíceis de perceber apenas com números.
+
+- Para o público, é a parte mais acessível da ciência de dados. Uma boa visualização muitas vezes comunica mais do que a saída crua de um modelo estatístico.
+
+]
+
+.pull-right[
+
+&lt;img src="img/39-visualizacao-scatter-plot.png" width="100%" /&gt;
+
+.center[Ilustração por [Allison Horst](https://allisonhorst.com/)]
+
+]
+
+---
+
+.pull-left[
+
+&lt;br&gt;
+
+**Análise exploratória**
+
+- foco na **investigação**
+- deve ser **rápida** de executar
+- objetivo: **aprender**
+
+&lt;img src="index_files/figure-html/unnamed-chunk-183-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+Ideal para entender padrões iniciais, identificar _outliers_ e gerar hipóteses.
+
+]
+
+--
+
+.pull-right[
+
+&lt;br&gt;
+
+**Análise descritiva**
+
+- foco na **comunicação**
+- deve ser **customizável**
+- objetivo: **transmitir informações com clareza**
+
+&lt;img src="index_files/figure-html/unnamed-chunk-184-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+Ideal para relatar achados de forma clara e convincente ao público.
+
+]
+
+---
+
+### Gramática de gráficos _em camadas_
+
+O pacote [`{ggplot2}`](https://ggplot2.tidyverse.org) segue duas ideias fundamentais que ajudam a entender como os gráficos são construídos:
+
+1. **Gráficos são representações visuais de dados**, construídos a partir de atributos estéticos (posição, cor, forma, tamanho ...) aplicados a formas geométricas (pontos, linhas, barras ...).
+
+&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; Essa ideia vem da obra _[The Grammar of Graphics](https://www.springer.com/gp/book/9780387245447)_, que inspirou o `ggplot`.
+
+2. **Gráficos podem ser construídos em camadas**, sobrepondo diferentes elementos visuais (dados, eixos, títulos, linhas de tendência etc.).
+
+&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; Essa abordagem é conhecida como _[layered grammar of graphics](https://vita.had.co.nz/papers/layered-grammar.html)_.
+
+----
+
+Nos próximos exemplos, vamos trabalhar com a base `pinguins_raw`:
+
+
+``` r
+library(tidyverse)
+
+pinguins &lt;- read_csv("dados/pinguins.csv")
+```
+
+.footnote[Curiosidade: o `gg` em `ggplot` vem de _Grammar of Graphics_.]
+
+---
+
+### Construindo um gráfico em Camadas
+
+No [`{ggplot2}`](https://ggplot2.tidyverse.org), cada gráfico é construído **em camadas**: começamos com a base de dados e adicionados, passo a passo, os elementos visuais que desejamos. Vamos ver isso em ação:
+
+&lt;div class="panelset"&gt;
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;1. Canvas (tela em branco)&lt;/div&gt;
+
+
+``` r
+cars |&gt;  
+* ggplot()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-186-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;2. Eixos (estética)&lt;/div&gt;
+
+
+``` r
+cars |&gt;  
+  ggplot() +
+* aes(x = speed, y = dist)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-187-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;3. Geometria (pontos)&lt;/div&gt;
+
+
+``` r
+cars |&gt; 
+  ggplot() +
+  aes(x = speed, y = dist) +
+* geom_point()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-188-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Exemplo completo de gráfico em camadas
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Visualização Final&lt;/div&gt;
+
+&lt;img src="index_files/figure-html/unnamed-chunk-189-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt; 
+&lt;div class="panel-name"&gt;Código em Camadas (R)&lt;/div&gt;
+
+
+``` r
+cars |&gt; 
+  ggplot() +                                 
+  aes(x = speed, y = dist) +                 
+  geom_point(color = "darkblue") +           
+  geom_smooth(                               
+    se = FALSE,                              
+    color = "darkgrey",                      
+    method = "lm",                           
+    formula = "y~x"                          
+  ) +                                        
+  labs(                                      
+    title = "A velocidade influencia na distância de parada?",   
+    subtitle = "Distância necessária para parar o carro",        
+    x = "Velocidade",                    
+    y = "Distância para parar",          
+    caption = "Fonte: Ezekiel, M. (1930)\nMethods of Correlation Analysis. Wiley" 
+  ) +
+  theme_minimal()                        
+```
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Curiosidade: por que o `+`?
+
+Diferente de outros pacotes do `tidyverse`, o `ggplot2` **não usa o pipe (`|&gt;` ou `%&gt;%`) para encadear operações**.
+Em vez disso, uso o operador `+`, que **representa a adição de camadas ao gráfico**.
+
+Mas por quê?
+
+Segundo o próprio Hadley Wickham (criador do pacote), quando começou a desenvolver o `ggplot2`, **ele ainda não conhecia o operador pipe**.
+
+&lt;a href="https://www.reddit.com/r/dataisbeautiful/comments/3mp9r7/comment/cvi19ly/"&gt;
+  &lt;img src="img/40-reddit-ggplot.png" style="width:85%;"&gt;
+&lt;/a&gt;
+
+&lt;!-- [![Comentário de Hadley Wickham no Reddit](img/40-reddit-ggplot.png)](https://www.reddit.com/r/dataisbeautiful/comments/3mp9r7/comment/cvi19ly/?utm_source=embedv2&amp;utm_medium=comment_embed&amp;utm_content=whitespace) --&gt;
+
+---
+
+# [Qual gráfico escolher?](https://www.data-to-viz.com)
+
+&lt;div style="text-align: center;"&gt;
+  &lt;a href="https://www.data-to-viz.com"&gt;
+    &lt;img src="img/41-data-to-viz.png" style="width:85%;"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+---
+
+### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
+
+&lt;div style="text-align: center;"&gt;
+  &lt;a href="https://rstudio.github.io/cheatsheets/data-visualization.pdf"&gt;
+    &lt;img src="img/42-cheatsheet-ggplot2.png" style="width:100%;"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+---
+
+### Um gráfico de pontos (dispersão)
+
+
+``` r
+pinguins |&gt; 
+  ggplot() + 
+  aes(x = flipper_length_mm, y = body_mass_g) + 
+* geom_point()
+```
+
+```
+## Warning: Removed 2 rows containing missing values or values outside the scale range
+## (`geom_point()`).
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-191-1.png" width="85%" /&gt;
+
+---
+
+### Gráfico de pontos (dispersão)
+
+O **gráfico de dispersão (_scatterplot_)** é uma das formas mais intuitivas de visualizar a relação entre duas variáveis numéricas.
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;1. &lt;code&gt;geom_point( )&lt;/code&gt;&lt;/div&gt;
+
+- A função `geom_point()` define que os dados serão representados como **pontos** no plano cartesiano.
+
+- O prefixo `geom_` indica uma **forma geométrica**. 
+
+&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; Outras funções semelhantes incluem:
+
+&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; `geom_bar()`, `geom_line()`, `geom_histogram()`, `geom_boxplot()`, etc.
+
+&lt;br&gt;
+
+**Exemplo (com `mapping = ` explícito):**
+
+
+``` r
+geom_point(mapping = aes(x = comprimento_nadadeira, y = massa_corporal))
+```
+
+**Exemplo (sem `mapping = `):**
+
+
+``` r
+geom_point(aes(x = comprimento_nadadeira, y = massa_corporal))
+```
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;2. &lt;code&gt;aes( )&lt;/code&gt; e Boas Práticas&lt;/div&gt;
+
+- O argumento `mapping` define **como os dados se conectam aos atributos estéticos** (posição, cor, forma,...).
+
+- O mapeamento é sempre feito com `aes()`.
+
+- **Sempre mapeie colunas dentro de `aes()`** para garantir que o gráfico reflita os dados corretamente.
+
+&lt;br&gt;
+
+**Boas práticas**
+
+- _Warnings_ são comuns quando há `NA` — o [`{ggplot2}`](https://ggplot2.tidyverse.org) remove essas linhas automaticamente.
+
+- É comum usar função do [`{dplyr}`](https://dplyr.tidyverse.org) **antes de passar os dados ao** `ggplot()`.
+
+&lt;br&gt;
+
+&lt;div style="text-align: center;"&gt;
+  &lt;strong style="font-size: 130%;"&gt;Mapeamentos devem SEMPRE ser feitos dentro de &lt;code&gt;aes()&lt;/code&gt;.&lt;/strong&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Gráfico de pontos (dispersão)
+
+Vamos adicionar uma **reta de tendência** ao gráfico com a função `geom_smooth()`.
+
+
+``` r
+pinguins |&gt; 
+  ggplot() +
+  aes(x = flipper_length_mm, y = body_mass_g) + 
+  geom_point() +
+* geom_smooth(method = "lm", formula = "y ~ x", se = FALSE)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-194-1.png" width="100%" /&gt;
+
+---
+
+### Gráfico de pontos (dispersão)
+
+- A linha de tendência é adicionada ao gráfico com a função `geom_smooth()`. 
+
+  - Esse `geom` é usado para representar a **tendência ou relação entre as variáveis**, com base em um modelo estatístico. 
+
+- No exemplo, utilizamos um **modelo linear simples**, o que resulta em uma **linha reta** entre os pontos. 
+
+  - Isso é definido com os argumentos `method = "lm"` e `formula = "y ~ x"`.
+
+- Essa linha mostra uma **relação positiva** entre o comprimento da nadadeira e a massa corporal dos pinguins: 
+
+  - à medida que a nadadeira aumenta, a massa também tende a aumentar.
+
+- Como não estamos mapeando nenhuma variável, **os argumentos de `geom_smooth()` são passados fora da função `aes()`**.
+
+- O argumento `se = FALSE` serve para **remover a faixa de confiança** (erro padrão) que é exibida por padrão junto à linha de tendência.
+
+---
+
+### Gráfico de pontos (dispersão)
+
+Veja como o [`ggplot2`](https://ggplot2.tidyverse.org) é realmente construído em **camadas sobrepostas**. Se colocarmos a camada da **linha de tendência** antes da camada dos **pontos**, os **pontos serão desenhados por cima da linha**.
+
+
+``` r
+pinguins |&gt; 
+  ggplot() +
+  aes(x = flipper_length_mm, y = body_mass_g) + 
+  geom_smooth(method = "lm", formula = "y ~ x", se = FALSE) +  # linha primeiro
+  geom_point()                                                 # pontos depois
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-195-1.png" width="100%" /&gt;
+
+---
+
+### Gráfico de pontos (dispersão)
+
+Os atributos `x` e `y` são necessários para a construção de um gráfico de dispersão. Além deles, **outros atributos estéticos podem ser mapeados**, como a **cor**.
+
+Neste exemplo, a cor representa a variável `species`. Como essa variável é categórica, o [`{ggplot2}`](https://ggplot2.tidyverse.org) **atribui automaticamente uma cor distinta para cada categoria**.
+
+
+``` r
+pinguins |&gt; 
+  ggplot() +
+  aes(x = flipper_length_mm, y = body_mass_g) + 
+* geom_point(aes(color = species))
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-196-1.png" width="100%" /&gt;
+
+---
+
+### Gráfico de pontos (dispersão)
+
+Podemos adicionar mais de um atributo estético no mesmo gráfico. Neste exemplo, além da cor por espécie, o **formato dos pontos** (`shape`) é usado para representar o sexo (`sex`) dos pinguins.
+
+
+``` r
+pinguins |&gt; 
+  ggplot() +
+  aes(x = flipper_length_mm, y = body_mass_g) + 
+* geom_point(aes(color = species, shape = sex))
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-197-1.png" width="100%" /&gt;
+
+---
+
+### Gráfico de linhas
+
+Utilizamos a função `geom_line()` para criar um **gráfico de linhas**, que é idela para **representar séries temporais**. No exemplo a seguir, representamos a **massa corporal média dos pinguins** em cada ano, de 2007 a 2009.
+
+.tiny[
+
+``` r
+pinguins |&gt;
+  group_by(year) |&gt;
+  summarise(mean_body_mass_g = mean(body_mass_g, na.rm = TRUE)) |&gt;
+  ggplot() +
+* geom_line(aes(x = year, y = mean_body_mass_g))
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-198-1.png" width="100%" /&gt;
+]
+
+---
+
+### Gráfico de linhas
+
+Podemos combinar **pontos** e **linhas** em um mesmo gráfico para representar os dados de forma mais completa.  
+Para isso, basta adicionar os dois `geoms` no código, um após o outro.
+
+.tiny[
+
+``` r
+pinguins |&gt;
+  group_by(year) |&gt;
+  summarise(mean_body_mass_g = mean(body_mass_g, na.rm = TRUE)) |&gt;
+  ggplot() +
+* geom_line(aes(x = year, y = mean_body_mass_g)) +   # gráfico de linha
+* geom_point(aes(x = year, y = mean_body_mass_g))    # gráfico de pontos
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-199-1.png" width="100%" /&gt;
+]
+
+---
+
+### Gráfico de linhas
+
+Quando diferentes `geoms` compartilham os mesmos mapeamentos estéticos (`aes()`), podemos definir o `aes()` **diretamente na função `ggplot()`**. Dessa forma, **o mapeamento é aplicado automaticamente a todos os `geoms`**, tornando o código mais limpo e conciso. O exemplo anterior pode ser reescrito assim:
+
+.tiny[
+
+``` r
+pinguins |&gt;
+  group_by(year) |&gt;
+  summarise(mean_body_mass_g = mean(body_mass_g, na.rm = TRUE)) |&gt;
+* ggplot(aes(x = year, y = mean_body_mass_g)) +  # mapeamento global
+* geom_line() +                                  # gráfico de linhas (usa o aes definido acima)
+* geom_point()                                   # gráfico de pontos (usa o aes definido acima)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-200-1.png" width="100%" /&gt;
+]
+
+---
+
+### Gráfico de linhas
+
+Quando um `geom` precisa de um mapeamento adicional que **não se aplica aos outros**, esse atributo pode (e deve) ser especificado **dentro do `aes()` da função correspondente**.
+
+No exemplo abaixo, o `aes()` global define `x` e `y` para todos os `geoms`, mas o `geom_label()` adiciona o mapeamento **específico** da coluna `label`:
+
+.tiny[
+
+``` r
+pinguins |&gt; 
+  group_by(year) |&gt; 
+  summarise(mean_body_mass_g = round(mean(body_mass_g, na.rm = TRUE), 2)) |&gt; 
+* ggplot(aes(x = year, y = mean_body_mass_g)) +  # mapeamento global
+* geom_line() +                                  # gráfico de linhas (usa o aes global)
+* geom_label(aes(label = mean_body_mass_g))      # adiciona um label (usa o aes global + o label)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-201-1.png" width="100%" /&gt;
+]
+
+---
+
+### Gráfico de barras
+
+Vamos construir um **gráfico de barras** com o número de pinguins de cada espécie. Para isso, usamos a função `geom_col()`, que exibe **valores já agregados** (como contagens).
+
+.tiny[
+
+``` r
+pinguins |&gt; 
+  count(species) |&gt; 
+  ggplot() +
+* geom_col(aes(x = species, y = n))             # gráfico de barras
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-202-1.png" width="100%" /&gt;
+]
+
+---
+
+### Gráfico de barras
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Código (R) e Gráfico&lt;/div&gt;
+
+.tiny[
+
+``` r
+pinguins |&gt; 
+  count(species) |&gt; 
+  ggplot() +
+* geom_col(                                    # gráfico de barras com valores prontos
+*   aes(x = species, y = n, fill = species),   # preenche cada barra com uma cor diferente
+*   show.legend = FALSE                        # remove a legenda (já que a cor está no eixo x)
+  )
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-203-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Explicação&lt;/div&gt;
+
+Gráficos de barras também exigem os atributos `x` e `y`. O `x` define a **categoria**, e o `y` representa a **altura da barra**. 
+
+Quando a base contém valores `NA`, eles podem aparecer no gráfico. Para removê-los, use a função `filter()` previamente.
+
+&lt;br&gt;
+
+**Regra Prática:**
+
+Para **colorir barras por categorias**, usamos o atibuto `fill`, e não `color`.
+
+- `color`: contorno de elementos **sem área** (linhas, pontos, bordas).
+
+- `fill`: preechimento de elementos **com área** (barras, áreas, polígonos).
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Gráfico de barras
+
+Para **melhorar a legibilidade das _labels_ no eixo x**, uma boa prática é **inverter os eixos** do gráfico, transformando-o em barras horizontais. Isso é feito com a função `coord_flip()`.
+
+
+``` r
+pinguins |&gt;
+  count(species) |&gt;
+  ggplot() +
+  geom_col(aes(x = species, y = n, fill = species), show.legend = FALSE) +
+* coord_flip()                              # inverte os eixos: x vira y, y vira x
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-204-1.png" width="100%" /&gt;
+
+---
+
+### Gráfico de barras
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Código (R) e Gráfico&lt;/div&gt;
+
+
+``` r
+pinguins |&gt;
+  count(species) |&gt;
+* mutate(species = forcats::fct_reorder(species, n)) %&gt;%  # reordena os níveis da espécie
+  ggplot() +
+  geom_col(aes(x = species, y = n, fill = species), show.legend = FALSE) +
+  coord_flip()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-205-1.png" width="100%" /&gt;
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Explicação&lt;/div&gt;
+
+- Para **ordenar as categorias** de uma variável em um gráfico de barras, usamos a função `fct_reorder()` do pacote [`{forcats}`](https://forcats.tidyverse.org).
+
+- Ela permite **reordenar os níveis de um fator** com base em outra variável — neste caso, `n` (número de pinguins por espécie).
+
+&lt;br&gt;
+
+----
+
+&lt;br&gt;
+
+- No **R**, fatores são internamente representados por **números inteiros** (1, 2, 3...), mas exibem rótulos de texto.
+
+- Por padrão, esses níveis são ordenados **alfabeticamente**, o que pode gerar gráficos com ordenações pouco informativas.
+
+Exemplo:  
+`factor(c("banana", "uva", "melancia"))` → `"banana"` vira 1, `"melancia"` vira 2, `"uva"` vira 3
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Código (R) e Gráfico [sem &lt;code&gt;fct_reorder()&lt;/code&gt;]&lt;/div&gt;
+
+Nesse exemplo, as **categorias são exibidas em ordem alfabética**, pois não reordenamos os níveis do fator.
+
+
+``` r
+pinguins |&gt;
+  count(species) |&gt;
+  # mutate(species = forcats::fct_reorder(species, n)) %&gt;%  # reordena os níveis da espécie 
+  ggplot() +
+  geom_col(aes(x = species, y = n, fill = species), show.legend = FALSE) +
+  coord_flip()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-206-1.png" width="100%" /&gt;
+
+&lt;/div&gt;
+
+---
+
+### Gráfico de barras
+
+Por fim, podemos **adicionar rótulos (labels)** dentro das barras para mostrar os valores numéricos (quantidade de pinguins por espécie).
+
+.tiny[
+
+``` r
+pinguins |&gt;
+  count(species) |&gt;
+  mutate(species = forcats::fct_reorder(species, n)) %&gt;%
+  ggplot(aes(x = species)) +                                    # mapeamento comum a todos os geoms
+  geom_col(aes(y = n, fill = species), show.legend = FALSE) +   # cria o gráfico de barras
+* geom_label(aes(y = n / 2, label = n)) +                       # adiciona o número no centro da barra
+  coord_flip()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-207-1.png" width="100%" /&gt;
+]
+
+---
+
+### Histogramas
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;1. Código (R) e Gráfico&lt;/div&gt;
+
+.tiny[
+
+``` r
+pinguins |&gt; 
+  filter(species == "Adelie") |&gt; 
+  ggplot() +
+* geom_histogram(aes(x = body_mass_g))
+```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+```
+## Warning: Removed 1 row containing non-finite outside the scale range
+## (`stat_bin()`).
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-208-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;2. O que é um histograma?&lt;/div&gt;
+
+- Um **histograma** mostra a **distribuição de uma variável numérica**, agrupando os dados em intervalos (bins).
+
+- É criado com `geom_histogram()` e requer apenas o mapeamento do eixo `x`.  O `y` (frequência) é calculado automaticamente.
+
+- Histogramas são úteis para visualizar a **forma da distribuição**: simétrica, enviesada, multimodal etc.
+
+----
+
+**Dica rápida:**  
+
+Histogramas são usados para **variáveis contínuas**, enquanto gráficos de barras são para **variáveis categóricas**.
+
+**Exemplo de agrupamento:**  
+
+Valores: `[3200, 3300, 3400, 3500, 3600]`  
+
+Com `binwidth = 200`:  
+- 3200–3399 → 2 observações  
+- 3400–3599 → 2 observações  
+- 3600–3799 → 1 observação
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt; 
+&lt;div class="panel-name"&gt;3. Personalizando o histograma&lt;/div&gt;
+
+.tiny[
+
+``` r
+pinguins |&gt;
+  filter(species == "Adelie") |&gt;
+  ggplot() +
+  geom_histogram(aes(x = body_mass_g),
+*                binwidth = 100,        # define o intervalo de cada intervalo (largura da barra)
+*                color = "white"        # altera a cor das bordas de cada coluna para branco
+                )
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-209-1.png" width="100%" /&gt;
+]
+
+---
+
+### Boxplot
+
+&lt;div class="panelset"&gt;
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;1. Código (R) e Gráfico&lt;/div&gt;
+
+.tiny[
+
+``` r
+pinguins |&gt; 
+  ggplot(aes(x = species, y = flipper_length_mm)) +    # mapeamentos principais
+* geom_boxplot(aes(color = species),                   # cada espécie com uma cor
+*              show.legend = FALSE)                    # remove legenda redundante
+```
+
+```
+## Warning: Removed 2 rows containing non-finite outside the scale range
+## (`stat_boxplot()`).
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-210-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;2. O que é um boxplot?&lt;/div&gt;
+
+Boxplots são gráficos estatísticos usados para **resumir a distribuição de uma variável numérica**, especialmente quando queremos **comparar grupos**.
+
+No [`ggplot2`](https://ggplot2.tidyverse.org), usamos a função `geom_boxplot()` para criar esses gráficos.  
+Ela exige dois mapeamentos:
+
+- `x`: uma **variável categórica** (ex: `species`)  
+- `y`: uma **variável numérica** (ex: `flipper_length_mm`)
+
+&lt;br&gt;
+
+O boxplot exibe:
+- A **mediana** da distribuição (linha central);
+- Os **quartis** (caixa que representa o intervalo interquartil);
+- Os **outliers** (pontos fora dos "bigodes").
+
+É ideal para avaliar a **dispersão, simetria e presença de valores extremos**.
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Títulos, _labels_ e escalas
+
+&lt;div class="panelset"&gt;
+  
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Gráfico &lt;code&gt;labs()&lt;/code&gt;&lt;/div&gt;
+
+&lt;img src="index_files/figure-html/unnamed-chunk-211-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Código &lt;code&gt;labs()&lt;/code&gt;&lt;/div&gt;
+
+A função `labs()` é usada para **adicionar ou alterar os textos do gráfico**, como **títulos, subtítulos, eixos e legendas**. Os principais argumentos dessa função são:
+
+- `title`: texto do título
+- `subtitle`: texto do subtítulo
+- `caption`: texto do rodapé
+- `x`: texto do eixo x
+- `y`: texto do eixo y
+
+.tiny[
+
+``` r
+pinguins |&gt; 
+  ggplot() +
+  aes(x = flipper_length_mm, y = body_mass_g) +
+  geom_point(aes(color = species)) +
+* labs(
+*   x = "Comprimento da nadadeira (mm)",                         # nome do eixo x
+*   y = "Massa corporal (g)",                                    # nome do eixo y
+*   color = "Espécies",                                          # nome da legenda de cores
+*   title = "Gráfico de dispersão",                              # título principal
+*   subtitle = "Comprimento da nadadeira vs Massa corporal",     # subtítulo
+*   caption = "{palmerpenguins} R package"                       # legenda de rodapé
+* )
+```
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Gráfico &lt;code&gt;scale_()&lt;/code&gt;&lt;/div&gt;
+
+&lt;img src="index_files/figure-html/unnamed-chunk-213-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Código &lt;code&gt;scale_()&lt;/code&gt;&lt;/div&gt;
+
+As funções `scale_x_*()` e `scale_y_*()` controlam **como os eixos são exibidos**: você pode definir **quais valores aparecem** (_breaks_) e **como eles são formatados** (_labels_, limites etc.).
+
+As funções e argumentos mais comuns são:
+
+- `scale_x_continuous()`: ajusta eixos com valores numéricos contínuos (x)
+- `scale_y_continuous()`: ajusta eixos com valores numéricos contínuos (y)
+- `scale_x_discrete()`: ajusta eixos com valores categóricos (x)
+- `scale_y_discrete()`: ajusta eixos com valores categóricos (y)
+- `breaks = c(...)`: define quais valores aparecem no eixo
+
+
+``` r
+pinguins |&gt; 
+  group_by(year) |&gt; 
+  summarise(mean_body_mass_g = mean(body_mass_g, na.rm = TRUE)) |&gt; 
+  ggplot() +
+  geom_line(aes(x = year, y = mean_body_mass_g)) +
+* scale_x_continuous(breaks = seq(2007, 2009, 1)) +   # mostra os anos 2007, 2008 e 2009 no eixo x
+* scale_y_continuous(breaks = seq(4000, 4250, 25))    # mostra valores a cada 25g no eixo y
+```
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Cores
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Introdução&lt;/div&gt;
+
+Para **controlar as cores** em [`ggplot2`](https://ggplot2.tidyverse.org), usamos **funções da família `scale_*_*()`**:
+
+- `scale_fill_manual()` → para preenchimento (barras, áreas, caixas)
+
+- `scale_color_manual()` → para linhas, bordas e pontos
+
+A escolha entre `color` e `fill` depende da **geometria** utilizada:
+
+- `fill`: elementos com área (ex: `geom_col`, `geom_bar`, `geom_boxplot`)
+
+- `color`: elementos de contorno (ex: `geom_line`, `geom_point`, `geom_jitter`)
+
+**Paletas de cores prontas:**
+
+- **Escalas qualitativas:** usadas para variáveis **nominais** (ex: sexo, cor/raça)
+
+- **Escalas divergentes:** usadas para variáveis com **centro neutro** (ex: correlação, saldo)
+
+- **Escalas sequenciais:** usadas para variáveis **ordinais** ou **contínuas crescentes** (ex: faixa etária, escolaridade)
+
+- **Viridis:** paleta perceptualmente uniforme e compatível com **daltonismo**
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Paletas no &lt;code&gt;{ggplot2}&lt;/code&gt; e pacotes externos&lt;/div&gt;
+
+**Paletas no `ggplot2`:**
+
+- `scale_*_brewer()` → para variáveis **discretas** (qualitativas, sequenciais, divergentes)
+
+- `scale_*_distiller()` → para variáveis **contínuas**
+
+- `scale_*_fermenter()` → transforma variável contínua em faixas (binned)
+
+- `scale_*_viridis_[c/d/b]` → versão acessível para diferentes tipos de dados
+
+- `scale_*_manual()` → define manualmente as cores
+
+**Paletas de outros pacotes:**
+
+- `{ghibli}` – inspirado no Studio Ghibli
+- `{paletteer}` – enorme repositório de paletas de vários pacotes
+- `{RColorBrewer}` – clássico, base para o `scale_brewer()`
+- `{hrbrthemes}` – temas e escalas de cor pensadas para publicações
+- `{ggthemr}` – define temas e cores para gráficos (menos mantido hoje)
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Cores
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;1. &lt;code&gt;scale_fill_manual('nome')&lt;/code&gt;&lt;/div&gt;
+
+Substituindo as cores padrão do gráfico por outro conjunto de cores.
+
+.tiny[
+
+``` r
+pinguins |&gt; 
+  count(species) |&gt; 
+  mutate(species = forcats::fct_reorder(species, n)) |&gt; 
+  ggplot(aes(x = species, y = n)) +
+  geom_col(aes(fill = species), show.legend = FALSE) +
+  coord_flip() +
+* scale_fill_manual(values = c("red", "blue", "purple"))
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-215-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;2. &lt;code&gt;scale_fill_manual('hex')&lt;/code&gt;&lt;/div&gt;
+
+Também é possível usar cores hexadecimais para definir as cores.
+
+.tiny[
+
+``` r
+pinguins |&gt; 
+  count(species) |&gt; 
+  mutate(species = forcats::fct_reorder(species, n)) |&gt; 
+  ggplot(aes(x = species, y = n)) +
+  geom_col(aes(fill = species), show.legend = FALSE) +
+  coord_flip() +
+* scale_fill_manual(values = c("#ff0000", "#0000ff", "#a020f0"))
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-216-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Cores
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;&lt;code&gt;scale_fill_manual()&lt;/code&gt;&lt;/div&gt;
+
+.tiny[
+
+``` r
+pinguins  |&gt; 
+  ggplot(aes(x = flipper_length_mm)) +
+* geom_histogram(aes(fill = species), alpha = 0.5, position = "identity") +
+* scale_fill_manual(values = c("darkorange", "purple", "cyan4")) +
+  labs(x = "Comprimento da nadadeira (mm)", y = "Frequência", 
+       title = "Comprimento da nadadeira dos Pinguins") +
+  theme_minimal() 
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-217-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;&lt;code&gt;scale_color_manual()&lt;/code&gt;&lt;/div&gt;
+
+.tiny[
+
+``` r
+pinguins |&gt;  
+  ggplot(aes(x = species, y = flipper_length_mm, color = species)) +
+* geom_boxplot(width = 0.3, show.legend = FALSE) +
+* geom_jitter(alpha = 0.5, show.legend = FALSE, position = position_jitter(width = 0.2, seed = 0)) +
+* scale_color_manual(values = c("darkorange","purple","cyan4")) +
+  labs(x = "Espécies", y = "Comprimento da nadadeira (mm)") +
+  theme_minimal()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-218-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Diferença entre &lt;code&gt;fill&lt;/code&gt; e &lt;code&gt;color&lt;/code&gt;&lt;/div&gt;
+
+Ambos os gráficos utilizam **escalas manuais de cor** com a família `scale_*_manual()`.
+
+&lt;br&gt;
+
+**Diferença entre as estéticas:**
+
+- `fill = species`: controla a **cor de preenchimento** dos elementos com área  
+  (ex: histogramas, colunas, caixas).
+
+- `color = species`: controla a **cor de contorno ou linha** dos elementos  
+  (ex: pontos, linhas, bordas de boxplots).
+
+&lt;br&gt;
+
+&lt;div style="text-align: center;"&gt;
+  &lt;strong style="font-size: 130%;"&gt;Escolher corretamente &lt;code&gt;fill&lt;/code&gt; ou &lt;code&gt;color&lt;/code&gt; é essencial para que o gráfico reflita visualmente os grupos corretamente.&lt;/strong&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Argumentos adicionais&lt;/div&gt;
+
+**Argumentos utilizados nos gráficos:**
+
+- `alpha = 0.5`: controla a **transparência** da cor (neste caso, 50% transparente):
+
+  - `1` = 100% opaco (padrão), 
+  - `0` = 100% transparente
+  - **Útil para sobreposição**, como no histograma com várias espécies
+
+- `position = "identity"`: desenha os elementos **sem empilhar ou ajustar**:
+  
+  - Usado no histograma para permitir **sobreposição das distribuições**
+  - Se usássemos `position = "stack"`, as barras seriam empilhadas
+
+- `geom_jitter()`: **espalha os pontos horizontalmente** (ou verticalmente)  para evitar sobreposição: 
+  
+  - Muito útil com **variáveis categóricas**, como `species`
+  - O argumento `width = 0.2` controla **o grau de espalhamento**
+  - `seed = 0` garante reprodutibilidade da posição dos pontos
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Trocando os textos da legenda
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;1. Explicação&lt;/div&gt;
+
+Para alterar os **textos exibidos na legenda** em gráficos do [`ggplot2`](https://ggplot2.tidyverse.org), você pode usar:
+
+- `scale_color_discrete(labels = ...)`: quando o mapeamento é categórico e você **não vai definir as cores manualmente**
+- `scale_color_manual(values = ..., labels = ...)`: quando quiser **definir as cores e os textos**
+
+Use também a função `labs()` para **alterar o título da legenda** (por exemplo, de `"species"` para `"Espécie"`).
+
+&lt;br&gt;
+
+Essas funções valem também para outros atributos estéticos:
+
+- `scale_fill_discrete()` / `scale_fill_manual()`  
+- `scale_shape_manual()`  
+- `scale_linetype_manual()`  
+- etc.
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;2. Exemplo prático&lt;/div&gt;
+
+
+``` r
+pinguins |&gt;
+  ggplot(aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species)) +
+* labs(color = "Espécie") +  # altera o título da legenda
+* scale_color_discrete(      # troca os textos exibidos
+*   labels = c("Pinguim de Adélia", "Pinguim de Barbicha", "Pinguim Gentoo")) +
+  theme_minimal()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-219-1.png" width="100%" /&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Temas
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;1. Explicação&lt;/div&gt;
+
+O `ggplot2` oferece vários **temas prontos** na família `theme_*()` para facilitar a padronização visual dos gráficos.
+
+- O tema **padrão** tem fundo cinza.
+- Outras opções como `theme_bw()`, `theme_light()`, `theme_void()` e `theme_minimal()` ajustam o fundo, as grades, as bordas e o estilo geral do gráfico.
+
+Também é possível **criar seu próprio tema** usando a função `theme()`, personalizando os elementos visuais com:
+
+- `element_text()` – textos (títulos, eixos, etc.)
+- `element_line()` – linhas
+- `element_rect()` – fundos e bordas
+- `element_blank()` – remover elementos
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;padrão&lt;/div&gt;
+
+.tiny[
+
+``` r
+pinguins |&gt; 
+  ggplot() + 
+  aes(x = flipper_length_mm, y = body_mass_g) + 
+  geom_point()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-220-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;bw&lt;/div&gt;
+
+.tiny[
+
+``` r
+pinguins |&gt; 
+  ggplot() + 
+  aes(x = flipper_length_mm, y = body_mass_g) +
+  geom_point() +
+* theme_bw()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-221-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;classic&lt;/div&gt;
+
+.tiny[ 
+
+``` r
+pinguins |&gt;  
+  ggplot() + 
+  aes(x = flipper_length_mm, y = body_mass_g) +
+  geom_point() +
+* theme_classic()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-222-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;light&lt;/div&gt;
+
+.tiny[
+
+``` r
+pinguins |&gt;  
+  ggplot() + 
+  aes(x = flipper_length_mm, y = body_mass_g) +
+  geom_point() +
+* theme_light()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-223-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;minimal&lt;/div&gt;
+
+.tiny[
+
+``` r
+pinguins |&gt;  
+  ggplot() + 
+  aes(x = flipper_length_mm, y = body_mass_g) +
+  geom_point() +
+* theme_minimal()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-224-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;void&lt;/div&gt;
+
+.tiny[
+
+``` r
+pinguins |&gt;  
+  ggplot() + 
+  aes(x = flipper_length_mm, y = body_mass_g) + 
+  geom_point() +
+* theme_void()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-225-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;dark&lt;/div&gt;
+
+.tiny[
+
+``` r
+pinguins |&gt;  
+  ggplot() + 
+  aes(x = flipper_length_mm, y = body_mass_g) + 
+  geom_point() +
+* theme_dark()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-226-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class=panel&gt;
+&lt;div class="panel-name"&gt;criando o próprio tema&lt;/div&gt;
+
+.tiny[
+
+``` r
+pinguins |&gt;  
+  ggplot(aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species)) +
+  labs(title = "Gráfico de dispersão", subtitle = "Comprimento da nadadeira vs Massa corporal") +
+* theme(plot.title = element_text(hjust = 0.5),
+*   plot.subtitle = element_text(hjust = 0.5),
+*   axis.title = element_text(color = "red"),
+*   panel.background = element_rect(fill = "lightgrey"),
+*   panel.grid = element_blank())
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-227-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Mapas
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;1. Preparando os dados&lt;/div&gt;
+
+Para elaborar mapas temáticos, vamos usar duas bases:
+
+- A base `ideb_fundamental`, com as notas do IDEB para os municípios brasileiros.
+
+
+``` r
+# importa a base do Ideb
+ideb_fundamental &lt;- readr::read_csv("dados/ideb_fundamental.csv")
+```
+
+- A malha municipal obtida pelo pacote [`{geobr}`](https://github.com/ipeaGIT/geobr), que fornece o _shapefile_ com as **divisões político-administrativas**.
+
+
+``` r
+# importa a malha municipal (geometria dos municípios)
+mapa_muni &lt;- geobr::read_municipality(year = 2020)
+```
+
+Depois, unimos as duas bases usando a função `left_join()` do [`{dplyr}`](https://dplyr.tidyverse.org/), relacionando o código do municipio (`code_muni` na malha e `id_municipio` no Ideb):
+
+
+``` r
+# une as duas bases pelo código do município
+ideb_mapa &lt;- dplyr::left_join(mapa_muni, ideb_fundamental, by = c("code_muni" = "id_municipio"))
+```
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;2. Explorando a base geoespacial&lt;/div&gt;
+
+.tiny[
+
+``` r
+dplyr::glimpse(ideb_mapa)
+```
+
+```
+## Rows: 5,570
+## Columns: 12
+## $ code_muni    &lt;dbl&gt; 1100015, 1100023, 1100031, 1100049, 1100056, 1100064, 110…
+## $ name_muni    &lt;chr&gt; "Alta Floresta D'oeste", "Ariquemes", "Cabixi", "Cacoal",…
+## $ code_state   &lt;dbl&gt; 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 1…
+## $ abbrev_state &lt;chr&gt; "RO", "RO", "RO", "RO", "RO", "RO", "RO", "RO", "RO", "RO…
+## $ name_state   &lt;chr&gt; "Rondônia", "Rondônia", "Rondônia", "Rondônia", "Rondônia…
+## $ code_region  &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ name_region  &lt;chr&gt; "Norte", "Norte", "Norte", "Norte", "Norte", "Norte", "No…
+## $ ano          &lt;dbl&gt; 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 202…
+## $ tx_aprov     &lt;dbl&gt; 94.31667, 94.20000, 97.25000, 99.46667, 98.80000, 99.3250…
+## $ ensino       &lt;chr&gt; "fundamental", "fundamental", "fundamental", "fundamental…
+## $ ideb         &lt;dbl&gt; 4.750000, 4.983333, 5.000000, 5.316667, 5.500000, 5.65000…
+## $ geom         &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-62.19465 -..., MULTIPOLYGON…
+```
+]
+
+&lt;!-- Com a junção realizada, temos uma base com: --&gt;
+
+- A coluna `geom`, que contém a **geometria dos municípios** — os **polígonos** que usados para desenhar o mapa.
+- A coluna `ideb`, com os **valores do índice de desenvolvimento da educação básica** de cada município.
+
+&lt;!-- Essas duas colunas são essenciais para criar **mapas coropléticos** (mapas onde as cores representam valores). --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;1. Mapa Brasil&lt;/div&gt;
+
+&lt;img src="index_files/figure-html/unnamed-chunk-232-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;2. Mapa Brasil — Código&lt;/div&gt;
+
+.tiny[
+
+``` r
+ggplot(ideb_mapa) +
+* aes(geometry = geom) +
+* geom_sf(aes(fill = ideb), color = NA) +
+  scale_fill_viridis_c(na.value = "grey90",
+                       alpha = 0.8,
+                       name = "Ideb") +
+  labs(
+    title = "Notas médias do Ideb para o Ensino Fundamental",
+    subtitle = "nos municípios brasileiros em 2021",
+    caption = paste(
+      "Fonte: Bases dos Dados | Inep | {geobr} R package",
+      "\nDuzentos e quarenta e um (241) municípios brasileiros",
+      "\nnão possuíam notas do Ideb no ano de 2021"
+    )
+  ) +
+  theme_void() +
+  theme(plot.caption = element_text(lineheight = 1.1),
+        legend.position = c(0.2, 0.25))
+```
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;3. Mapa RS&lt;/div&gt;
+
+&lt;img src="index_files/figure-html/unnamed-chunk-234-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;4. Mapa RS — Código&lt;/div&gt;
+
+.tiny[
+
+``` r
+ideb_mapa |&gt;
+  filter(abbrev_state == "RS") |&gt;
+* ggplot(aes(geometry = geom)) +
+* geom_sf(aes(fill = ideb)) +
+  scale_fill_viridis_c(na.value = "grey90",
+                       alpha = 0.6,
+                       name = "Ideb") +
+  labs(
+    title = "Notas médias do Ideb para o Ensino Fundamental",
+    subtitle = "nos municípios do Rio Grande do Sul em 2021",
+    caption = paste(
+      "Fonte: Bases dos Dados | Inep | {geobr} R package",
+      "\nTrinta e sete (37) municípios gaúchos não possuíam",
+      "\nnotas do Ideb no ano de 2021"
+    )
+  ) +
+  theme_void() +
+  theme(plot.caption = element_text(lineheight = 1.1),
+        legend.position = c(0.2, 0.2))
+```
+]
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;1. Mapa RS + Cidades&lt;/div&gt;
+
+&lt;img src="index_files/figure-html/unnamed-chunk-236-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;2. Mapa RS + Cidades — Manipulação&lt;/div&gt;
+
+Para adicionar os nomes das cidades ao mapa, criamos um `data.frame` contendo a digla do estado (`abbrev_state`), o nome dos municípios (`name_muni`) e suas respectivas coordenadas geográficas (`long` e `lat`).
+
+
+``` r
+cidade_rs &lt;- data.frame(
+  abbrev_state = rep("RS", 5),
+  name_muni = c(
+    "Porto Alegre", "Caxias do Sul", "Canoas", "Pelotas", "Santa Maria"
+  ),
+  long = c(-30.032778,  -29.167778, -29.92, -31.771944, -29.683889),
+  lat = c(-51.23, -51.178889, -51.18, -52.342778, -53.806944)
+)
+```
+
+Esse `data.frame` é utilizado como base nas funções `geom_point()` e `geom_text_repel()` para posicionar os marcadores e os rótulos das cidades sobre o mapa.
+
+O pacote [`{ggrepel}`](https://ggrepel.slowkow.com/) permite **inserir textos de forma inteligente**, evitando que os rótulos se sobreponham. Ele ajusta automaticamente a posição de cada texto para garantir melhor leitura e visualização, especialmente útil em regiões com alta densidade de pontos.
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;3. Mapa RS + Cidades — Visualização&lt;/div&gt;
+
+
+``` r
+ideb_mapa |&gt; 
+  filter(abbrev_state == "RS") |&gt; 
+  ggplot() +
+  geom_sf(aes(geometry = geom, fill = ideb)) +
+  scale_fill_viridis_c(alpha = 0.5, na.value = "grey90") +
+* geom_point(data = cidade_rs, aes(x = lat, y = long), size = 1.5) +
+* ggrepel::geom_text_repel(data = cidade_rs,
+*   aes(x = lat, y = long, label = name_muni),
+*   fontface = "bold", size = 4,
+*   nudge_x = c(3, 2, 2, 2, -3),
+*   nudge_y = c(0, 1, 0.5, -0.5, 1.5)) +
+  labs(title = "Notas médias do Ideb para o Ensino Fundamental",
+    subtitle = "nos municípios do Rio Grande do Sul em 2021",
+    caption =paste("Fonte: Bases dos Dados | Inep | {geobr} R package",
+      "\nDentre as 5 principais cidades do RS, Caxias do Sul atingiu",
+      "\na maior nota com 5.83, seguida de Santa Maria, Pelotas,",
+      "\nCanoas e Porto Alegre. \nTrinta e sete (37) municípios gaúchos",
+      "\nnão possuíam notas do Ideb no ano de 2021")) +
+  theme_void() +
+  theme(plot.caption = element_text(lineheight = 1.1),
+    legend.position = c(0.2, 0.2))
+```
+
+&lt;/div&gt;
+
+---
+
+## Para saber mais!
+
+.panelset[
+
+.panel[.panel-name[Em Inglês (1)]
+.pull-left[
+- [ggplot2 extensions — gallery](https://exts.ggplot2.tidyverse.org/gallery/)
+
+&lt;a href="https://exts.ggplot2.tidyverse.org/gallery/"&gt;
+&lt;img src="img/43-ggplot-extensions.png" width="80%" style="display: block; margin: auto;" /&gt;
+&lt;/a&gt;
+]
+
+.pull-right[
+- [Livro R Cookbook (seção de gráficos)](http://www.cookbook-r.com/Graphs/)
+
+&lt;a href="http://www.cookbook-r.com/Graphs/"&gt;
+&lt;img src="img/44-r-cookbook.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;/a&gt;
+]
+]
+
+.panel[.panel-name[Em Inglês (2)]
+.pull-left[
+- [An Economist’s Guide to Visualizing Data](https://pubs.aeaweb.org/doi/pdf/10.1257/jep.28.1.209)
+
+&lt;a href="https://pubs.aeaweb.org/doi/pdf/10.1257/jep.28.1.209"&gt;
+&lt;img src="img/45-economist-guide-visualizing-data.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;/a&gt;
+]
+
+.pull-right[
+- [Fundamentals of Data Visualization ](https://clauswilke.com/dataviz/)
+
+&lt;a href="https://clauswilke.com/dataviz/"&gt;
+&lt;img src="img/46-fundamentalz-data-viz.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;/a&gt;
+]
+]
+
+]
+
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>

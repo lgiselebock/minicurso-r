@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="Yihui Xie" />
     <meta name="author" content="Garrick Aden-Buie" />
-    <meta name="date" content="2025-04-20" />
+    <meta name="date" content="2025-04-23" />
     <script src="index_files/header-attrs/header-attrs.js"></script>
     <script src="index_files/clipboard/clipboard.min.js"></script>
     <link href="index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
@@ -46,7 +46,7 @@ class: center, middle, inverse, title-slide
 ### Garrick Aden-Buie
 ]
 .date[
-### 2025-04-20
+### 2025-04-23
 ]
 
 ---
@@ -65,6 +65,8 @@ class: center, middle, inverse, title-slide
 3. [Projetos](#projetos)
 4. [Importação de dados](#importacao)
 5. [Manipulação de dados](#manipulacao)
+6. [Visualização de dados](#visualizacao)
+7. [Regressão Linear](#regressao)
 
 ---
 
@@ -4460,18 +4462,18 @@ pinguins |&gt;
 ## # A tibble: 12 × 8
 ##    species   island   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
 ##    &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
-##  1 Chinstrap Dream              47.6          18.3               195        3850
-##  2 Adelie    Biscoe             40.6          18.8               193        3800
-##  3 Adelie    Biscoe             36.5          16.6               181        2850
-##  4 Chinstrap Dream              49.7          18.6               195        3600
-##  5 Chinstrap Dream              45.7          17.3               193        3600
-##  6 Chinstrap Dream              52            18.1               201        4050
-##  7 Gentoo    Biscoe             50            16.3               230        5700
-##  8 Gentoo    Biscoe             48.7          14.1               210        4450
-##  9 Adelie    Torgers…           37.8          17.1               186        3300
-## 10 Chinstrap Dream              49            19.5               210        3950
-## 11 Adelie    Dream              39.8          19.1               184        4650
-## 12 Chinstrap Dream              46.9          16.6               192        2700
+##  1 Gentoo    Biscoe             44            13.6               208        4350
+##  2 Adelie    Dream              40.2          20.1               200        3975
+##  3 Gentoo    Biscoe             46.8          15.4               215        5150
+##  4 Adelie    Torgers…           38.9          17.8               181        3625
+##  5 Gentoo    Biscoe             50            16.3               230        5700
+##  6 Adelie    Biscoe             41.1          18.2               192        4050
+##  7 Adelie    Dream              36.3          19.5               190        3800
+##  8 Gentoo    Biscoe             49.2          15.2               221        6300
+##  9 Chinstrap Dream              46.2          17.5               187        3650
+## 10 Adelie    Torgers…           36.2          16.1               187        3550
+## 11 Gentoo    Biscoe             48.4          16.3               220        5400
+## 12 Gentoo    Biscoe             43.4          14.4               218        4600
 ## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
 ```
 
@@ -6593,7 +6595,2433 @@ ideb_mapa |&gt;
 
 ]
 
+---
 
+class: inverse center middle
+name: regressao
+
+# Regressão Linear
+
+.center[(Acompanhe no arquivo `05-regressao.R`)]
+
+---
+
+&lt;!-- class: inverse center middle --&gt;
+
+# Dados Educacionais
+
+---
+
+### Importando as bases
+
+.tiny[
+
+``` r
+# Bases do IDEB
+ideb_fund  &lt;- readr::read_csv(
+  "dados/ideb_fundamental.csv",
+  col_types = cols(id_municipio = col_character(), ano = col_integer())
+)
+ideb_medio &lt;- readr::read_csv(
+  "dados/ideb_medio.csv",
+  col_types = cols(id_municipio = col_character(), ano = col_integer())
+)
+
+# Indicadores educacionais
+indic_fund &lt;- readr::read_csv(
+  "dados/indicadores_fundamental.csv",
+  col_types = cols(id_municipio = col_character(), ano = col_integer())
+)
+indic_medio &lt;- readr::read_csv(
+  "dados/indicadores_medio.csv",
+  col_types = cols(id_municipio = col_character(), ano = col_integer())
+)
+
+# PIB per capita
+pib_pop &lt;- readr::read_csv(
+  "dados/pib_pc.csv",
+  col_types = cols(id_municipio = col_character(), ano = col_integer())
+)
+```
+]
+
+---
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Ideb&lt;/div&gt;
+
+
+``` r
+head(ideb_fund, n = 5)
+```
+
+```
+## # A tibble: 5 × 5
+##   id_municipio   ano tx_aprov ensino       ideb
+##   &lt;chr&gt;        &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
+## 1 1100015       2021     94.3 fundamental  4.75
+## 2 1100023       2021     94.2 fundamental  4.98
+## 3 1100049       2021     99.5 fundamental  5.32
+## 4 1100064       2021     99.3 fundamental  5.65
+## 5 1100072       2021     98.6 fundamental  5.32
+```
+
+``` r
+head(ideb_medio, n = 5)
+```
+
+```
+## # A tibble: 5 × 5
+##   id_municipio   ano tx_aprov ensino  ideb
+##   &lt;chr&gt;        &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;
+## 1 1100304       2021     75.6 medio   3.55
+## 2 1200435       2021     90   medio   2.9 
+## 3 1300060       2021     89.4 medio   3   
+## 4 1300201       2021     72.7 medio   2.2 
+## 5 1300508       2021     87.1 medio   3.1
+```
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Ideb — Dicionário&lt;/div&gt;
+
+As bases `ideb_fund` (Ensino Fundamental) e `ideb_medio` (Ensino Médio) contêm:
+
+1. `id_municipio`: código do IBGE de identificação do município
+
+2. `tx_aprov`: taxa de aprovação média do município
+
+3. `ideb`: índice de desenvolvimento da educação básica (Ideb) do município
+
+  - Calculado com base nas taxas de aprovação (Censo Escolar) e no desempenho no Saeb (Sistema de Avaliação da Educação Básica)
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Indicadores&lt;/div&gt;
+
+
+``` r
+head(indic_fund, n = 5)
+```
+
+```
+## # A tibble: 5 × 5
+##     ano id_municipio tx_aband hrs_aula   tdi
+##   &lt;int&gt; &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
+## 1  2021 1100015         0.167     4    21.9 
+## 2  2021 1100023         1.63      4.41 13.6 
+## 3  2021 1100031         0.355     4    10.7 
+## 4  2021 1100049         0.493     4.49  9.31
+## 5  2021 1100056         0.22      4.06  7.52
+```
+
+``` r
+head(indic_medio, n = 5)
+```
+
+```
+## # A tibble: 5 × 5
+##     ano id_municipio tx_aband hrs_aula   tdi
+##   &lt;int&gt; &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
+## 1  2021 1100015          1        4.77  44.5
+## 2  2021 1100023          5.13     6.47  25.7
+## 3  2021 1100031          3.8      4     19.3
+## 4  2021 1100049          4.32     6.86  28.2
+## 5  2021 1100056          9.51     6.89  24.3
+```
+
+&lt;/div&gt;
+
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Indicadores — Dicionário&lt;/div&gt;
+
+As bases `indic_fund` (Ensino Fundamental) e `indic_medio` (Ensino Médio) contêm indicadores educacionais como:
+
+1. `id_municipio`: código do IBGE de identificação do município
+
+2. `tx_aband`: taxa média de abandono escolar por município
+
+3. `hrs_aula`: média das horas de aula por município
+
+4. `tdi`: taxa de distorção idade-série por município
+
+  - Proporção de alunos com dois anos ou mais de atraso escolar.
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;PIB&lt;/div&gt;
+
+
+``` r
+head(pib_pop, n = 5)
+```
+
+```
+## # A tibble: 5 × 4
+##   id_municipio   ano        pib populacao
+##   &lt;chr&gt;        &lt;int&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+## 1 1100015       2020  570272326     22728
+## 2 1100023       2020 2818048618    109523
+## 3 1100031       2020  167189811      5188
+## 4 1100049       2020 2519352677     85893
+## 5 1100056       2020  600670074     16204
+```
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;PIB — Dicionário&lt;/div&gt;
+
+A base `pib_pop` traz os seguintes dados para o ano de 2020:
+
+1. `id_municipio`: código do IBGE de identificação do município
+
+2. `pib`: Produto Interno Bruto total do município
+
+3. `populacao`: população total do município
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+.right[O PIB _per capita_ será calculado depois.]
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Padronizando as bases de dados
+
+Preparamos as bases para análise selecionando apenas as variáveis relevantes de cada uma. Também criamos o PIB per capita a partir do PIB total e da população.
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Ideb: Fundamental&lt;/div&gt;
+
+.tiny[
+
+``` r
+ideb_fundamental &lt;- ideb_fund |&gt; 
+  select(id_municipio, tx_aprov, ideb)
+
+ideb_fundamental
+```
+
+```
+## # A tibble: 5,569 × 3
+##    id_municipio tx_aprov  ideb
+##    &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt;
+##  1 1100015          94.3  4.75
+##  2 1100023          94.2  4.98
+##  3 1100049          99.5  5.32
+##  4 1100064          99.3  5.65
+##  5 1100072          98.6  5.32
+##  6 1100080          94.3  4.78
+##  7 1100098          98.3  5.24
+##  8 1100106          96.7  4.76
+##  9 1100122          98.4  5.28
+## 10 1100148         100    5.74
+## # ℹ 5,559 more rows
+```
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Ideb: Médio&lt;/div&gt;
+
+.tiny[
+
+``` r
+ideb_medio &lt;- ideb_medio |&gt; 
+  select(id_municipio, tx_aprov, ideb)
+
+ideb_medio
+```
+
+```
+## # A tibble: 5,557 × 3
+##    id_municipio tx_aprov  ideb
+##    &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt;
+##  1 1100304          75.6  3.55
+##  2 1200435          90    2.9 
+##  3 1300060          89.4  3   
+##  4 1300201          72.7  2.2 
+##  5 1300508          87.1  3.1 
+##  6 1300607          87.4  2.8 
+##  7 1300680          87.5  3.1 
+##  8 1300805          87.2  3.1 
+##  9 1300839          94.9  3.1 
+## 10 1301407          88.6  3.9 
+## # ℹ 5,547 more rows
+```
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Indicadores: Fundamental&lt;/div&gt;
+
+.tiny[
+
+``` r
+indicadores_fundamental &lt;- indic_fund |&gt; 
+  select(id_municipio, tx_aband, hrs_aula, tdi)
+
+indicadores_fundamental
+```
+
+```
+## # A tibble: 5,570 × 4
+##    id_municipio tx_aband hrs_aula   tdi
+##    &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
+##  1 1100015         0.167     4    21.9 
+##  2 1100023         1.63      4.41 13.6 
+##  3 1100031         0.355     4    10.7 
+##  4 1100049         0.493     4.49  9.31
+##  5 1100056         0.22      4.06  7.52
+##  6 1100064         0         4.05  7.15
+##  7 1100072         0         4.04 13.0 
+##  8 1100080         2.87      4.2  23.2 
+##  9 1100098         1.97      4.24 14.8 
+## 10 1100106         2.28      4.14 27.2 
+## # ℹ 5,560 more rows
+```
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Indicadores: Médio&lt;/div&gt;
+
+.tiny[
+
+``` r
+indicadores_medio &lt;- indic_medio |&gt; 
+  select(id_municipio, tx_aband, hrs_aula, tdi)
+
+indicadores_medio
+```
+
+```
+## # A tibble: 5,570 × 4
+##    id_municipio tx_aband hrs_aula   tdi
+##    &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
+##  1 1100015         1         4.77  44.5
+##  2 1100023         5.13      6.47  25.7
+##  3 1100031         3.8       4     19.3
+##  4 1100049         4.32      6.86  28.2
+##  5 1100056         9.51      6.89  24.3
+##  6 1100064         0.98      7.04  16.5
+##  7 1100072         0.8       4     21.9
+##  8 1100080         0.133     4.5   34.3
+##  9 1100098         0         5.66  31.3
+## 10 1100106         8.68      6.18  46.2
+## # ℹ 5,560 more rows
+```
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;PIB per capita&lt;/div&gt;
+
+.tiny[
+
+``` r
+pib_pc &lt;- pib_pop |&gt; 
+* mutate(pib_pc = pib/populacao)  |&gt; # cria a variável PIB per capita
+  select(id_municipio, pib_pc)  
+  
+pib_pc
+```
+
+```
+## # A tibble: 5,570 × 2
+##    id_municipio pib_pc
+##    &lt;chr&gt;         &lt;dbl&gt;
+##  1 1100015      25091.
+##  2 1100023      25730.
+##  3 1100031      32226.
+##  4 1100049      29331.
+##  5 1100056      37069.
+##  6 1100064      23606.
+##  7 1100072      37172.
+##  8 1100080      13936.
+##  9 1100098      20380.
+## 10 1100106      21148.
+## # ℹ 5,560 more rows
+```
+]
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Juntando as bases de dados: Ensino Fundamental
+
+Reunimos em uma única base (`fundamental`) as variáveis de desempenho (`ideb`), permanência escolar (`tx_aprov`, `tx_aband`, `tdi`, `hrs_aula`) e contexto socioeconômico (`pib_pc`), usando `id_municipio` como chave.
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;&lt;code&gt;left_join()&lt;/code&gt;&lt;/div&gt;
+
+.tiny[
+
+``` r
+fundamental &lt;- left_join(ideb_fundamental, indicadores_fundamental, by = "id_municipio") |&gt; 
+  left_join(pib_pc, by = "id_municipio")
+
+fundamental
+```
+
+```
+## # A tibble: 5,569 × 7
+##    id_municipio tx_aprov  ideb tx_aband hrs_aula   tdi pib_pc
+##    &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1 1100015          94.3  4.75    0.167     4    21.9  25091.
+##  2 1100023          94.2  4.98    1.63      4.41 13.6  25730.
+##  3 1100049          99.5  5.32    0.493     4.49  9.31 29331.
+##  4 1100064          99.3  5.65    0         4.05  7.15 23606.
+##  5 1100072          98.6  5.32    0         4.04 13.0  37172.
+##  6 1100080          94.3  4.78    2.87      4.2  23.2  13936.
+##  7 1100098          98.3  5.24    1.97      4.24 14.8  20380.
+##  8 1100106          96.7  4.76    2.28      4.14 27.2  21148.
+##  9 1100122          98.4  5.28    1.9       4.53 16.7  31210.
+## 10 1100148         100    5.74    0         4.27  6.42 19687.
+## # ℹ 5,559 more rows
+```
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;&lt;code&gt;reduce()&lt;/code&gt;&lt;/div&gt;
+
+.tiny[
+
+``` r
+fundamental &lt;- list(ideb_fundamental, indicadores_fundamental, pib_pc) %&gt;% 
+  purrr::reduce(left_join)
+
+fundamental
+```
+
+```
+## # A tibble: 5,569 × 7
+##    id_municipio tx_aprov  ideb tx_aband hrs_aula   tdi pib_pc
+##    &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1 1100015          94.3  4.75    0.167     4    21.9  25091.
+##  2 1100023          94.2  4.98    1.63      4.41 13.6  25730.
+##  3 1100049          99.5  5.32    0.493     4.49  9.31 29331.
+##  4 1100064          99.3  5.65    0         4.05  7.15 23606.
+##  5 1100072          98.6  5.32    0         4.04 13.0  37172.
+##  6 1100080          94.3  4.78    2.87      4.2  23.2  13936.
+##  7 1100098          98.3  5.24    1.97      4.24 14.8  20380.
+##  8 1100106          96.7  4.76    2.28      4.14 27.2  21148.
+##  9 1100122          98.4  5.28    1.9       4.53 16.7  31210.
+## 10 1100148         100    5.74    0         4.27  6.42 19687.
+## # ℹ 5,559 more rows
+```
+]
+
+.right[&lt;span style='font-size:80%'&gt;`reduce(left_join)` é mais eficiente quando há muitas bases.&lt;/span&gt;]
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Análise Descritivas: Ensino Fundamental
+
+&lt;!-- O objetivo é **identificar padrões gerais, possíveis outliers e assimetrias**. --&gt;
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Resumo estatístico&lt;/div&gt;
+
+O objetivo é **identificar padrões gerais, possíveis outliers e assimetrias**.
+
+.tiny[
+
+``` r
+summary(fundamental)
+```
+
+```
+##  id_municipio          tx_aprov           ideb          tx_aband      
+##  Length:5569        Min.   : 64.00   Min.   :2.600   Min.   : 0.0000  
+##  Class :character   1st Qu.: 95.16   1st Qu.:4.700   1st Qu.: 0.0750  
+##  Mode  :character   Median : 97.95   Median :5.280   Median : 0.4364  
+##                     Mean   : 96.44   Mean   :5.221   Mean   : 1.1324  
+##                     3rd Qu.: 99.43   3rd Qu.:5.717   3rd Qu.: 1.3833  
+##                     Max.   :100.00   Max.   :8.800   Max.   :20.8000  
+##                     NA's   :76       NA's   :240                      
+##     hrs_aula           tdi             pib_pc        
+##  Min.   : 3.400   Min.   : 0.000   Min.   :    13.6  
+##  1st Qu.: 4.185   1st Qu.: 7.275   1st Qu.:  9950.1  
+##  Median : 4.400   Median :12.046   Median : 17632.7  
+##  Mean   : 4.602   Mean   :13.680   Mean   : 25032.0  
+##  3rd Qu.: 4.755   3rd Qu.:19.064   3rd Qu.: 32072.9  
+##  Max.   :10.300   Max.   :53.300   Max.   :591101.1  
+## 
+```
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Histograma&lt;/div&gt;
+
+.tiny[
+
+``` r
+fundamental |&gt; 
+  ggplot(aes(x = ideb)) +
+* geom_histogram()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-255-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Boxplot horizontal&lt;/div&gt;
+
+.tiny[
+
+``` r
+fundamental |&gt; 
+  ggplot() +
+* aes(x = ideb) +
+* geom_boxplot()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-256-1.png" width="87%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Boxplot vertical&lt;/div&gt;
+
+.pull-left[
+.tiny[
+
+``` r
+fundamental |&gt; 
+  ggplot() +
+* aes(y = ideb) +
+* geom_boxplot()
+```
+]
+]
+
+.pull-right[
+&lt;img src="index_files/figure-html/unnamed-chunk-258-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Regressão Linear: Ensino Fundamental
+
+&lt;!-- **Será que a taxa de distorção idade-série (`tdi`) está positivamente relacionada à taxa de abandono escolar (`tx_aband`)?** --&gt;
+
+**Será que a `tdi` está positivamente relacionada à `tx_aband`?**
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;sem linha de tendência&lt;/div&gt;
+
+.tiny[
+
+``` r
+fundamental |&gt; 
+  ggplot(aes(x = tdi, y = tx_aband)) +
+  geom_point() 
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-259-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;com linha de tendência&lt;/div&gt;
+
+.tiny[
+
+``` r
+fundamental |&gt; 
+  ggplot(aes(x = tdi, y = tx_aband)) +
+  geom_point() +
+* geom_smooth(method = "lm", se = FALSE)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-260-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;regressão linear&lt;/div&gt;
+
+.scroll-output[
+
+``` r
+modelo &lt;- lm(tx_aband ~ tdi, data = fundamental)
+summary(modelo)
+```
+
+```
+## 
+## Call:
+## lm(formula = tx_aband ~ tdi, data = fundamental)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.3881 -0.7446 -0.1523  0.3974 18.3472 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.568396   0.039688  -14.32   &lt;2e-16 ***
+## tdi          0.124327   0.002501   49.71   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.501 on 5567 degrees of freedom
+## Multiple R-squared:  0.3074,	Adjusted R-squared:  0.3073 
+## F-statistic:  2471 on 1 and 5567 DF,  p-value: &lt; 2.2e-16
+```
+]
+
+&lt;br&gt;
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;interpretação&lt;/div&gt;
+
+**Resultado:** 
+
+A relação entre `tdi` e `tx_aband` é **positiva**, com significância estatística (p &lt; 0.001).
+
+O `\(R^2\)` do modelo é 0.3074, ou seja, cerca de 30.74% da variação em `tx_aband` é explicada por `tdi`.
+
+**Equação estimada:**
+
+$$
+\text{tx_aband} = -0.568 + 0.124 \cdot \text{tdi}   
+$$
+
+**Interpretação:**
+
+- A cada **1 p.p. de aumento em `tdi`**, espera-se um **aumento de 0.124 p.p. na `tx_aband`**.
+- Esse resultado reforça a hipótese de que **quanto maior a distorção idade-série**, **maior tende a ser a evasão escolar**.
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+&lt;!-- ### Regressão Linear: Ensino Fundamental --&gt;
+
+&lt;!-- **Qual a relação entre a taxa de distorção idade-série (`tdi`), a taxa de aprovação (`tx_aprov`), as horas-aula (`hrs_aula`) e a taxa de abandono escolar (`tx_aband`)?** --&gt;
+
+**Qual a relação entre `tdi`, `tx_aprov`, `hrs_aula` e `tx_aband`?**
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;sem linha de tendência&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;com linha de tendência&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;regressão linear&lt;/div&gt;
+
+.tiny[
+
+``` r
+modelo &lt;- lm(tx_aband ~ tdi + tx_aprov + hrs_aula, data = fundamental)
+summary(modelo)
+```
+
+```
+## 
+## Call:
+## lm(formula = tx_aband ~ tdi + tx_aprov + hrs_aula, data = fundamental)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -7.9012 -0.5380  0.0074  0.3868 13.5496 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 22.093790   0.459395  48.093   &lt;2e-16 ***
+## tdi          0.059155   0.002466  23.985   &lt;2e-16 ***
+## tx_aprov    -0.227616   0.004547 -50.054   &lt;2e-16 ***
+## hrs_aula     0.039772   0.024120   1.649   0.0992 .  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.247 on 5489 degrees of freedom
+##   (76 observations deleted due to missingness)
+## Multiple R-squared:  0.525,	Adjusted R-squared:  0.5248 
+## F-statistic:  2023 on 3 and 5489 DF,  p-value: &lt; 2.2e-16
+```
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;interpretação&lt;/div&gt;
+
+**Resultado:**
+
+A taxa de distorção idade-série (`tdi`) e as horas-aula (`hrs_aula`) apresentam relação **positiva** com a taxa de abandono escolar (`tx_aband`), enquanto a taxa de aprovação (`tx_aprov`) tem relação **negativa**.
+
+- `tdi`: **positiva**, estatisticamente significativa (p &lt; 0.001)
+- `hrs_aula`: **positiva**, significância ao nível de 10% (p = 0.0992)
+- `tx_aprov`: **negativa**, estatisticamente significativa (p &lt; 0.001)
+
+O `\(R^2 = 0.525\)`, indicando que 52.5% da variação da taxa de abandono é explicada pelas variáveis.
+
+O **Teste F** é estatisticamente significativo, mostrando que os parâmetros são conjuntamente relevantes.
+
+**Equação estimada:**
+
+$$
+\text{tx_aband} = 22.093 + 0.059 \cdot \text{tdi} - 0.228 \cdot \text{tx_aprov} + 0.040 \cdot \text{hrs_aula}
+$$
+
+**Interpretação:**
+
+- Aumento de **1 p.p. na `tdi`** resulta em **aumento de 0.059 p.p. na `tx_aband`** _(ceteris paribus)_.
+- Aumento de **1 p.p. na `tx_aprov`** resulta em **redução de 0.228 p.p. na `tx_aband`** _(ceteris paribus)_.
+- Aumento de **1 hora-aula** resulta em **aumento de 0.04 p.p. na `tx_aband`** _(ceteris paribus)_.
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+**Qual a relação entre `tdi`, `tx_aprov`, `pib_pc` e a `tx_aband`?**
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;sem linha de tendência&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;com linha de tendência&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;regressão linear&lt;/div&gt;
+
+.tiny[
+
+``` r
+modelo &lt;- lm(tx_aband ~ tdi + tx_aprov + pib_pc, data = fundamental)
+summary(modelo)
+```
+
+```
+## 
+## Call:
+## lm(formula = tx_aband ~ tdi + tx_aprov + pib_pc, data = fundamental)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -7.9172 -0.5341  0.0029  0.3950 13.4971 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.245e+01  4.543e-01  49.430  &lt; 2e-16 ***
+## tdi          5.582e-02  2.491e-03  22.413  &lt; 2e-16 ***
+## tx_aprov    -2.278e-01  4.501e-03 -50.621  &lt; 2e-16 ***
+## pib_pc      -4.391e-06  6.038e-07  -7.272 4.04e-13 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.241 on 5489 degrees of freedom
+##   (76 observations deleted due to missingness)
+## Multiple R-squared:  0.5293,	Adjusted R-squared:  0.5291 
+## F-statistic:  2058 on 3 and 5489 DF,  p-value: &lt; 2.2e-16
+```
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;interpretação&lt;/div&gt;
+
+**Resultado:**
+
+A variável `tdi` apresenta relação **positiva** com a `tx_aband`, enquanto `tx_aprov` e `pib_pc` apresentam relações **negativas**.
+
+- `tdi`: **positiva**, estatisticamente significativa (p &lt; 0.001)
+- `tx_aprov`: **negativa**, estatisticamente significativa (p &lt; 0.001)
+- `pib_pc`: **negativa**, estatisticamente significativa (p &lt; 0.001)
+
+O `\(R^2 = 0.5293\)` indica que o modelo explica 52.93% da variação da `tx_aband`.
+
+O **Teste F** confirma a significância conjunta dos parâmetros.
+
+**Equação estimada:**
+
+$$
+\text{tx_aband} = 22.438 + 0.056 \cdot \text{tdi} - 0.229 \cdot \text{tx_aprov} - 0.000004 \cdot \text{pib_pc}
+$$
+
+**Interpretação:**
+
+- Aumento de **1 p.p. na `tdi`** resulta em **aumento de 0.056 p.p. na `tx_aband`** _(ceteris paribus)_.
+- Aumento de **1 p.p. na `tx_aprov`** resulta em **redução de 0.229 p.p. na `tx_aband`** _(ceteris paribus)_.
+- Aumento de **R$ 10000.00 no `pib_pc`** resulta em **redução de 0.04 p.p. na `tx_aband`** _(ceteris paribus)_.
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Juntando as bases de dados: Ensino Médio
+
+Reunimos em uma única base (`medio`) as variáveis de desempenho (`ideb`), permanência escolar (`tx_aprov`, `tx_aband`, `tdi`, `hrs_aula`) e contexto socioeconômico (`pib_pc`), usando `id_municipio` como chave.
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;&lt;code&gt;left_join()&lt;/code&gt;&lt;/div&gt;
+
+.tiny[
+
+``` r
+medio &lt;- left_join(ideb_medio, indicadores_medio, by = "id_municipio") |&gt; 
+  left_join(pib_pc, by = "id_municipio")
+
+medio
+```
+
+```
+## # A tibble: 5,557 × 7
+##    id_municipio tx_aprov  ideb tx_aband hrs_aula   tdi pib_pc
+##    &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1 1100304          75.6  3.55     2.94     4.56  31.3 30848.
+##  2 1200435          90    2.9      9.9      4.93  54.1 12526.
+##  3 1300060          89.4  3        4.87     4     46.3  8689.
+##  4 1300201          72.7  2.2     21.4      3.87  62.0  8469.
+##  5 1300508          87.1  3.1      5.83     4.8   47.8  9653.
+##  6 1300607          87.4  2.8      8        5.67  35.7  7951.
+##  7 1300680          87.5  3.1     11.8      3.87  47.2  8229.
+##  8 1300805          87.2  3.1      6.63     4.97  42.2  8659.
+##  9 1300839          94.9  3.1      2.23     3.83  44.6 12846.
+## 10 1301407          88.6  3.9      1.08     7.05  29.0  1409.
+## # ℹ 5,547 more rows
+```
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;&lt;code&gt;reduce()&lt;/code&gt;&lt;/div&gt;
+
+.tiny[
+
+``` r
+medio &lt;- list(ideb_medio, indicadores_medio, pib_pc) |&gt; 
+  purrr::reduce(left_join)
+
+medio
+```
+
+```
+## # A tibble: 5,557 × 7
+##    id_municipio tx_aprov  ideb tx_aband hrs_aula   tdi pib_pc
+##    &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1 1100304          75.6  3.55     2.94     4.56  31.3 30848.
+##  2 1200435          90    2.9      9.9      4.93  54.1 12526.
+##  3 1300060          89.4  3        4.87     4     46.3  8689.
+##  4 1300201          72.7  2.2     21.4      3.87  62.0  8469.
+##  5 1300508          87.1  3.1      5.83     4.8   47.8  9653.
+##  6 1300607          87.4  2.8      8        5.67  35.7  7951.
+##  7 1300680          87.5  3.1     11.8      3.87  47.2  8229.
+##  8 1300805          87.2  3.1      6.63     4.97  42.2  8659.
+##  9 1300839          94.9  3.1      2.23     3.83  44.6 12846.
+## 10 1301407          88.6  3.9      1.08     7.05  29.0  1409.
+## # ℹ 5,547 more rows
+```
+]
+
+.right[&lt;span style='font-size:80%'&gt;`reduce(left_join)` é mais eficiente quando há muitas bases.&lt;/span&gt;]
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Análise Descritivas: Ensino Médio
+
+&lt;!-- O objetivo é **identificar padrões gerais, possíveis outliers e assimetrias**. --&gt;
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Resumo estatístico&lt;/div&gt;
+
+O objetivo é **identificar padrões gerais, possíveis outliers e assimetrias**.
+
+.tiny[
+
+``` r
+summary(medio)
+```
+
+```
+##  id_municipio          tx_aprov           ideb          tx_aband      
+##  Length:5557        Min.   : 37.10   Min.   :2.000   Min.   : 0.0000  
+##  Class :character   1st Qu.: 86.70   1st Qu.:3.800   1st Qu.: 0.5333  
+##  Mode  :character   Median : 93.80   Median :4.200   Median : 2.7750  
+##                     Mean   : 90.89   Mean   :4.172   Mean   : 5.1947  
+##                     3rd Qu.: 97.90   3rd Qu.:4.600   3rd Qu.: 7.1400  
+##                     Max.   :100.00   Max.   :6.400   Max.   :50.1000  
+##                     NA's   :132      NA's   :2138                     
+##     hrs_aula           tdi            pib_pc        
+##  Min.   : 3.000   Min.   : 0.00   Min.   :    13.6  
+##  1st Qu.: 4.333   1st Qu.:15.40   1st Qu.:  9948.5  
+##  Median : 4.800   Median :23.30   Median : 17596.6  
+##  Mean   : 5.231   Mean   :25.74   Mean   : 25023.3  
+##  3rd Qu.: 5.725   3rd Qu.:34.20   3rd Qu.: 32063.3  
+##  Max.   :15.500   Max.   :74.90   Max.   :591101.1  
+## 
+```
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Histograma&lt;/div&gt;
+
+.tiny[
+
+``` r
+medio |&gt; 
+  ggplot(aes(x = ideb)) +
+* geom_histogram()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-267-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Boxplot horizontal&lt;/div&gt;
+
+.tiny[
+
+``` r
+medio |&gt; 
+  ggplot() +
+* aes(x = ideb) +
+* geom_boxplot()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-268-1.png" width="87%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Boxplot vertical&lt;/div&gt;
+
+.pull-left[
+.tiny[
+
+``` r
+medio |&gt; 
+  ggplot() +
+* aes(y = ideb) +
+* geom_boxplot()
+```
+]
+]
+
+.pull-right[
+&lt;img src="index_files/figure-html/unnamed-chunk-270-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Regressão Linear: Ensino Médio
+
+**Existe relação entre `ideb` e a `tx_aband`?**
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;sem linha de tendência&lt;/div&gt;
+
+.tiny[
+
+``` r
+medio |&gt;  
+  ggplot(aes(x = ideb, y = tx_aband)) +
+  geom_point()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-271-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;com linha de tendência&lt;/div&gt;
+
+.tiny[
+
+``` r
+medio |&gt;  
+  ggplot(aes(x = ideb, y = tx_aband)) +
+  geom_point() + 
+* geom_smooth(method = "lm", se = FALSE)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-272-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;regressão linear&lt;/div&gt;
+
+.scroll-output[
+.tiny[
+
+``` r
+modelo &lt;- lm(tx_aband ~ ideb, data = medio)
+summary(modelo)
+```
+
+```
+## 
+## Call:
+## lm(formula = tx_aband ~ ideb, data = medio)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -11.5403  -2.4673  -0.5747   1.6307  29.4115 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  22.2989     0.4654   47.91   &lt;2e-16 ***
+## ideb         -4.4828     0.1103  -40.62   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.988 on 3417 degrees of freedom
+##   (2138 observations deleted due to missingness)
+## Multiple R-squared:  0.3257,	Adjusted R-squared:  0.3255 
+## F-statistic:  1650 on 1 and 3417 DF,  p-value: &lt; 2.2e-16
+```
+]
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;interpretação&lt;/div&gt;
+
+**Resultado:**
+
+A relação entre o desempenho escolar (`ideb`) e a taxa de abandono (`tx_aband`) é **negativa**, com alta significância estatística (p &lt; 0.001).
+
+O coeficiente de determinação `\(R^2 = 0.3257\)` indica que, aproximadamente, 32.57% da variação da taxa de abandono (`tx_aband`) é explicada pelo desempenho no Ideb (`ideb`). 
+
+**Equação estimada:**
+
+$$
+\text{tx_aband} = 22.2989 - 4.4828 \cdot \text{ideb}
+$$
+
+**Interpretação:**
+
+- Um **aumento de 1 ponto no `ideb`** resulta, em média, em uma **redução de 4.48 p.p. na `tx_aband`** do ensino médio, **ceteris paribus**.
+- Municípios com melhores desempenhos educacionais no ensino médio apresentam taxas de abandono escolar significativemente menores.
+
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+**Qual a relação entre `hrs_aula` e a `tx_aband`?**
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;sem linha de tendência&lt;/div&gt;
+
+.tiny[
+
+``` r
+medio |&gt;  
+  ggplot(aes(x = tx_aprov, y = tx_aband)) +
+  geom_point() 
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-274-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;com linha de tendência&lt;/div&gt;
+
+.tiny[
+
+``` r
+medio |&gt; 
+  ggplot(aes(x = tx_aprov, y = tx_aband)) +
+  geom_point() +
+* geom_smooth(method = "lm", se = FALSE)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-275-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;regressão linear&lt;/div&gt;
+
+.scroll-output[
+.tiny[
+
+``` r
+modelo &lt;- lm(tx_aband ~ tx_aprov, data = medio)
+summary(modelo)
+```
+
+```
+## 
+## Call:
+## lm(formula = tx_aband ~ tx_aprov, data = medio)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -33.664  -1.462  -0.120   1.575  21.338 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 56.044660   0.565009   99.19   &lt;2e-16 ***
+## tx_aprov    -0.559250   0.006184  -90.44   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 4.241 on 5423 degrees of freedom
+##   (132 observations deleted due to missingness)
+## Multiple R-squared:  0.6013,	Adjusted R-squared:  0.6012 
+## F-statistic:  8179 on 1 and 5423 DF,  p-value: &lt; 2.2e-16
+```
+]
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;interpretação&lt;/div&gt;
+
+**Resultado:**
+
+A variável `tx_aprov` apresenta uma relação **negativa** com a `tx_aband` no ensino médio. Essa relação é estatisticamente significativa (p &lt; 0.001).
+
+O `\(R^2\)` é igual a 0.6013, indicando que, aproximadamente, 60.13% da variação na `tx_aband` escolar pode ser explicada pela `tx_aprov`.
+
+**Equação estimada:**
+
+$$
+\text{tx_aband} = 56.04 - 0.595 \cdot \text{tx_aprov}
+$$
+
+**Interpretação:**
+
+- A cada **aumento de 1 p.p. na `tx_aprov`**, há uma **redução estimada de 0.559 p.p. na `tx_aband`**, _ceteris paribus_.
+- Esse efeito é estatisticamente significativo e indica uma **forte associação inversa** entre as variáveis: **quanto maior a aprovação, menor o abandono**.
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+**Qual a relação entre `hrs_aula` e a `tx_aband`?**
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;sem linha de tendência&lt;/div&gt;
+
+.tiny[
+
+``` r
+medio |&gt;  
+  ggplot(aes(x = hrs_aula, y = tx_aband)) +
+  geom_point() 
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-277-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;com linha de tendência&lt;/div&gt;
+
+.tiny[
+
+``` r
+medio |&gt;  
+  ggplot(aes(x = hrs_aula, y = tx_aband)) +
+  geom_point() +
+* geom_smooth(method = "lm", se = FALSE)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-278-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;regressão linear&lt;/div&gt;
+
+.scroll-output[
+.tiny[
+
+``` r
+modelo &lt;- lm(tx_aband ~ hrs_aula, data = medio)
+summary(modelo)
+```
+
+```
+## 
+## Call:
+## lm(formula = tx_aband ~ hrs_aula, data = medio)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -7.074 -4.395 -1.906  1.842 43.794 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 10.28548    0.35771   28.75   &lt;2e-16 ***
+## hrs_aula    -0.97324    0.06629  -14.68   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 6.557 on 5555 degrees of freedom
+## Multiple R-squared:  0.03736,	Adjusted R-squared:  0.03718 
+## F-statistic: 215.6 on 1 and 5555 DF,  p-value: &lt; 2.2e-16
+```
+]
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;interpretação&lt;/div&gt;
+
+**Resultado:**
+
+A relação entre `hrs_aula` e a `tx_aband` é **negativa**, com alta significância estatística (p &lt; 0.001).
+
+O `\(R^2\)` é igual a 0.03736, o que indica que aproximadamente 3.736% da variação na `tx_aband` é explicada pelo número de horas-aula semanais (`hrs_aula`).
+ 
+**Equação estimada:**
+
+$$
+\text{tx_aband} = 10{,}285 - 0{,}973 \cdot \text{hrs_aula}
+$$
+
+**Interpretação:**
+
+- Um **aumento de 1 hrs_aula** está associado a uma **redução de 0.9732 p.p. na `tx_aband`**, _ceteris paribus_.
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+**Qual a relação entre `tx_aprov`, `tdi`, `hrs_aula`, `pib_pc` e a `tx_aband`?**
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;sem linha de tendência&lt;/div&gt;
+
+
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;com linha de tendência&lt;/div&gt;
+
+
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;regressão linear&lt;/div&gt;
+
+.scroll-output[
+.tiny[
+
+``` r
+modelo &lt;- lm(tx_aband ~ tx_aprov + tdi + hrs_aula + pib_pc,data = medio)
+summary(modelo)
+```
+
+```
+## 
+## Call:
+## lm(formula = tx_aband ~ tx_aprov + tdi + hrs_aula + pib_pc, data = medio)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -31.677  -1.677   0.049   1.714  21.847 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  4.994e+01  6.898e-01  72.402  &lt; 2e-16 ***
+## tx_aprov    -5.038e-01  6.756e-03 -74.565  &lt; 2e-16 ***
+## tdi          8.258e-02  4.669e-03  17.686  &lt; 2e-16 ***
+## hrs_aula    -1.363e-01  4.297e-02  -3.171  0.00153 ** 
+## pib_pc      -1.428e-05  2.034e-06  -7.021 2.48e-12 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 4.073 on 5420 degrees of freedom
+##   (132 observations deleted due to missingness)
+## Multiple R-squared:  0.6325,	Adjusted R-squared:  0.6322 
+## F-statistic:  2332 on 4 and 5420 DF,  p-value: &lt; 2.2e-16
+```
+]
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;interpretação&lt;/div&gt;
+
+**Resultado:**
+
+A variável `tdi` apresenta relação **positiva** com a `tx_aband`, enquanto `tx_aprov`, `hrs_aula` e `pib_pc` apresentam relações **negativas** e estatísticamente significativas.
+
+&lt;!-- - `tdi`: **positiva**, estatisticamente significativa (p &lt; 0.001) --&gt;
+&lt;!-- - `tx_aprov`: **negativa**, estatisticamente significativa (p &lt; 0.001) --&gt;
+&lt;!-- - `hrs_aula`: **negativa**, significância ao nível de 1% (p = 0.00153) --&gt;
+&lt;!-- - `pib_pc`: **negativa**, estatisticamente significativa (p &lt; 0.001) --&gt;
+
+O `\(R^2 = 0.6325\)` indica que o modelo explica 63.25% da variação da `tx_aband`.
+
+O **Teste F** confirma a significância conjunta dos parâmetros.
+ 
+**Equação estimada:**
+
+$$
+\text{tx_aband} = 49.94 - 0.504 \cdot \text{tx_aprov} + 0.083 \cdot \text{tdi} - 0.136 \cdot \text{hrs_aula} - 0.00001 \cdot \text{pibpc}
+$$
+
+**Interpretação:**
+
+- A cada **aumento de 1 p.p. na `tx_aprov`**, espera-se uma **redução de 0.504 p.p. na `tx_aband`**, _ceteris paribus_.
+- A cada **aumento de 1 p.p. na `tdi`**, espera-se um **aumento de 0.083 p.p. na `tx_aband`**, _ceteris paribus_.
+- Um **aumento de 1 hora-aula média (`hrs_aula`) por semana** está associado a uma **redução de 0.136 p.p. na `tc_aband`**, _ceteris paribus_. 
+  - Sugerindo que maior carga horária pode estar relacionada à permanência dos alunos na escola.
+- Um **aumento de R$ 10000 no `pib_pc`** está associado a uma **redução de 0.1 p.p. na `tx_aband`**, _ceteris paribus_.
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### &lt;span style='color:#34a15a'&gt;BASE DOS DADOS&lt;/span&gt;
+
+&lt;span style='color:#34a15a'&gt;&lt;b&gt;Importando a base da BigQuery para o R:&lt;/b&gt;&lt;/span&gt;
+
+
+``` r
+# instala o pacote (se ainda não estiver instalado)
+# install.packages("basedosdados")
+
+# carrega o pacote
+library(basedosdados)
+
+# define o ID do projeto da Google Cloud (BigQuery)
+# faz a ligação entre o R e a BigQuery do Google
+set_billing_id("ID-DO-PROJETO")
+```
+
+
+``` sql
+-- exemplo sem filtro
+SELECT coluna1, coluna2, coluna3,
+coluna4 AS apelido_da_coluna
+FROM `basedosdados.projeto.tabela`
+
+-- exemplo com filtro
+SELECT coluna1, coluna2, coluna3,
+coluna4 AS apelido_da_coluna
+FROM `basedosdados.projeto.tabela`
+WHERE coluna1 = 'valor1' AND coluna2 = 'valor2'
+```
+
+---
+
+### Atlas do Desenvolvimento Humano
+
+O **Atlas do Desenvolvimento Humano no Brasil** é uma plataforma criada em parceria entre o Programa das Nações Unidas para o Desenvolvimento (PNUD), o Instituto de Pesquisa Econômica Aplicada (IPEA) e a Fundação João Pinheiro (FJP). Seu objetivo é **facilitar o acesso a informações estatísticas sobre as características e desigualdades sociais do país**, sendo uma das principais ferramentas de divulgação de dados sobre o desenvolvimento humano no Brasil.
+
+O Atlas apresenta o **Índice de Desenvolvimento Humano Municipal (IDH-M)**, além de disponibilizar mais de **330 indicadores** que abordam temas como educação, saúde, habitação, renda, trabalho, vulnerabilidade social, meio ambiente e participação política. Esses dados estão organizados para os 5.570 municípios brasileiros, 5 macrorregiões, 27 Unidades da Federação, 21 regiões metropolitanas, 3 regiões integradas de desenvolvimento (RIDEs) e cerca de 17 mil Unidades de Desenvolvimento Humano (UDHs), que representam os "bairros" — as menores territorialidades analisadas, diretamente relacionadas à realidade local da população.
+
+Além dos dados provenientes dos Censos Demográficos de 1991, 2000 e 2010, o projeto passou a incorporar informações da Pesquisa Nacional por Amostra de Domicílios (PNAD) e de registros administrativos e cadastrais. O Atlas também oferece indicadores desagregados por grupos sociais, como mulheres, homens, negros, brancos e populações rurais e urbanas, o que amplia a capacidade analítica sobre as desigualdades e o desenvolvimento em diferentes contextos.
+
+&lt;br&gt;
+
+.right[Fonte: [Atlas Brasil](http://www.atlasbrasil.org.br)]
+
+---
+
+### Atlas do Desenvolvimento Humano — importando a base de dados
+
+
+
+
+``` r
+# consulta SQL à base do ADH via basedosdados
+adh &lt;- "SELECT id_municipio, ano, mortalidade_1, mortalidade_5, taxa_freq_liquida_pre,
+indice_gini,prop_pobreza_extrema_criancas, prop_pobreza_criancas, prop_vulner_pobreza_criancas, 
+taxa_agua_esgoto_inadequados, taxa_criancas_fora_escola_4_5
+FROM `basedosdados.mundo_onu_adh.municipio`" |&gt; 
+  basedosdados::read_sql()
+
+# visualiza a estrutura da base
+glimpse(adh)
+```
+
+```
+## Rows: 16,695
+## Columns: 11
+## $ id_municipio                  &lt;chr&gt; "1100031", "1100056", "1100262", "110080…
+## $ ano                           &lt;int64&gt; 1991, 2000, 2000, 1991, 1991, 1991, 19…
+## $ mortalidade_1                 &lt;dbl&gt; 41.52, 27.50, 28.31, 54.65, 59.58, 41.14…
+## $ mortalidade_5                 &lt;dbl&gt; 52.94, 32.93, 33.90, 69.43, 75.59, 52.47…
+## $ taxa_freq_liquida_pre         &lt;dbl&gt; 0.00, 14.04, 17.15, 15.81, 2.24, 4.25, 2…
+## $ indice_gini                   &lt;dbl&gt; 0.70, 0.69, 0.75, 0.71, 0.70, 0.78, 0.71…
+## $ prop_pobreza_extrema_criancas &lt;dbl&gt; 67.41, 22.22, 59.89, 33.60, 59.61, 60.61…
+## $ prop_pobreza_criancas         &lt;dbl&gt; 82.74, 46.00, 100.00, 67.87, 82.29, 81.0…
+## $ prop_vulner_pobreza_criancas  &lt;dbl&gt; 91.22, 71.37, 100.00, 89.24, 93.75, 92.1…
+## $ taxa_agua_esgoto_inadequados  &lt;dbl&gt; 0.63, 24.82, 42.05, 9.60, 7.80, 5.09, 5.…
+## $ taxa_criancas_fora_escola_4_5 &lt;dbl&gt; NA, 76.09, 74.15, NA, NA, NA, NA, NA, NA…
+```
+
+---
+
+**Será que a mortalidade infantil (até 1 ano) se relaciona com a taxa de água e esgoto inadequados?**
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;sem linha de tendência&lt;/div&gt;
+
+.tiny[
+
+``` r
+adh |&gt; 
+  ggplot(aes(x = taxa_agua_esgoto_inadequados, y = mortalidade_1)) +
+  geom_point() 
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-284-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;com linha de tendência&lt;/div&gt;
+
+.tiny[
+
+``` r
+adh |&gt;  
+  ggplot(aes(x = taxa_agua_esgoto_inadequados, y = mortalidade_1)) +
+  geom_point() +
+* geom_smooth(method = "lm", se = FALSE)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-285-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;regressão linear&lt;/div&gt;
+
+.scroll-output[
+.tiny[
+
+``` r
+modelo &lt;- lm(mortalidade_1 ~ taxa_agua_esgoto_inadequados, data = adh)
+summary(modelo)
+```
+
+```
+## 
+## Call:
+## lm(formula = mortalidade_1 ~ taxa_agua_esgoto_inadequados, data = adh)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -59.422 -10.285  -3.636   7.427  81.355 
+## 
+## Coefficients:
+##                               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                  24.098839   0.149584   161.1   &lt;2e-16 ***
+## taxa_agua_esgoto_inadequados  0.689124   0.006565   105.0   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 15.69 on 16693 degrees of freedom
+## Multiple R-squared:  0.3976,	Adjusted R-squared:  0.3976 
+## F-statistic: 1.102e+04 on 1 and 16693 DF,  p-value: &lt; 2.2e-16
+```
+]
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;interpretação&lt;/div&gt;
+
+**Resultado:**
+
+A taxa de domicílios com acesso inadequado a água e esgoto (`taxa_agua_esgoto_inadequados`) apresenta uma relação **positiva** com a mortalidade infantil (`mortalidade_1`), com significância estatística (p &lt; 0.001).
+
+O coeficiente de determinação (`\(R^2\)`) é 0.3976, indicando que cerca de 39.76% da variação na mortalidade infantil é explicada pela taxa de infraestrutura inadequada.
+ 
+**Equação estimada:**
+
+$$
+\text{mortalidade_1} = 24.0988 + 0.6891 \cdot \text{taxa_agua_esgoto_inadequados}
+$$
+
+**Interpretação:**
+
+- Um **aumento de 1 p.p. na taxa de domicílios com água e esgoto inadequados** está associado a um **aumento de 0.6891 óbitos por mil nascidos vivos** na taxa de mortalidade infantil, _ceteris paribus_.
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+**Relação entre a proporção de extrema pobreza em crianças e a mortalidade infantil (até 5 anos)**
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;sem linha de tendência&lt;/div&gt;
+
+.tiny[
+
+``` r
+adh |&gt;  
+  ggplot(aes(x = prop_pobreza_extrema_criancas, y = mortalidade_5)) +
+  geom_point() 
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-287-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;com linha de tendência&lt;/div&gt;
+
+.tiny[
+
+``` r
+adh |&gt;  
+  ggplot(aes(x = prop_pobreza_extrema_criancas, y = mortalidade_5)) +
+  geom_point() +
+* geom_smooth(method = "lm", se = FALSE)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-288-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;regressão linear&lt;/div&gt;
+
+.scroll-output[
+.tiny[
+
+``` r
+modelo &lt;- lm(mortalidade_5 ~ prop_pobreza_extrema_criancas, data = adh)
+summary(modelo)
+```
+
+```
+## 
+## Call:
+## lm(formula = mortalidade_5 ~ prop_pobreza_extrema_criancas, data = adh)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -74.322  -8.357  -0.638   6.418  87.053 
+## 
+## Coefficients:
+##                                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                   13.712534   0.196014   69.96   &lt;2e-16 ***
+## prop_pobreza_extrema_criancas  0.954348   0.005484  174.03   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 15.92 on 16693 degrees of freedom
+## Multiple R-squared:  0.6447,	Adjusted R-squared:  0.6446 
+## F-statistic: 3.029e+04 on 1 and 16693 DF,  p-value: &lt; 2.2e-16
+```
+]
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;interpretação&lt;/div&gt;
+
+**Resultado:**
+
+A proporção de crianças em extrema pobreza (`prop_pobreza_extrema_criancas`) possui relação **positiva** com a mortalidade infantil de até 5 anos (`mortalidade_5`). A variável é estatisticamente significativa (p &lt; 0.001).
+
+O coeficiente de determinação é `\(R^2 = 0.6447\)`, ou seja, cerca de 64.47% da variabilidade na mortalidade infantil é explicada pelo modelo.
+ 
+**Equação estimada:**
+
+$$
+\text{mortalidade_5} = 13.7125 + 0.9543 \cdot \text{prop_pobreza_extrema_criancas}
+$$
+
+**Interpretação:**
+
+- Um **aumento de 1 p.p. na `prop_pobreza_extrema_criancas`** está associado a um **aumento de 0.9543 óbitos por mil nascidos vivos** na `mortalidade_5`, _ceteris paribus_.
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+**Padrão regional: pobreza infantil extrema e mortalidade até 5 anos**
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Importando dados&lt;/div&gt;
+
+Primeiro, importamos os dados de região dos municípios e unimos à base `adh` com um `left_join()`:
+
+.tiny[
+
+``` r
+regiao &lt;- "SELECT id_municipio, nome_regiao 
+FROM `basedosdados.br_bd_diretorios_brasil.municipio`" |&gt; 
+  read_sql()
+
+dados &lt;- left_join(adh, regiao, by = "id_municipio")
+```
+]
+
+&lt;!-- Agora, a base `dados` tem os dados de `adh` e os dados de `regiao`. --&gt;
+
+
+```
+## Rows: 16,695
+## Columns: 12
+## $ id_municipio                  &lt;chr&gt; "1100031", "1100056", "1100262", "110080…
+## $ ano                           &lt;int64&gt; 1991, 2000, 2000, 1991, 1991, 1991, 19…
+## $ mortalidade_1                 &lt;dbl&gt; 41.52, 27.50, 28.31, 54.65, 59.58, 41.14…
+## $ mortalidade_5                 &lt;dbl&gt; 52.94, 32.93, 33.90, 69.43, 75.59, 52.47…
+## $ taxa_freq_liquida_pre         &lt;dbl&gt; 0.00, 14.04, 17.15, 15.81, 2.24, 4.25, 2…
+## $ indice_gini                   &lt;dbl&gt; 0.70, 0.69, 0.75, 0.71, 0.70, 0.78, 0.71…
+## $ prop_pobreza_extrema_criancas &lt;dbl&gt; 67.41, 22.22, 59.89, 33.60, 59.61, 60.61…
+## $ prop_pobreza_criancas         &lt;dbl&gt; 82.74, 46.00, 100.00, 67.87, 82.29, 81.0…
+## $ prop_vulner_pobreza_criancas  &lt;dbl&gt; 91.22, 71.37, 100.00, 89.24, 93.75, 92.1…
+## $ taxa_agua_esgoto_inadequados  &lt;dbl&gt; 0.63, 24.82, 42.05, 9.60, 7.80, 5.09, 5.…
+## $ taxa_criancas_fora_escola_4_5 &lt;dbl&gt; NA, 76.09, 74.15, NA, NA, NA, NA, NA, NA…
+## $ nome_regiao                   &lt;chr&gt; "Norte", "Norte", "Norte", "Norte", "Nor…
+```
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;sem linha de tendência&lt;/div&gt;
+
+.tiny[
+
+``` r
+dados |&gt; 
+  ggplot(aes(x = prop_pobreza_extrema_criancas, y = mortalidade_5, color = nome_regiao)) +
+  geom_point(alpha = 0.5) +
+  scale_color_brewer(palette = "Set2")
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-292-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;com linha de tendência&lt;/div&gt;
+
+.tiny[
+
+``` r
+dados |&gt;  
+  ggplot(aes(x = prop_pobreza_extrema_criancas, y = mortalidade_5, color = nome_regiao)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE) + 
+  scale_color_brewer(palette = "Set2")
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-293-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;interpretação&lt;/div&gt;
+
+**Existe padrão regional?**
+
+Sim. Municípios das regiões **Norte e Nordeste** apresentam os maiores níveis de:
+
+- Mortalidade infantil (até 5 anos) (`mortalidade_5`)
+
+- Proporção de crianças em extrema pobreza (`prop_pobreza_extrema_criancas`)
+
+As demais regiões tendem a se concentrar em níveis mais baixos desses dois indicadores.
+
+A tendência é **positiva em todas as regiões**, mas a intensidade da relação parece variar regionalmente.
+
+&lt;br&gt;
+
+**Observação:**
+
+Esse tipo de visualização reforça a importância de **análises desagregadas por região**, pois a **média nacional pode mascarar desigualdades territoriais** importantes.
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+**Relação entre crianças fora da escola (4 e 5 anos) e a proporção de crianças na extrema pobreza**
+
+.tiny[
+
+``` r
+dados |&gt;  
+  ggplot() +
+  aes(x = prop_pobreza_extrema_criancas, y = taxa_criancas_fora_escola_4_5, color = nome_regiao) +
+  geom_point(alpha = 0.5) +
+  scale_color_brewer(palette = "Set2") +
+* geom_smooth(method = "lm", se = FALSE) # linha de tendência para cada região do Brasil
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-294-1.png" width="100%" /&gt;
+]
+
+&lt;span style='font-size:90%'&gt;Observa-se &lt;b&gt;variação na inclinação da relação entre pobreza extrema e crianças fora da escola entre as regiões&lt;/b&gt;. No Sul, essa associação é mais forte — indicando que o aumento da pobreza extrema está mais fortemente ligado à evasão escolar nessa faixa etária — enquanto no Nordeste o efeito é menos pronunciado.&lt;/span&gt;
+
+---
+
+**Evolução da Mortalidade Infantil (até 1 ano) por Região — 1991, 2000 e 2010**
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;gráfico de pontos&lt;/div&gt;
+
+.tiny[
+
+``` r
+dados |&gt; 
+  group_by(ano, nome_regiao) |&gt;  
+  summarise(media = mean(mortalidade_1, na.rm = TRUE)) |&gt; 
+  ggplot(aes(x = media, y = nome_regiao, color = as.factor(ano))) +
+* geom_point(size = 4)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-295-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;gráfico de barras&lt;/div&gt;
+
+.tiny[
+
+``` r
+dados |&gt; 
+  group_by(ano, nome_regiao) |&gt; 
+  summarise(media = mean(mortalidade_1, na.rm = TRUE)) |&gt;  
+  ggplot(aes(x = nome_regiao, y = media, fill = as.factor(ano))) +
+* geom_bar(stat = "identity", position = "dodge") # indica como as barras devem ser posicionadas
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-296-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;interpretação&lt;/div&gt;
+
+
+
+Os gráficos mostram duas formas de representar a **média da mortalidade infantil (até 1 ano)** por região brasileira, nos anos de **1991, 2000 e 2010**. Em todas as regiões, observa-se uma **queda consistente** ao longo do período analisado.
+
+&lt;br&gt;
+
+**Reduções percentuais por região:**
+
+- **Centro-Oeste:** redução de 4.91 p.p. (1991—2000); redução 10.815515 p.p. (2000—2010)
+
+- **Nordeste:** redução de 27.11 p.p. (1991–2000); redução de 21.9 p.p. (2000–2010)
+
+- **Norte:** redução de 18.52 p.p. (1991–2000); redução de 16.64 p.p. (2000–2010)
+
+- **Sudeste:** redução de 8.77 p.p. (1991–2000); redução de 9.08 p.p. (2000–2010)
+
+- **Sul:** redução de 9.04 p.p. (1991–2000); redução de 6.55 p.p. (2000–2010)
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+### Mapas
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;introdução&lt;/div&gt;
+
+Para criar mapas com dados municipais, usamos o pacote [{geobr}](https://github.com/ipeaGIT/geobr), que fornece as malhas espaciais do Brasil em diferentes níveis (municípios, estados etc.). Em seguida, realizamos um `left_join()` com nossa base de indicadores (`dados`) para unir as informações socioeconômicas e geográficas.
+
+.tiny[
+
+``` r
+muni &lt;- geobr::read_municipality(year = 2010) |&gt; 
+  mutate(code_muni = as.character(code_muni))
+
+muni_dados &lt;- left_join(muni, dados, by = c("code_muni" = "id_municipio"))
+```
+]
+
+O resultado é uma base geográfica completa (`muni_dados`) pronta para visualização com `ggplot2` + `geom_sf()`.
+
+.tiny[
+
+```
+##  [1] "code_muni"                     "name_muni"                    
+##  [3] "code_state"                    "abbrev_state"                 
+##  [5] "ano"                           "mortalidade_1"                
+##  [7] "mortalidade_5"                 "taxa_freq_liquida_pre"        
+##  [9] "indice_gini"                   "prop_pobreza_extrema_criancas"
+## [11] "prop_pobreza_criancas"         "prop_vulner_pobreza_criancas" 
+## [13] "taxa_agua_esgoto_inadequados"  "taxa_criancas_fora_escola_4_5"
+## [15] "nome_regiao"                   "geom"
+```
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;mortalidade (até 1 ano)&lt;/div&gt;
+
+.pull-left[
+
+``` r
+muni_dados |&gt;
+  filter(ano == 2010) |&gt;
+  ggplot() +
+* aes(
+*   geometry = geom,
+*   fill = mortalidade_1
+* ) +
+* geom_sf(
+*   color = NA
+* ) +
+* scale_fill_viridis_c(
+*   na.value = "grey90"
+* ) +
+  theme_minimal()
+```
+]
+
+.pull-right[
+&lt;img src="index_files/figure-html/unnamed-chunk-301-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;pobreza extrema crianças&lt;/div&gt;
+
+.pull-left[
+
+``` r
+muni_dados |&gt; 
+  filter(ano == 2010) |&gt; 
+  ggplot() +
+* aes(
+*   geometry = geom,
+*   fill = prop_pobreza_extrema_criancas
+* ) +
+* geom_sf(
+*   color = NA
+* ) +
+* scale_fill_viridis_c(
+*   na.value = "grey90"
+* ) +
+  theme_minimal()
+```
+]
+
+.pull-right[
+&lt;img src="index_files/figure-html/unnamed-chunk-303-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;tx. crianças fora da escola&lt;/div&gt;
+
+.pull-left[
+
+``` r
+muni_dados |&gt; 
+  filter(ano == 2010) |&gt; 
+  ggplot() +
+* aes(
+*   geometry = geom,
+*   fill = taxa_criancas_fora_escola_4_5
+* ) +
+* geom_sf(
+*   color = NA
+* ) +
+* scale_fill_viridis_c(
+*   na.value = "grey90"
+* ) +
+  theme_minimal()
+```
+]
+
+.pull-right[
+&lt;img src="index_files/figure-html/unnamed-chunk-305-1.png" width="100%" /&gt;
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;tx. água/esgoto inadequados&lt;/div&gt;
+
+.pull-left[
+
+``` r
+muni_dados |&gt; 
+  filter(ano == 2010) |&gt; 
+  ggplot() +
+* aes(
+*   geometry = geom,
+*   fill = taxa_agua_esgoto_inadequados
+* ) +
+* geom_sf(
+*   color = NA
+* ) +
+* scale_fill_viridis_c(
+*   na.value = "grey90"
+* ) +
+  theme_minimal()
+```
+]
+
+.pull-right[
+&lt;img src="index_files/figure-html/unnamed-chunk-307-1.png" width="100%" /&gt;
+]
+
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+class: inverse center middle
+name: "wooldridge"
+
+# Pacote [`{wooldridge}`](https://justinmshea.github.io/wooldridge/)
+
+&lt;br&gt;
+&lt;br&gt;
+
+.right[&lt;span style='font-size:80%'&gt;Este pacote contém a documentação completa &lt;br&gt;para cada conjunto e todos os dados &lt;br&gt; utilizados no livro &lt;span style='color:#f58634'&gt;&lt;b&gt;Introdução à Econometria&lt;/b&gt;&lt;/span&gt; &lt;br&gt; de Jeffrey M. Wooldridge&lt;/span&gt;]
+
+---
+
+### Dado utilizado: `wage`
+
+
+
+O conjunto de dados `wage` é derivado de uma pesquisa populacional realizada em 1976, coletada por Henry Farver e Jeffrey Wooldridge enquanto eram colegas no [MIT](https://www.mit.edu/), em 1988. Ele contém 526 observações e 24 variáveis relacionadas ao mercado de trabalho, incuindo: *wage, educ, exper, tenure, nonwhite, female, married, numdep, smsa, northcen, south, west, construc, ndurman, trcommpu, trade, services, profserv, profocc, clerocc, servocc, lwage, expersq, e tenursq*.
+
+.tiny[
+
+``` r
+wage &lt;- wooldridge::wage1
+```
+]
+
+.scroll-output[
+
+```
+## Rows: 526
+## Columns: 24
+## $ wage     &lt;dbl&gt; 3.10, 3.24, 3.00, 6.00, 5.30, 8.75, 11.25, 5.00, 3.60, 18.18,…
+## $ educ     &lt;int&gt; 11, 12, 11, 8, 12, 16, 18, 12, 12, 17, 16, 13, 12, 12, 12, 16…
+## $ exper    &lt;int&gt; 2, 22, 2, 44, 7, 9, 15, 5, 26, 22, 8, 3, 15, 18, 31, 14, 10, …
+## $ tenure   &lt;int&gt; 0, 2, 0, 28, 2, 8, 7, 3, 4, 21, 2, 0, 0, 3, 15, 0, 0, 10, 0, …
+## $ nonwhite &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ female   &lt;int&gt; 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1…
+## $ married  &lt;int&gt; 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0…
+## $ numdep   &lt;int&gt; 2, 3, 2, 0, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1, 1, 0, 0, 3, 0, 0…
+## $ smsa     &lt;int&gt; 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+## $ northcen &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ south    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ west     &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+## $ construc &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ ndurman  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ trcommpu &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ trade    &lt;int&gt; 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ services &lt;int&gt; 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ profserv &lt;int&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1…
+## $ profocc  &lt;int&gt; 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1…
+## $ clerocc  &lt;int&gt; 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0…
+## $ servocc  &lt;int&gt; 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0…
+## $ lwage    &lt;dbl&gt; 1.1314021, 1.1755733, 1.0986123, 1.7917595, 1.6677068, 2.1690…
+## $ expersq  &lt;int&gt; 4, 484, 4, 1936, 49, 81, 225, 25, 676, 484, 64, 9, 225, 324, …
+## $ tenursq  &lt;int&gt; 0, 4, 0, 784, 4, 64, 49, 9, 16, 441, 4, 0, 0, 9, 225, 0, 0, 1…
+```
+]
+
+---
+
+**A relação entre educação e salário**
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;gráfico&lt;/div&gt;
+
+``` r
+wage |&gt; 
+  ggplot(aes(x = educ, y = wage)) +
+  geom_point() +
+  geom_smooth(method = 'lm', se = FALSE) 
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-311-1.png" width="100%" /&gt;
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;regressão&lt;/div&gt;
+
+``` r
+modelo &lt;- lm(wage ~ educ, data = wage)
+summary(modelo)
+```
+
+```
+## 
+## Call:
+## lm(formula = wage ~ educ, data = wage)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.3396 -2.1501 -0.9674  1.1921 16.6085 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.90485    0.68497  -1.321    0.187    
+## educ         0.54136    0.05325  10.167   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.378 on 524 degrees of freedom
+## Multiple R-squared:  0.1648,	Adjusted R-squared:  0.1632 
+## F-statistic: 103.4 on 1 and 524 DF,  p-value: &lt; 2.2e-16
+```
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;interpretação&lt;/div&gt;
+
+A relação entre os anos de estudo (`educ`) e o salário médio por hora (`wage`) é positiva e estatisticamente significativa.
+
+O coeficiente estimado para `educ` é **0.5413**, indicando que a cada ano adicional de escolaridade, o salário tende a aumentar, em média, **US$ 0.54**.
+
+O `\(R^2\)` do modelo é **0.1648**, o que significa que `educ` explica aproximadamente **16.48** da variação salarial.
+
+&lt;br&gt;
+
+**Regressão estimada:**
+
+$$
+\text{wage} = -0.9048 + 0.5413 \cdot \text{educ}
+$$
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+**A relação entre educação e log-salário**
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;gráfico&lt;/div&gt;
+
+``` r
+wage |&gt; 
+  ggplot(aes(x = educ, y = lwage)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-313-1.png" width="100%" /&gt;
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;regressão&lt;/div&gt;
+
+``` r
+modelo &lt;- lm(lwage ~ educ, data = wage)
+summary(modelo)
+```
+
+```
+## 
+## Call:
+## lm(formula = lwage ~ educ, data = wage)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.21158 -0.36393 -0.07263  0.29712  1.52339 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 0.583773   0.097336   5.998 3.74e-09 ***
+## educ        0.082744   0.007567  10.935  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.4801 on 524 degrees of freedom
+## Multiple R-squared:  0.1858,	Adjusted R-squared:  0.1843 
+## F-statistic: 119.6 on 1 and 524 DF,  p-value: &lt; 2.2e-16
+```
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;interpretação&lt;/div&gt;
+
+A relação entre os anos de estudo (`educ`) e o logaritmo do salário por hora (`lwage`) é **positiva** e estatisticamente significativa, com p-valor próximo de zero.
+
+O coeficiente de determinação `\(R^2\)` é **0.1858**, ou seja, 18.58% da variação no log-salário é explicada pela escolaridade.
+
+&lt;br&gt;
+
+**Regressão estimada:**
+
+$$
+\text{lwage} = 0.5837 + 0.0827 \cdot \text{educ}
+$$
+
+&lt;br&gt;
+
+**Interpretação do coeficiente:**
+
+A cada **1 ano adicional de escolaridade** (`educ`), o **salário aumenta em média 8.3%**, dado que o modelo está em log-linear (interpretação aproximadade `\(\beta \cdot 100\)`).
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+**Mincer — o salário é estimado por meio da escolaridade e da experiência**
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;gráfico&lt;/div&gt;
+
+``` r
+wage |&gt; 
+  ggplot(aes(x = educ, y = lwage)) +
+  geom_point(aes(color = exper), alpha = 0.7) +
+  scale_color_viridis_c() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-315-1.png" width="100%" /&gt;
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;regressão&lt;/div&gt;
+
+``` r
+mincer &lt;- lm(lwage ~ educ + exper, data = wage)
+summary(mincer)
+```
+
+```
+## 
+## Call:
+## lm(formula = lwage ~ educ + exper, data = wage)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.05800 -0.30136 -0.04539  0.30601  1.44425 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 0.216854   0.108595   1.997   0.0464 *  
+## educ        0.097936   0.007622  12.848  &lt; 2e-16 ***
+## exper       0.010347   0.001555   6.653 7.24e-11 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.4614 on 523 degrees of freedom
+## Multiple R-squared:  0.2493,	Adjusted R-squared:  0.2465 
+## F-statistic: 86.86 on 2 and 523 DF,  p-value: &lt; 2.2e-16
+```
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;interpretação&lt;/div&gt;
+
+O logaritmo do salário por hora (`lwage`) está **positivamente** relacionado com os anos de estudo (`educ`) e com os anos de experiência (`exper`). Ambos os coeficientes são estatisticamente significativos.
+
+O `\(R^2\)` do modelo é **0.2493**, ou seja, 24.93% da variabilidade no log-salário (`lwage`) é explicada por escolaridade (`educ`) e experiência (`exper`).
+
+&lt;br&gt;
+
+**Regressão estimada:**
+
+$$
+\text{lwage} = 0.217 + 0.098 \cdot \text{educ} + 0.010 \cdot \text{exper}
+$$
+
+&lt;br&gt;
+
+**Interpretação dos coeficientes:**
+
+- Cada **ano adicional de estudo** (`educ`) está associado a um **aumento médio de 9.79%** no salário por hora (`lwage`), _ceteris paribus_.
+
+- Cada **ano adicional de experiência** (`exper`) implica em **aumento médio de 1.03%** no salário por hora (`lwage`), _ceteris paribus_.
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+**Mincer com efeito não linear da experiência sobre o salário**
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;gráfico&lt;/div&gt;
+
+``` r
+wage |&gt; 
+  ggplot(aes(x = educ, y = lwage)) +
+  geom_point(aes(color = exper, size = expersq), alpha = 0.7) +
+  scale_color_viridis_c() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-317-1.png" width="100%" /&gt;
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;regressão&lt;/div&gt;
+
+``` r
+mincer &lt;- lm(lwage ~ educ + exper + expersq, data = wage)
+summary(mincer)
+```
+
+```
+## 
+## Call:
+## lm(formula = lwage ~ educ + exper + expersq, data = wage)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.96387 -0.29375 -0.04009  0.29497  1.30216 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.1279975  0.1059323   1.208    0.227    
+## educ         0.0903658  0.0074680  12.100  &lt; 2e-16 ***
+## exper        0.0410089  0.0051965   7.892 1.77e-14 ***
+## expersq     -0.0007136  0.0001158  -6.164 1.42e-09 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.4459 on 522 degrees of freedom
+## Multiple R-squared:  0.3003,	Adjusted R-squared:  0.2963 
+## F-statistic: 74.67 on 3 and 522 DF,  p-value: &lt; 2.2e-16
+```
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;interpretação&lt;/div&gt;
+
+O modelo sugere que:
+
+- A **educação (`educ`)** tem **efeito positivo** no log do salário: cada ano adicional aumenta o log-salário em 9.04%.
+
+- A **experiência (`exper`)** também contribui **positivamente**, mas a um ritmo decrescente.
+
+- O **termo quadrático da experiência (`expersq`)** é **negativo**, indicando que **há um ponto de retorno**, após o qual o efeito da experiência no salário começa a decrescer — um comportamento esperado para carreiras profissionais.
+
+&lt;br&gt;
+
+**Regressão estimada:**
+
+$$
+\text{lwage} = 0.128 + 0.090 \cdot \text{educ} + 0.041 \cdot \text{exper} - 0.0007 \cdot \text{expersq}
+$$
+
+&lt;br&gt;
+
+O modelo apresenta um `\(R^2\)` de **0.3003**, ou seja, aproximadamente 30.03% da variação no log-salário é explicada pelas variáveis `educ`, `exper` e `expersq`.
+
+Todos os coeficientes são estatisticamente significativos, com p-valores próximos de zero.
+
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+## Para saber mais!
+
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Em inglês&lt;/div&gt;
+
+.pull-left[
+
+- [Causal Inference: The Mixtape](https://mixtape.scunning.com/index.html)
+
+&lt;a href="https://mixtape.scunning.com/index.html"&gt;
+&lt;img src="img/47-casual-inference.png" width="45%" style="display: block; margin: auto;" /&gt;
+&lt;/a&gt;
+
+]
+
+.pull-right[
+
+- [An Introduction to Statistical Learning: with Applications in R](https://hastie.su.domains/ISLRv2_website.pdf)
+
+&lt;a href="https://mixtape.scunning.com/index.html"&gt;
+&lt;img src="img/48-introduction-statistical-learning.png" width="45%" style="display: block; margin: auto;" /&gt;
+&lt;/a&gt;
+
+]
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+# Obrigada!
+
+.pull-left[
+
+&lt;img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjFlNDgyOTRhMTk5MGE4ZTNmNjg5ZWMzM2NlZDU3ODBmZDU0OGFiNiZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/M9NbzZjAcxq9jS9LZJ/giphy.gif" width="65%" style="display: block; margin: auto;" /&gt;
+
+&lt;!-- .center[Agradecimento especial a [Curso-R](https://curso-r.com/) pelos materiais.] --&gt;
+
+.center[Slides criados usando os pacotes em R:]
+.center[[**xaringan**](https://github.com/yihui/xaringan)]
+.center[[**xaringanthemer**](https://github.com/gadenbuie/xaringanthemer)]
+
+.center[O chakra vem da biblioteca JavaScript [remark.js](https://remarkjs.com), [**knitr**](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com).]
+]
+
+.pull-right[
+
+&lt;img src="img/49-luisa.jpg" width="55%" style="display: block; margin: auto;" /&gt;
+
+.center[&lt;i class="fas fa-home"&gt;&lt;/i&gt; [luisa.rbind.io](https://luisa.rbind.io/)]
+
+.center[&lt;i class="fab fa-twitter"&gt;&lt;/i&gt; [@lgiselebock](https://twitter.com/lgiselebock)]
+
+.center[&lt;i class="fab fa-github"&gt;&lt;/i&gt; [@lgiselebock](https://github.com/lgiselebock/)]
+
+.center[&lt;i class="far fa-envelope"&gt;&lt;/i&gt; [luisa.bock@acad.ufsm.br](mailto:luisa.bock@acad.ufsm.br)]
+]
+
+&lt;!-- inicio academic icons --&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"&gt;
+&lt;!-- final academic icons --&gt;
+
+ 
+&lt;!-- inicio font awesome --&gt;
+&lt;script src="https://kit.fontawesome.com/1f72d6921a.js" crossorigin="anonymous"&gt;&lt;/script&gt;
+
+&lt;!-- final font awesome --&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

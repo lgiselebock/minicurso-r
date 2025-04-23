@@ -27,3 +27,9 @@ li{
 .inverse a {
   color: #f58634;
 }
+
+.scroll-output pre {
+  overflow-x: auto;
+  font-size: 0.5em; /* você pode ajustar aqui */
+  max-height: 400px; /* evita que quebre o layout vertical */
+}

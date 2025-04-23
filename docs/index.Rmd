@@ -66,6 +66,8 @@ xaringanExtra::use_panelset()
 3. [Projetos](#projetos)
 4. [Importação de dados](#importacao)
 5. [Manipulação de dados](#manipulacao)
+6. [Visualização de dados](#visualizacao)
+7. [Regressão Linear](#regressao)
 
 ---
 
@@ -4860,3 +4862,1779 @@ knitr::include_graphics("img/46-fundamentalz-data-viz.png")
 
 ---
 
+class: inverse center middle
+name: regressao
+
+# Regressão Linear
+
+.center[(Acompanhe no arquivo `05-regressao.R`)]
+
+---
+
+<!-- class: inverse center middle -->
+
+# Dados Educacionais
+
+---
+
+### Importando as bases
+
+.tiny[
+```{r}
+# Bases do IDEB
+ideb_fund  <- readr::read_csv(
+  "dados/ideb_fundamental.csv",
+  col_types = cols(id_municipio = col_character(), ano = col_integer())
+)
+ideb_medio <- readr::read_csv(
+  "dados/ideb_medio.csv",
+  col_types = cols(id_municipio = col_character(), ano = col_integer())
+)
+
+# Indicadores educacionais
+indic_fund <- readr::read_csv(
+  "dados/indicadores_fundamental.csv",
+  col_types = cols(id_municipio = col_character(), ano = col_integer())
+)
+indic_medio <- readr::read_csv(
+  "dados/indicadores_medio.csv",
+  col_types = cols(id_municipio = col_character(), ano = col_integer())
+)
+
+# PIB per capita
+pib_pop <- readr::read_csv(
+  "dados/pib_pc.csv",
+  col_types = cols(id_municipio = col_character(), ano = col_integer())
+)
+```
+]
+
+---
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">Ideb</div>
+
+```{r}
+head(ideb_fund, n = 5)
+
+head(ideb_medio, n = 5)
+```
+
+</div>
+
+<div class="panel">
+<div class="panel-name">Ideb — Dicionário</div>
+
+As bases `ideb_fund` (Ensino Fundamental) e `ideb_medio` (Ensino Médio) contêm:
+
+1. `id_municipio`: código do IBGE de identificação do município
+
+2. `tx_aprov`: taxa de aprovação média do município
+
+3. `ideb`: índice de desenvolvimento da educação básica (Ideb) do município
+
+  - Calculado com base nas taxas de aprovação (Censo Escolar) e no desempenho no Saeb (Sistema de Avaliação da Educação Básica)
+
+</div>
+
+<div class="panel">
+<div class="panel-name">Indicadores</div>
+
+```{r}
+head(indic_fund, n = 5)
+
+head(indic_medio, n = 5)
+```
+
+</div>
+
+
+<div class="panel">
+<div class="panel-name">Indicadores — Dicionário</div>
+
+As bases `indic_fund` (Ensino Fundamental) e `indic_medio` (Ensino Médio) contêm indicadores educacionais como:
+
+1. `id_municipio`: código do IBGE de identificação do município
+
+2. `tx_aband`: taxa média de abandono escolar por município
+
+3. `hrs_aula`: média das horas de aula por município
+
+4. `tdi`: taxa de distorção idade-série por município
+
+  - Proporção de alunos com dois anos ou mais de atraso escolar.
+
+</div>
+
+<div class="panel">
+<div class="panel-name">PIB</div>
+
+```{r}
+head(pib_pop, n = 5)
+```
+
+</div>
+
+<div class="panel">
+<div class="panel-name">PIB — Dicionário</div>
+
+A base `pib_pop` traz os seguintes dados para o ano de 2020:
+
+1. `id_municipio`: código do IBGE de identificação do município
+
+2. `pib`: Produto Interno Bruto total do município
+
+3. `populacao`: população total do município
+
+<br>
+<br>
+<br>
+
+.right[O PIB _per capita_ será calculado depois.]
+
+</div>
+</div>
+
+---
+
+### Padronizando as bases de dados
+
+Preparamos as bases para análise selecionando apenas as variáveis relevantes de cada uma. Também criamos o PIB per capita a partir do PIB total e da população.
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">Ideb: Fundamental</div>
+
+.tiny[
+```{r}
+ideb_fundamental <- ideb_fund |> 
+  select(id_municipio, tx_aprov, ideb)
+
+ideb_fundamental
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">Ideb: Médio</div>
+
+.tiny[
+```{r}
+ideb_medio <- ideb_medio |> 
+  select(id_municipio, tx_aprov, ideb)
+
+ideb_medio
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">Indicadores: Fundamental</div>
+
+.tiny[
+```{r}
+indicadores_fundamental <- indic_fund |> 
+  select(id_municipio, tx_aband, hrs_aula, tdi)
+
+indicadores_fundamental
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">Indicadores: Médio</div>
+
+.tiny[
+```{r}
+indicadores_medio <- indic_medio |> 
+  select(id_municipio, tx_aband, hrs_aula, tdi)
+
+indicadores_medio
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">PIB per capita</div>
+
+.tiny[
+```{r}
+pib_pc <- pib_pop |> 
+  mutate(pib_pc = pib/populacao)  |> # cria a variável PIB per capita #<<
+  select(id_municipio, pib_pc)  
+  
+pib_pc
+```
+]
+
+</div>
+</div>
+
+---
+
+### Juntando as bases de dados: Ensino Fundamental
+
+Reunimos em uma única base (`fundamental`) as variáveis de desempenho (`ideb`), permanência escolar (`tx_aprov`, `tx_aband`, `tdi`, `hrs_aula`) e contexto socioeconômico (`pib_pc`), usando `id_municipio` como chave.
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name"><code>left_join()</code></div>
+
+.tiny[
+```{r}
+fundamental <- left_join(ideb_fundamental, indicadores_fundamental, by = "id_municipio") |> 
+  left_join(pib_pc, by = "id_municipio")
+
+fundamental
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name"><code>reduce()</code></div>
+
+.tiny[
+```{r}
+fundamental <- list(ideb_fundamental, indicadores_fundamental, pib_pc) %>% 
+  purrr::reduce(left_join)
+
+fundamental
+```
+]
+
+.right[<span style='font-size:80%'>`reduce(left_join)` é mais eficiente quando há muitas bases.</span>]
+
+</div>
+</div>
+
+---
+
+### Análise Descritivas: Ensino Fundamental
+
+<!-- O objetivo é **identificar padrões gerais, possíveis outliers e assimetrias**. -->
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">Resumo estatístico</div>
+
+O objetivo é **identificar padrões gerais, possíveis outliers e assimetrias**.
+
+.tiny[
+```{r}
+summary(fundamental)
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">Histograma</div>
+
+.tiny[
+```{r out.width='90%', fig.align='center'}
+fundamental |> 
+  ggplot(aes(x = ideb)) +
+  geom_histogram() #<<
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">Boxplot horizontal</div>
+
+.tiny[
+```{r out.width='87%', fig.align='center'}
+fundamental |> 
+  ggplot() +
+  aes(x = ideb) + #<<
+  geom_boxplot() #<<
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">Boxplot vertical</div>
+
+.pull-left[
+.tiny[
+```{r eval=FALSE}
+fundamental |> 
+  ggplot() +
+  aes(y = ideb) + #<<
+  geom_boxplot() #<<
+```
+]
+]
+
+.pull-right[
+```{r echo=FALSE, fig.width=3.5, fig.height=3, fig.align='center'}
+fundamental |> 
+  ggplot() +
+  aes(y = ideb) +
+  geom_boxplot()
+```
+]
+
+</div>
+</div>
+
+---
+
+### Regressão Linear: Ensino Fundamental
+
+<!-- **Será que a taxa de distorção idade-série (`tdi`) está positivamente relacionada à taxa de abandono escolar (`tx_aband`)?** -->
+
+**Será que a `tdi` está positivamente relacionada à `tx_aband`?**
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">sem linha de tendência</div>
+
+.tiny[
+```{r fig.height=2.7}
+fundamental |> 
+  ggplot(aes(x = tdi, y = tx_aband)) +
+  geom_point() 
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">com linha de tendência</div>
+
+.tiny[
+```{r fig.height=2.5}
+fundamental |> 
+  ggplot(aes(x = tdi, y = tx_aband)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) #<<
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">regressão linear</div>
+
+.scroll-output[
+```{r}
+modelo <- lm(tx_aband ~ tdi, data = fundamental)
+summary(modelo)
+```
+]
+
+<br>
+
+</div>
+
+<div class="panel">
+<div class="panel-name">interpretação</div>
+
+**Resultado:** 
+
+A relação entre `tdi` e `tx_aband` é **positiva**, com significância estatística (p < 0.001).
+
+O $R^2$ do modelo é 0.3074, ou seja, cerca de `r 0.3074*100`% da variação em `tx_aband` é explicada por `tdi`.
+
+**Equação estimada:**
+
+$$
+\text{tx_aband} = -0.568 + 0.124 \cdot \text{tdi}   
+$$
+
+**Interpretação:**
+
+- A cada **1 p.p. de aumento em `tdi`**, espera-se um **aumento de 0.124 p.p. na `tx_aband`**.
+- Esse resultado reforça a hipótese de que **quanto maior a distorção idade-série**, **maior tende a ser a evasão escolar**.
+
+</div>
+</div>
+
+---
+
+<!-- ### Regressão Linear: Ensino Fundamental -->
+
+<!-- **Qual a relação entre a taxa de distorção idade-série (`tdi`), a taxa de aprovação (`tx_aprov`), as horas-aula (`hrs_aula`) e a taxa de abandono escolar (`tx_aband`)?** -->
+
+**Qual a relação entre `tdi`, `tx_aprov`, `hrs_aula` e `tx_aband`?**
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">sem linha de tendência</div>
+
+</div>
+
+<div class="panel">
+<div class="panel-name">com linha de tendência</div>
+
+</div>
+
+<div class="panel">
+<div class="panel-name">regressão linear</div>
+
+.tiny[
+```{r}
+modelo <- lm(tx_aband ~ tdi + tx_aprov + hrs_aula, data = fundamental)
+summary(modelo)
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">interpretação</div>
+
+**Resultado:**
+
+A taxa de distorção idade-série (`tdi`) e as horas-aula (`hrs_aula`) apresentam relação **positiva** com a taxa de abandono escolar (`tx_aband`), enquanto a taxa de aprovação (`tx_aprov`) tem relação **negativa**.
+
+- `tdi`: **positiva**, estatisticamente significativa (p < 0.001)
+- `hrs_aula`: **positiva**, significância ao nível de 10% (p = 0.0992)
+- `tx_aprov`: **negativa**, estatisticamente significativa (p < 0.001)
+
+O $R^2 = 0.525$, indicando que `r 0.525*100`% da variação da taxa de abandono é explicada pelas variáveis.
+
+O **Teste F** é estatisticamente significativo, mostrando que os parâmetros são conjuntamente relevantes.
+
+**Equação estimada:**
+
+$$
+\text{tx_aband} = 22.093 + 0.059 \cdot \text{tdi} - 0.228 \cdot \text{tx_aprov} + 0.040 \cdot \text{hrs_aula}
+$$
+
+**Interpretação:**
+
+- Aumento de **1 p.p. na `tdi`** resulta em **aumento de 0.059 p.p. na `tx_aband`** _(ceteris paribus)_.
+- Aumento de **1 p.p. na `tx_aprov`** resulta em **redução de 0.228 p.p. na `tx_aband`** _(ceteris paribus)_.
+- Aumento de **1 hora-aula** resulta em **aumento de 0.04 p.p. na `tx_aband`** _(ceteris paribus)_.
+
+</div>
+</div>
+
+---
+
+**Qual a relação entre `tdi`, `tx_aprov`, `pib_pc` e a `tx_aband`?**
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">sem linha de tendência</div>
+
+</div>
+
+<div class="panel">
+<div class="panel-name">com linha de tendência</div>
+
+</div>
+
+<div class="panel">
+<div class="panel-name">regressão linear</div>
+
+.tiny[
+```{r}
+modelo <- lm(tx_aband ~ tdi + tx_aprov + pib_pc, data = fundamental)
+summary(modelo)
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">interpretação</div>
+
+**Resultado:**
+
+A variável `tdi` apresenta relação **positiva** com a `tx_aband`, enquanto `tx_aprov` e `pib_pc` apresentam relações **negativas**.
+
+- `tdi`: **positiva**, estatisticamente significativa (p < 0.001)
+- `tx_aprov`: **negativa**, estatisticamente significativa (p < 0.001)
+- `pib_pc`: **negativa**, estatisticamente significativa (p < 0.001)
+
+O $R^2 = 0.5293$ indica que o modelo explica `r 0.5293*100`% da variação da `tx_aband`.
+
+O **Teste F** confirma a significância conjunta dos parâmetros.
+
+**Equação estimada:**
+
+$$
+\text{tx_aband} = 22.438 + 0.056 \cdot \text{tdi} - 0.229 \cdot \text{tx_aprov} - 0.000004 \cdot \text{pib_pc}
+$$
+
+**Interpretação:**
+
+- Aumento de **1 p.p. na `tdi`** resulta em **aumento de 0.056 p.p. na `tx_aband`** _(ceteris paribus)_.
+- Aumento de **1 p.p. na `tx_aprov`** resulta em **redução de 0.229 p.p. na `tx_aband`** _(ceteris paribus)_.
+- Aumento de **R$ 10000.00 no `pib_pc`** resulta em **redução de 0.04 p.p. na `tx_aband`** _(ceteris paribus)_.
+
+</div>
+</div>
+
+---
+
+### Juntando as bases de dados: Ensino Médio
+
+Reunimos em uma única base (`medio`) as variáveis de desempenho (`ideb`), permanência escolar (`tx_aprov`, `tx_aband`, `tdi`, `hrs_aula`) e contexto socioeconômico (`pib_pc`), usando `id_municipio` como chave.
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name"><code>left_join()</code></div>
+
+.tiny[
+```{r}
+medio <- left_join(ideb_medio, indicadores_medio, by = "id_municipio") |> 
+  left_join(pib_pc, by = "id_municipio")
+
+medio
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name"><code>reduce()</code></div>
+
+.tiny[
+```{r}
+medio <- list(ideb_medio, indicadores_medio, pib_pc) |> 
+  purrr::reduce(left_join)
+
+medio
+```
+]
+
+.right[<span style='font-size:80%'>`reduce(left_join)` é mais eficiente quando há muitas bases.</span>]
+
+</div>
+</div>
+
+---
+
+### Análise Descritivas: Ensino Médio
+
+<!-- O objetivo é **identificar padrões gerais, possíveis outliers e assimetrias**. -->
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">Resumo estatístico</div>
+
+O objetivo é **identificar padrões gerais, possíveis outliers e assimetrias**.
+
+.tiny[
+```{r}
+summary(medio)
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">Histograma</div>
+
+.tiny[
+```{r out.width='90%', fig.align='center'}
+medio |> 
+  ggplot(aes(x = ideb)) +
+  geom_histogram() #<<
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">Boxplot horizontal</div>
+
+.tiny[
+```{r out.width='87%', fig.align='center'}
+medio |> 
+  ggplot() +
+  aes(x = ideb) + #<<
+  geom_boxplot() #<<
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">Boxplot vertical</div>
+
+.pull-left[
+.tiny[
+```{r eval=FALSE}
+medio |> 
+  ggplot() +
+  aes(y = ideb) + #<<
+  geom_boxplot() #<<
+```
+]
+]
+
+.pull-right[
+```{r echo=FALSE, fig.width=3.5, fig.height=3, fig.align='center'}
+medio |> 
+  ggplot() +
+  aes(y = ideb) +
+  geom_boxplot()
+```
+]
+
+</div>
+</div>
+
+---
+
+### Regressão Linear: Ensino Médio
+
+**Existe relação entre `ideb` e a `tx_aband`?**
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">sem linha de tendência</div>
+
+.tiny[
+```{r fig.height=2.8}
+medio |>  
+  ggplot(aes(x = ideb, y = tx_aband)) +
+  geom_point()
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">com linha de tendência</div>
+
+.tiny[
+```{r fig.height=2.7}
+medio |>  
+  ggplot(aes(x = ideb, y = tx_aband)) +
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) #<<
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">regressão linear</div>
+
+.scroll-output[
+.tiny[
+```{r}
+modelo <- lm(tx_aband ~ ideb, data = medio)
+summary(modelo)
+```
+]
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">interpretação</div>
+
+**Resultado:**
+
+A relação entre o desempenho escolar (`ideb`) e a taxa de abandono (`tx_aband`) é **negativa**, com alta significância estatística (p < 0.001).
+
+O coeficiente de determinação $R^2 = 0.3257$ indica que, aproximadamente, `r 0.3257*100`% da variação da taxa de abandono (`tx_aband`) é explicada pelo desempenho no Ideb (`ideb`). 
+
+**Equação estimada:**
+
+$$
+\text{tx_aband} = 22.2989 - 4.4828 \cdot \text{ideb}
+$$
+
+**Interpretação:**
+
+- Um **aumento de 1 ponto no `ideb`** resulta, em média, em uma **redução de 4.48 p.p. na `tx_aband`** do ensino médio, **ceteris paribus**.
+- Municípios com melhores desempenhos educacionais no ensino médio apresentam taxas de abandono escolar significativemente menores.
+
+
+</div>
+</div>
+
+---
+
+**Qual a relação entre `hrs_aula` e a `tx_aband`?**
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">sem linha de tendência</div>
+
+.tiny[
+```{r fig.height=3.5}
+medio |>  
+  ggplot(aes(x = tx_aprov, y = tx_aband)) +
+  geom_point() 
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">com linha de tendência</div>
+
+.tiny[
+```{r fig.height=3.3}
+medio |> 
+  ggplot(aes(x = tx_aprov, y = tx_aband)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) #<<
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">regressão linear</div>
+
+.scroll-output[
+.tiny[
+```{r}
+modelo <- lm(tx_aband ~ tx_aprov, data = medio)
+summary(modelo)
+```
+]
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">interpretação</div>
+
+**Resultado:**
+
+A variável `tx_aprov` apresenta uma relação **negativa** com a `tx_aband` no ensino médio. Essa relação é estatisticamente significativa (p < 0.001).
+
+O $R^2$ é igual a 0.6013, indicando que, aproximadamente, `r 0.6013*100`% da variação na `tx_aband` escolar pode ser explicada pela `tx_aprov`.
+
+**Equação estimada:**
+
+$$
+\text{tx_aband} = 56.04 - 0.595 \cdot \text{tx_aprov}
+$$
+
+**Interpretação:**
+
+- A cada **aumento de 1 p.p. na `tx_aprov`**, há uma **redução estimada de 0.559 p.p. na `tx_aband`**, _ceteris paribus_.
+- Esse efeito é estatisticamente significativo e indica uma **forte associação inversa** entre as variáveis: **quanto maior a aprovação, menor o abandono**.
+
+</div>
+</div>
+
+---
+
+**Qual a relação entre `hrs_aula` e a `tx_aband`?**
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">sem linha de tendência</div>
+
+.tiny[
+```{r fig.height=3.5}
+medio |>  
+  ggplot(aes(x = hrs_aula, y = tx_aband)) +
+  geom_point() 
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">com linha de tendência</div>
+
+.tiny[
+```{r fig.height=3.3}
+medio |>  
+  ggplot(aes(x = hrs_aula, y = tx_aband)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) #<<
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">regressão linear</div>
+
+.scroll-output[
+.tiny[
+```{r}
+modelo <- lm(tx_aband ~ hrs_aula, data = medio)
+summary(modelo)
+```
+]
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">interpretação</div>
+
+**Resultado:**
+
+A relação entre `hrs_aula` e a `tx_aband` é **negativa**, com alta significância estatística (p < 0.001).
+
+O $R^2$ é igual a 0.03736, o que indica que aproximadamente `r 0.03736*100`% da variação na `tx_aband` é explicada pelo número de horas-aula semanais (`hrs_aula`).
+ 
+**Equação estimada:**
+
+$$
+\text{tx_aband} = 10{,}285 - 0{,}973 \cdot \text{hrs_aula}
+$$
+
+**Interpretação:**
+
+- Um **aumento de 1 hrs_aula** está associado a uma **redução de 0.9732 p.p. na `tx_aband`**, _ceteris paribus_.
+
+</div>
+</div>
+
+---
+
+**Qual a relação entre `tx_aprov`, `tdi`, `hrs_aula`, `pib_pc` e a `tx_aband`?**
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">sem linha de tendência</div>
+
+
+
+</div>
+
+<div class="panel">
+<div class="panel-name">com linha de tendência</div>
+
+
+
+</div>
+
+<div class="panel">
+<div class="panel-name">regressão linear</div>
+
+.scroll-output[
+.tiny[
+```{r}
+modelo <- lm(tx_aband ~ tx_aprov + tdi + hrs_aula + pib_pc,data = medio)
+summary(modelo)
+```
+]
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">interpretação</div>
+
+**Resultado:**
+
+A variável `tdi` apresenta relação **positiva** com a `tx_aband`, enquanto `tx_aprov`, `hrs_aula` e `pib_pc` apresentam relações **negativas** e estatísticamente significativas.
+
+<!-- - `tdi`: **positiva**, estatisticamente significativa (p < 0.001) -->
+<!-- - `tx_aprov`: **negativa**, estatisticamente significativa (p < 0.001) -->
+<!-- - `hrs_aula`: **negativa**, significância ao nível de 1% (p = 0.00153) -->
+<!-- - `pib_pc`: **negativa**, estatisticamente significativa (p < 0.001) -->
+
+O $R^2 = 0.6325$ indica que o modelo explica `r 0.6325*100`% da variação da `tx_aband`.
+
+O **Teste F** confirma a significância conjunta dos parâmetros.
+ 
+**Equação estimada:**
+
+$$
+\text{tx_aband} = 49.94 - 0.504 \cdot \text{tx_aprov} + 0.083 \cdot \text{tdi} - 0.136 \cdot \text{hrs_aula} - 0.00001 \cdot \text{pibpc}
+$$
+
+**Interpretação:**
+
+- A cada **aumento de 1 p.p. na `tx_aprov`**, espera-se uma **redução de 0.504 p.p. na `tx_aband`**, _ceteris paribus_.
+- A cada **aumento de 1 p.p. na `tdi`**, espera-se um **aumento de 0.083 p.p. na `tx_aband`**, _ceteris paribus_.
+- Um **aumento de 1 hora-aula média (`hrs_aula`) por semana** está associado a uma **redução de 0.136 p.p. na `tc_aband`**, _ceteris paribus_. 
+  - Sugerindo que maior carga horária pode estar relacionada à permanência dos alunos na escola.
+- Um **aumento de R$ 10000 no `pib_pc`** está associado a uma **redução de 0.1 p.p. na `tx_aband`**, _ceteris paribus_.
+
+</div>
+</div>
+
+---
+
+### <span style='color:#34a15a'>BASE DOS DADOS</span>
+
+<span style='color:#34a15a'><b>Importando a base da BigQuery para o R:</b></span>
+
+```{r}
+# instala o pacote (se ainda não estiver instalado)
+# install.packages("basedosdados")
+
+# carrega o pacote
+library(basedosdados)
+
+# define o ID do projeto da Google Cloud (BigQuery)
+# faz a ligação entre o R e a BigQuery do Google
+set_billing_id("ID-DO-PROJETO")
+```
+
+```{sql eval = FALSE, include = TRUE}
+-- exemplo sem filtro
+SELECT coluna1, coluna2, coluna3,
+coluna4 AS apelido_da_coluna
+FROM `basedosdados.projeto.tabela`
+
+-- exemplo com filtro
+SELECT coluna1, coluna2, coluna3,
+coluna4 AS apelido_da_coluna
+FROM `basedosdados.projeto.tabela`
+WHERE coluna1 = 'valor1' AND coluna2 = 'valor2'
+```
+
+---
+
+### Atlas do Desenvolvimento Humano
+
+O **Atlas do Desenvolvimento Humano no Brasil** é uma plataforma criada em parceria entre o Programa das Nações Unidas para o Desenvolvimento (PNUD), o Instituto de Pesquisa Econômica Aplicada (IPEA) e a Fundação João Pinheiro (FJP). Seu objetivo é **facilitar o acesso a informações estatísticas sobre as características e desigualdades sociais do país**, sendo uma das principais ferramentas de divulgação de dados sobre o desenvolvimento humano no Brasil.
+
+O Atlas apresenta o **Índice de Desenvolvimento Humano Municipal (IDH-M)**, além de disponibilizar mais de **330 indicadores** que abordam temas como educação, saúde, habitação, renda, trabalho, vulnerabilidade social, meio ambiente e participação política. Esses dados estão organizados para os 5.570 municípios brasileiros, 5 macrorregiões, 27 Unidades da Federação, 21 regiões metropolitanas, 3 regiões integradas de desenvolvimento (RIDEs) e cerca de 17 mil Unidades de Desenvolvimento Humano (UDHs), que representam os "bairros" — as menores territorialidades analisadas, diretamente relacionadas à realidade local da população.
+
+Além dos dados provenientes dos Censos Demográficos de 1991, 2000 e 2010, o projeto passou a incorporar informações da Pesquisa Nacional por Amostra de Domicílios (PNAD) e de registros administrativos e cadastrais. O Atlas também oferece indicadores desagregados por grupos sociais, como mulheres, homens, negros, brancos e populações rurais e urbanas, o que amplia a capacidade analítica sobre as desigualdades e o desenvolvimento em diferentes contextos.
+
+<br>
+
+.right[Fonte: [Atlas Brasil](http://www.atlasbrasil.org.br)]
+
+---
+
+### Atlas do Desenvolvimento Humano — importando a base de dados
+
+```{r config, include=FALSE}
+source("config.R")
+```
+
+```{r}
+# consulta SQL à base do ADH via basedosdados
+adh <- "SELECT id_municipio, ano, mortalidade_1, mortalidade_5, taxa_freq_liquida_pre,
+indice_gini,prop_pobreza_extrema_criancas, prop_pobreza_criancas, prop_vulner_pobreza_criancas, 
+taxa_agua_esgoto_inadequados, taxa_criancas_fora_escola_4_5
+FROM `basedosdados.mundo_onu_adh.municipio`" |> 
+  basedosdados::read_sql()
+
+# visualiza a estrutura da base
+glimpse(adh)
+```
+
+---
+
+**Será que a mortalidade infantil (até 1 ano) se relaciona com a taxa de água e esgoto inadequados?**
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">sem linha de tendência</div>
+
+.tiny[
+```{r fig.height=3.3}
+adh |> 
+  ggplot(aes(x = taxa_agua_esgoto_inadequados, y = mortalidade_1)) +
+  geom_point() 
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">com linha de tendência</div>
+
+.tiny[
+```{r fig.height=3.1}
+adh |>  
+  ggplot(aes(x = taxa_agua_esgoto_inadequados, y = mortalidade_1)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) #<<
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">regressão linear</div>
+
+.scroll-output[
+.tiny[
+```{r}
+modelo <- lm(mortalidade_1 ~ taxa_agua_esgoto_inadequados, data = adh)
+summary(modelo)
+```
+]
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">interpretação</div>
+
+**Resultado:**
+
+A taxa de domicílios com acesso inadequado a água e esgoto (`taxa_agua_esgoto_inadequados`) apresenta uma relação **positiva** com a mortalidade infantil (`mortalidade_1`), com significância estatística (p < 0.001).
+
+O coeficiente de determinação ($R^2$) é 0.3976, indicando que cerca de `r 0.3976*100`% da variação na mortalidade infantil é explicada pela taxa de infraestrutura inadequada.
+ 
+**Equação estimada:**
+
+$$
+\text{mortalidade_1} = 24.0988 + 0.6891 \cdot \text{taxa_agua_esgoto_inadequados}
+$$
+
+**Interpretação:**
+
+- Um **aumento de 1 p.p. na taxa de domicílios com água e esgoto inadequados** está associado a um **aumento de 0.6891 óbitos por mil nascidos vivos** na taxa de mortalidade infantil, _ceteris paribus_.
+
+</div>
+</div>
+
+---
+
+**Relação entre a proporção de extrema pobreza em crianças e a mortalidade infantil (até 5 anos)**
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">sem linha de tendência</div>
+
+.tiny[
+```{r fig.height=3.3}
+adh |>  
+  ggplot(aes(x = prop_pobreza_extrema_criancas, y = mortalidade_5)) +
+  geom_point() 
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">com linha de tendência</div>
+
+.tiny[
+```{r fig.height=3.1}
+adh |>  
+  ggplot(aes(x = prop_pobreza_extrema_criancas, y = mortalidade_5)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) #<<
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">regressão linear</div>
+
+.scroll-output[
+.tiny[
+```{r}
+modelo <- lm(mortalidade_5 ~ prop_pobreza_extrema_criancas, data = adh)
+summary(modelo)
+```
+]
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">interpretação</div>
+
+**Resultado:**
+
+A proporção de crianças em extrema pobreza (`prop_pobreza_extrema_criancas`) possui relação **positiva** com a mortalidade infantil de até 5 anos (`mortalidade_5`). A variável é estatisticamente significativa (p < 0.001).
+
+O coeficiente de determinação é $R^2 = 0.6447$, ou seja, cerca de `r 0.6447*100`% da variabilidade na mortalidade infantil é explicada pelo modelo.
+ 
+**Equação estimada:**
+
+$$
+\text{mortalidade_5} = 13.7125 + 0.9543 \cdot \text{prop_pobreza_extrema_criancas}
+$$
+
+**Interpretação:**
+
+- Um **aumento de 1 p.p. na `prop_pobreza_extrema_criancas`** está associado a um **aumento de 0.9543 óbitos por mil nascidos vivos** na `mortalidade_5`, _ceteris paribus_.
+
+</div>
+</div>
+
+---
+
+**Padrão regional: pobreza infantil extrema e mortalidade até 5 anos**
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">Importando dados</div>
+
+Primeiro, importamos os dados de região dos municípios e unimos à base `adh` com um `left_join()`:
+
+.tiny[
+```{r}
+regiao <- "SELECT id_municipio, nome_regiao 
+FROM `basedosdados.br_bd_diretorios_brasil.municipio`" |> 
+  read_sql()
+
+dados <- left_join(adh, regiao, by = "id_municipio")
+```
+]
+
+<!-- Agora, a base `dados` tem os dados de `adh` e os dados de `regiao`. -->
+
+```{r echo=FALSE}
+glimpse(dados)
+```
+
+</div>
+
+<div class="panel">
+<div class="panel-name">sem linha de tendência</div>
+
+.tiny[
+```{r fig.height=3.3}
+dados |> 
+  ggplot(aes(x = prop_pobreza_extrema_criancas, y = mortalidade_5, color = nome_regiao)) +
+  geom_point(alpha = 0.5) +
+  scale_color_brewer(palette = "Set2")
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">com linha de tendência</div>
+
+.tiny[
+```{r fig.height=3.1}
+dados |>  
+  ggplot(aes(x = prop_pobreza_extrema_criancas, y = mortalidade_5, color = nome_regiao)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE) + 
+  scale_color_brewer(palette = "Set2")
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">interpretação</div>
+
+**Existe padrão regional?**
+
+Sim. Municípios das regiões **Norte e Nordeste** apresentam os maiores níveis de:
+
+- Mortalidade infantil (até 5 anos) (`mortalidade_5`)
+
+- Proporção de crianças em extrema pobreza (`prop_pobreza_extrema_criancas`)
+
+As demais regiões tendem a se concentrar em níveis mais baixos desses dois indicadores.
+
+A tendência é **positiva em todas as regiões**, mas a intensidade da relação parece variar regionalmente.
+
+<br>
+
+**Observação:**
+
+Esse tipo de visualização reforça a importância de **análises desagregadas por região**, pois a **média nacional pode mascarar desigualdades territoriais** importantes.
+
+</div>
+</div>
+
+---
+
+**Relação entre crianças fora da escola (4 e 5 anos) e a proporção de crianças na extrema pobreza**
+
+.tiny[
+```{r fig.height=2.7}
+dados |>  
+  ggplot() +
+  aes(x = prop_pobreza_extrema_criancas, y = taxa_criancas_fora_escola_4_5, color = nome_regiao) +
+  geom_point(alpha = 0.5) +
+  scale_color_brewer(palette = "Set2") +
+  geom_smooth(method = "lm", se = FALSE) # linha de tendência para cada região do Brasil #<<
+```
+]
+
+<span style='font-size:90%'>Observa-se <b>variação na inclinação da relação entre pobreza extrema e crianças fora da escola entre as regiões</b>. No Sul, essa associação é mais forte — indicando que o aumento da pobreza extrema está mais fortemente ligado à evasão escolar nessa faixa etária — enquanto no Nordeste o efeito é menos pronunciado.</span>
+
+---
+
+**Evolução da Mortalidade Infantil (até 1 ano) por Região — 1991, 2000 e 2010**
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">gráfico de pontos</div>
+
+.tiny[
+```{r fig.height=3}
+dados |> 
+  group_by(ano, nome_regiao) |>  
+  summarise(media = mean(mortalidade_1, na.rm = TRUE)) |> 
+  ggplot(aes(x = media, y = nome_regiao, color = as.factor(ano))) +
+  geom_point(size = 4) #<<
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">gráfico de barras</div>
+
+.tiny[
+```{r fig.height=3}
+dados |> 
+  group_by(ano, nome_regiao) |> 
+  summarise(media = mean(mortalidade_1, na.rm = TRUE)) |>  
+  ggplot(aes(x = nome_regiao, y = media, fill = as.factor(ano))) +
+  geom_bar(stat = "identity", position = "dodge") # indica como as barras devem ser posicionadas #<<
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">interpretação</div>
+
+```{r include=FALSE}
+med_mort_inf_red_reg_bras <- dados |>  
+  group_by(ano, nome_regiao) |>  
+  summarise(media = mean(mortalidade_1, na.rm = TRUE)) |> 
+  group_by(nome_regiao) |> 
+  mutate(reducao = -(media - lag(media)))
+```
+
+Os gráficos mostram duas formas de representar a **média da mortalidade infantil (até 1 ano)** por região brasileira, nos anos de **1991, 2000 e 2010**. Em todas as regiões, observa-se uma **queda consistente** ao longo do período analisado.
+
+<br>
+
+**Reduções percentuais por região:**
+
+- **Centro-Oeste:** redução de `r round(med_mort_inf_red_reg_bras$reducao[6], 2)` p.p. (1991—2000); redução `r med_mort_inf_red_reg_bras$reducao[11]` p.p. (2000—2010)
+
+- **Nordeste:** redução de `r round(med_mort_inf_red_reg_bras$reducao[7], 2)` p.p. (1991–2000); redução de `r round(med_mort_inf_red_reg_bras$reducao[12], 2)` p.p. (2000–2010)
+
+- **Norte:** redução de `r round(med_mort_inf_red_reg_bras$reducao[8], 2)` p.p. (1991–2000); redução de `r round(med_mort_inf_red_reg_bras$reducao[13], 2)` p.p. (2000–2010)
+
+- **Sudeste:** redução de `r round(med_mort_inf_red_reg_bras$reducao[9], 2)` p.p. (1991–2000); redução de `r round(med_mort_inf_red_reg_bras$reducao[14], 2)` p.p. (2000–2010)
+
+- **Sul:** redução de `r round(med_mort_inf_red_reg_bras$reducao[10], 2)` p.p. (1991–2000); redução de `r round(med_mort_inf_red_reg_bras$reducao[15], 2)` p.p. (2000–2010)
+
+</div>
+</div>
+
+---
+
+### Mapas
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">introdução</div>
+
+Para criar mapas com dados municipais, usamos o pacote [{geobr}](https://github.com/ipeaGIT/geobr), que fornece as malhas espaciais do Brasil em diferentes níveis (municípios, estados etc.). Em seguida, realizamos um `left_join()` com nossa base de indicadores (`dados`) para unir as informações socioeconômicas e geográficas.
+
+.tiny[
+```{r eval=FALSE}
+muni <- geobr::read_municipality(year = 2010) |> 
+  mutate(code_muni = as.character(code_muni))
+
+muni_dados <- left_join(muni, dados, by = c("code_muni" = "id_municipio"))
+```
+]
+
+O resultado é uma base geográfica completa (`muni_dados`) pronta para visualização com `ggplot2` + `geom_sf()`.
+
+.tiny[
+```{r echo=FALSE}
+muni <- geobr::read_municipality(year = 2010, showProgress = FALSE) |> 
+  mutate(code_muni = as.character(code_muni))
+
+muni_dados <- left_join(muni, dados, by = c("code_muni" = "id_municipio"))
+
+names(muni_dados)
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">mortalidade (até 1 ano)</div>
+
+.pull-left[
+```{r eval=FALSE}
+muni_dados |>
+  filter(ano == 2010) |>
+  ggplot() +
+  aes( #<<
+    geometry = geom, #<<
+    fill = mortalidade_1 #<<
+  ) + #<<
+  geom_sf( #<<
+    color = NA #<<
+  ) + #<<
+  scale_fill_viridis_c( #<<
+    na.value = "grey90" #<<
+  ) + #<<
+  theme_minimal()
+```
+]
+
+.pull-right[
+```{r echo=FALSE, fig.height=8}
+muni_dados |>  
+  filter(ano == 2010) |> 
+  ggplot() +
+  aes(geometry = geom, fill = mortalidade_1) + #<<
+  geom_sf(color = NA) + #<<
+  scale_fill_viridis_c(na.value = "grey90") + #<<
+  theme_minimal()
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">pobreza extrema crianças</div>
+
+.pull-left[
+```{r eval=FALSE}
+muni_dados |> 
+  filter(ano == 2010) |> 
+  ggplot() +
+  aes( #<<
+    geometry = geom, #<<
+    fill = prop_pobreza_extrema_criancas #<<
+  ) + #<<
+  geom_sf( #<<
+    color = NA #<<
+  ) + #<<
+  scale_fill_viridis_c( #<<
+    na.value = "grey90" #<<
+  ) + #<<
+  theme_minimal()
+```
+]
+
+.pull-right[
+```{r echo=FALSE, fig.height=8}
+muni_dados |> 
+  filter(ano == 2010) |> 
+  ggplot() +
+  aes(geometry = geom, fill = prop_pobreza_extrema_criancas) + #<<
+  geom_sf(color = NA) + #<<
+  scale_fill_viridis_c(na.value = "grey90") + #<<
+  theme_minimal()
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">tx. crianças fora da escola</div>
+
+.pull-left[
+```{r eval=FALSE}
+muni_dados |> 
+  filter(ano == 2010) |> 
+  ggplot() +
+  aes( #<<
+    geometry = geom, #<<
+    fill = taxa_criancas_fora_escola_4_5 #<<
+  ) + #<<
+  geom_sf( #<<
+    color = NA #<<
+  ) + #<<
+  scale_fill_viridis_c( #<<
+    na.value = "grey90" #<<
+  ) + #<<
+  theme_minimal()
+```
+]
+
+.pull-right[
+```{r echo=FALSE, fig.height=8}
+muni_dados |> 
+  filter(ano == 2010) |> 
+  ggplot() +
+  aes( #<<
+    geometry = geom, #<<
+    fill = taxa_criancas_fora_escola_4_5 #<<
+  ) + #<<
+  geom_sf(color = NA) + #<<
+  scale_fill_viridis_c(na.value = "grey90") + #<<
+  theme_minimal()
+```
+]
+
+</div>
+
+<div class="panel">
+<div class="panel-name">tx. água/esgoto inadequados</div>
+
+.pull-left[
+```{r eval=FALSE}
+muni_dados |> 
+  filter(ano == 2010) |> 
+  ggplot() +
+  aes( #<<
+    geometry = geom, #<<
+    fill = taxa_agua_esgoto_inadequados #<<
+  ) + #<<
+  geom_sf( #<<
+    color = NA #<<
+  ) + #<<
+  scale_fill_viridis_c( #<<
+    na.value = "grey90" #<<
+  ) + #<<
+  theme_minimal()
+```
+]
+
+.pull-right[
+```{r echo=FALSE, fig.height=8}
+muni_dados |> 
+  filter(ano == 2010) |> 
+  ggplot() +
+  aes(geometry = geom, fill = taxa_agua_esgoto_inadequados) +
+  geom_sf(color = NA) +
+  scale_fill_viridis_c(na.value = "grey90") +
+  theme_minimal()
+```
+]
+
+
+</div>
+</div>
+
+---
+
+class: inverse center middle
+name: "wooldridge"
+
+# Pacote [`{wooldridge}`](https://justinmshea.github.io/wooldridge/)
+
+<br>
+<br>
+
+.right[<span style='font-size:80%'>Este pacote contém a documentação completa <br>para cada conjunto e todos os dados <br> utilizados no livro <span style='color:#f58634'><b>Introdução à Econometria</b></span> <br> de Jeffrey M. Wooldridge</span>]
+
+---
+
+### Dado utilizado: `wage`
+
+```{r include=FALSE}
+wage <- wooldridge::wage1
+```
+
+O conjunto de dados `wage` é derivado de uma pesquisa populacional realizada em 1976, coletada por Henry Farver e Jeffrey Wooldridge enquanto eram colegas no [MIT](https://www.mit.edu/), em 1988. Ele contém 526 observações e 24 variáveis relacionadas ao mercado de trabalho, incuindo: *`r knitr::combine_words(names(wage), and = " e ")`*.
+
+.tiny[
+```{r}
+wage <- wooldridge::wage1
+```
+]
+
+.scroll-output[
+```{r echo=FALSE}
+glimpse(wage)
+```
+]
+
+---
+
+**A relação entre educação e salário**
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">gráfico</div>
+```{r fig.height=3.4}
+wage |> 
+  ggplot(aes(x = educ, y = wage)) +
+  geom_point() +
+  geom_smooth(method = 'lm', se = FALSE) 
+```
+</div>
+
+<div class="panel">
+<div class="panel-name">regressão</div>
+```{r}
+modelo <- lm(wage ~ educ, data = wage)
+summary(modelo)
+```
+</div>
+
+<div class="panel">
+<div class="panel-name">interpretação</div>
+
+A relação entre os anos de estudo (`educ`) e o salário médio por hora (`wage`) é positiva e estatisticamente significativa.
+
+O coeficiente estimado para `educ` é **0.5413**, indicando que a cada ano adicional de escolaridade, o salário tende a aumentar, em média, **US$ 0.54**.
+
+O $R^2$ do modelo é **0.1648**, o que significa que `educ` explica aproximadamente **`r round(0.1648*100, 2)`** da variação salarial.
+
+<br>
+
+**Regressão estimada:**
+
+$$
+\text{wage} = -0.9048 + 0.5413 \cdot \text{educ}
+$$
+
+</div>
+</div>
+
+---
+
+**A relação entre educação e log-salário**
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">gráfico</div>
+```{r fig.height=3.4}
+wage |> 
+  ggplot(aes(x = educ, y = lwage)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+</div>
+
+<div class="panel">
+<div class="panel-name">regressão</div>
+```{r}
+modelo <- lm(lwage ~ educ, data = wage)
+summary(modelo)
+```
+</div>
+
+<div class="panel">
+<div class="panel-name">interpretação</div>
+
+A relação entre os anos de estudo (`educ`) e o logaritmo do salário por hora (`lwage`) é **positiva** e estatisticamente significativa, com p-valor próximo de zero.
+
+O coeficiente de determinação $R^2$ é **0.1858**, ou seja, `r round(0.1858*100, 2)`% da variação no log-salário é explicada pela escolaridade.
+
+<br>
+
+**Regressão estimada:**
+
+$$
+\text{lwage} = 0.5837 + 0.0827 \cdot \text{educ}
+$$
+
+<br>
+
+**Interpretação do coeficiente:**
+
+A cada **1 ano adicional de escolaridade** (`educ`), o **salário aumenta em média 8.3%**, dado que o modelo está em log-linear (interpretação aproximadade $\beta \cdot 100$).
+
+</div>
+</div>
+
+---
+
+**Mincer — o salário é estimado por meio da escolaridade e da experiência**
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">gráfico</div>
+```{r fig.height=3.1}
+wage |> 
+  ggplot(aes(x = educ, y = lwage)) +
+  geom_point(aes(color = exper), alpha = 0.7) +
+  scale_color_viridis_c() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+</div>
+
+<div class="panel">
+<div class="panel-name">regressão</div>
+```{r}
+mincer <- lm(lwage ~ educ + exper, data = wage)
+summary(mincer)
+```
+</div>
+
+<div class="panel">
+<div class="panel-name">interpretação</div>
+
+O logaritmo do salário por hora (`lwage`) está **positivamente** relacionado com os anos de estudo (`educ`) e com os anos de experiência (`exper`). Ambos os coeficientes são estatisticamente significativos.
+
+O $R^2$ do modelo é **0.2493**, ou seja, `r round(0.2493*100, 2)`% da variabilidade no log-salário (`lwage`) é explicada por escolaridade (`educ`) e experiência (`exper`).
+
+<br>
+
+**Regressão estimada:**
+
+$$
+\text{lwage} = 0.217 + 0.098 \cdot \text{educ} + 0.010 \cdot \text{exper}
+$$
+
+<br>
+
+**Interpretação dos coeficientes:**
+
+- Cada **ano adicional de estudo** (`educ`) está associado a um **aumento médio de `r round(mincer$coefficients[2]*100, 2)`%** no salário por hora (`lwage`), _ceteris paribus_.
+
+- Cada **ano adicional de experiência** (`exper`) implica em **aumento médio de `r round(mincer$coefficients[3]*100, 2)`%** no salário por hora (`lwage`), _ceteris paribus_.
+
+</div>
+</div>
+
+---
+
+**Mincer com efeito não linear da experiência sobre o salário**
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">gráfico</div>
+```{r fig.height=3.1}
+wage |> 
+  ggplot(aes(x = educ, y = lwage)) +
+  geom_point(aes(color = exper, size = expersq), alpha = 0.7) +
+  scale_color_viridis_c() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+</div>
+
+<div class="panel">
+<div class="panel-name">regressão</div>
+```{r}
+mincer <- lm(lwage ~ educ + exper + expersq, data = wage)
+summary(mincer)
+```
+</div>
+
+<div class="panel">
+<div class="panel-name">interpretação</div>
+
+O modelo sugere que:
+
+- A **educação (`educ`)** tem **efeito positivo** no log do salário: cada ano adicional aumenta o log-salário em `r round(mincer$coefficients[2]*100, 2)`%.
+
+- A **experiência (`exper`)** também contribui **positivamente**, mas a um ritmo decrescente.
+
+- O **termo quadrático da experiência (`expersq`)** é **negativo**, indicando que **há um ponto de retorno**, após o qual o efeito da experiência no salário começa a decrescer — um comportamento esperado para carreiras profissionais.
+
+<br>
+
+**Regressão estimada:**
+
+$$
+\text{lwage} = 0.128 + 0.090 \cdot \text{educ} + 0.041 \cdot \text{exper} - 0.0007 \cdot \text{expersq}
+$$
+
+<br>
+
+O modelo apresenta um $R^2$ de **0.3003**, ou seja, aproximadamente `r round(0.3003*100, 2)`% da variação no log-salário é explicada pelas variáveis `educ`, `exper` e `expersq`.
+
+Todos os coeficientes são estatisticamente significativos, com p-valores próximos de zero.
+
+
+</div>
+</div>
+
+---
+
+## Para saber mais!
+
+<div class="panelset">
+
+<div class="panel">
+<div class="panel-name">Em inglês</div>
+
+.pull-left[
+
+- [Causal Inference: The Mixtape](https://mixtape.scunning.com/index.html)
+
+<a href="https://mixtape.scunning.com/index.html">
+```{r echo=FALSE, out.width="45%", fig.align='center'}
+knitr::include_graphics("img/47-casual-inference.png")
+```
+</a>
+
+]
+
+.pull-right[
+
+- [An Introduction to Statistical Learning: with Applications in R](https://hastie.su.domains/ISLRv2_website.pdf)
+
+<a href="https://mixtape.scunning.com/index.html">
+```{r echo=FALSE, out.width="45%", fig.align='center'}
+knitr::include_graphics("img/48-introduction-statistical-learning.png")
+```
+</a>
+
+]
+
+</div>
+</div>
+
+---
+
+# Obrigada!
+
+.pull-left[
+
+```{r echo=FALSE, out.width="65%", fig.align='center'}
+knitr::include_graphics("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjFlNDgyOTRhMTk5MGE4ZTNmNjg5ZWMzM2NlZDU3ODBmZDU0OGFiNiZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/M9NbzZjAcxq9jS9LZJ/giphy.gif")
+```
+
+<!-- .center[Agradecimento especial a [Curso-R](https://curso-r.com/) pelos materiais.] -->
+
+.center[Slides criados usando os pacotes em R:]
+.center[[**xaringan**](https://github.com/yihui/xaringan)]
+.center[[**xaringanthemer**](https://github.com/gadenbuie/xaringanthemer)]
+
+.center[O chakra vem da biblioteca JavaScript [remark.js](https://remarkjs.com), [**knitr**](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com).]
+]
+
+.pull-right[
+
+```{r echo=FALSE, out.width="55%", fig.align='center'}
+knitr::include_graphics("img/49-luisa.jpg")
+```
+
+.center[<i class="fas fa-home"></i> [luisa.rbind.io](https://luisa.rbind.io/)]
+
+.center[<i class="fab fa-twitter"></i> [@lgiselebock](https://twitter.com/lgiselebock)]
+
+.center[<i class="fab fa-github"></i> [@lgiselebock](https://github.com/lgiselebock/)]
+
+.center[<i class="far fa-envelope"></i> [luisa.bock@acad.ufsm.br](mailto:luisa.bock@acad.ufsm.br)]
+]
+
+<!-- inicio academic icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<!-- final academic icons -->
+
+ 
+<!-- inicio font awesome -->
+<script src="https://kit.fontawesome.com/1f72d6921a.js" crossorigin="anonymous"></script>
+
+<!-- final font awesome -->

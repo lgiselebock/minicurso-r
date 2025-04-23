@@ -60,13 +60,182 @@ class: center, middle, inverse, title-slide
 
 # Sumário
 
-1. [R e RStudio](#r-rstudio)
-2. [Introdução](#introducao)
-3. [Projetos](#projetos)
-4. [Importação de dados](#importacao)
-5. [Manipulação de dados](#manipulacao)
-6. [Visualização de dados](#visualizacao)
-7. [Regressão Linear](#regressao)
+&lt;div class="panelset"&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;R e RStudio&lt;/div&gt;
+
+- **[R e RStudio](#r-rstudio)**
+  
+  - [Instalação do R](#instalacao-r)
+  - [Instalação do RStudio](#instalacao-rstudio)
+  - [O que é o R?](#o-que-e-o-r)
+  - [RStudio](#rstudio)
+  - [Atalhos](#atalhos)
+  - [Help!](#help)
+  - [Cheat Sheets](#cheat-sheets)
+  - [O Ciclo da Ciência de Dados](#ciclo-ciencia-dados)
+  - [O Ciclo da Ciência de Dados no R](#ciclo-ciencia-dados-r)
+  
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Introdução&lt;/div&gt;
+
+.pull-left[
+- **[Introdução](#introducao)**
+
+  - [R como calculadora](#r-calculadora)
+  - [Funções matemáticas](#funcoes-matematicas)
+  - [Objetos](#objetos)
+  - [Operadores Relacionais](#operadores-relacionais)
+  - [Operadores Lógicos](#operadores-logicos)
+  - [Pertence](#pertence)
+  - [Tipos Básicos de dados](#tipos-basicos-dados)
+  - [Números](#numeros)
+  - [Lógicos](#logicos)
+  - [Textos](#textos)
+]
+
+.pull-right[
+- **[Introdução](#introducao)**
+
+  - [Fatores](#fatores)
+  - [NA](#NA)
+  - [Conversão de classes](#conversao-classes)
+  - [Tipos de objetos](#tipos-objetos)
+  - [Vetores](#vetores)
+  - [Matrizes](#matrizes)
+  - [Listas](#listas)
+  - [Data Frame](#data-frame)
+  - [Funções](#funcoes)
+  - [Pacotes](#pacotes)
+  - [Para saber mais!](#para-saber-mais-introducao)
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Importação&lt;/div&gt;
+ 
+- **[Projetos](#projetos)**
+
+  - [Pacote `tidyverse`](#pacote-tidyverse)  
+
+- **[Importação de dados](#importacao)**
+
+  - [Caminhos](#caminhos)
+  - [Tibbles](#tibbles)
+  - [Cheat Sheets](#cheat-sheets-importacao)
+  - [Importação de arquivos](#importacao-arquivos)
+  - [Exportação de arquivos](#exportacao-arquivos)
+  - [Importação e exportação de arquivos](#importacao-exportacao-arquivos-rds)
+  - [Visualização de um objeto](#visualizacao-objeto)
+  - [BASE DOS DADOS](#base-dos-dados)
+  - [BASE DOS DADOS — SQL](#base-dos-dados-sql)
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Manipulação&lt;/div&gt;
+
+.pull-left[
+- **[Manipulação de dados](#manipulacao)**
+
+  - [Pipe: `%&gt;%` ou `|&gt;`](#pipe)
+  - [Pacote `dplyr`](#pacote-dplyr)
+  - [Cheat Sheets](#cheat-sheets-dplyr)
+  - [Selecionando Colunas: `select()`](#dplyr-select)
+  - [Ordenando linhas: `arrange()`](#dplyr-arrange)
+  - [Aplicando mais de uma função](#mais-de-uma-funcao)
+  - [Filtrando linhas: `filter()`](#dplyr-filter)
+  - [Criando novas colunas: `mutate()`](#dplyr-mutate)
+  - [Sumarizando colunas: `summarise()`](#dplyr-summarise)
+  - [Sumarizando colunas agrupadas: `group_by()`](#dplyr-group-by)
+  - [Ordenando colunas:  `relocate()`](#dplyr-relocate)
+  - [Renomeando colunas: `rename()`](#dplyr-rename)
+  - [Selecionando linhas: `slice_head()`](#dplyr-slice-head)
+  - [Selecionando linhas: `slice_tail()`](#dplyr-slice-tail)
+]  
+
+.pull-right[ 
+- **[Manipulação de dados](#manipulacao)**
+
+  - [Selecionando linhas: `slice_max()`](#dplyr-slice-max)
+  - [Selecionando linhas: `slice_min()`](#dplyr-slice-min)
+  - [Selecionando linhas: `slice_sample()`](#dplyr-slice-sample)
+  - [Limpando a tabela: `distinct()`](#dplyr-distinct)
+  - [Contando valores: `count()`](#dplyr-count)
+  - [Combinando dados: `bind_rows()`](#dplyr-bind-rows)
+  - [Combinando dados: `bind_cols()`](#dplyr-bind-cols)
+  - [Unindo bases: `*_join()`](#dplyr-join)
+  - [Pacote `tidyr`](#pacote-tidyr)
+  - [Cheat Sheets](#cheat-sheets-tidyr)
+  - [União de colunas: `unite()`](#tidyr-unite)
+  - [Separação de colunas: `separate()`](#tidyr-separate)
+  - [Remove NAs: `drop_na()`](#tidyr-drop-na)
+  - [Pivotar os dados: `pivot_*()`](#tidyr-pivot)
+  - [Larga para longa: `pivot_longer()`](#tidyr-pivot-longer)
+  - [Longa para larga: `pivot_wider()`](#tidyr-pivot-wider)
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Visualização&lt;/div&gt;
+
+.pull-left[
+- **[Visualização de dados](#visualizacao)**
+
+  - [Para que servem as visualizações?](#para-que-servem-visualizacoes)
+  - [Gramática de gráficos _em camadas_](#gramatica-graficos-camadas)
+  - [Construindo um gráfico em Camadas](#construindo-grafico-camadas)
+  - [Curiosidade: por que o `+`?](#curiosidade-pq-mais)
+  - [Qual gráfico escolher?](#qual-grafico-escolher)
+  - [Cheat Sheets](#cheat-sheets-ggplot2)
+  - [Um gráfico de pontos (dispersão)](#grafico-pontos)
+  - [Gráfico de linhas](#grafico-linhas)
+  - [Gráfico de barras](#grafico-barras)
+]
+
+.pull-right[
+- **[Visualização de dados](#visualizacao)**
+
+  - [Histogramas](#histrogramas)
+  - [Boxplot](#boxplot)
+  - [Títulos, _labels_ e escalas](#titulos-labels-escalas)
+  - [Cores](#cores)
+  - [Trocando os textos da legenda](#trocando-textos-legenda)
+  - [Temas](#temas)
+  - [Mapas](#mapas)
+  - [Para saber mais!](#para-saber-mais-visualizacao)
+]
+
+&lt;/div&gt;
+
+&lt;div class="panel"&gt;
+&lt;div class="panel-name"&gt;Regressão Linear&lt;/div&gt;
+
+- **[Regressão Linear](#regressao)**
+
+  - [Dados Educacionais](#dados-educacionais)
+    - [Importando as bases](#dados-educacionais-importando-bases)
+    - [Padronizando as bases de dados](#dados-educacionais-padronizando-bases)
+    - [Juntando as bases de dados: Ensino Fundamental](#dados-educacionais-juntando-bases-fundamental)
+    - [Análise Descritivas: Ensino Fundamental](#dados-educacionais-analises-descritivas-fundamental)
+    - [Regressão Linear: Ensino Fundamental](#dados-educacionais-regressao-linear-fundamental)
+    - [Juntando as bases de dados: Ensino Médio](#dados-educacionais-juntando-bases-medio)
+    - [Análise Descritivas: Ensino Médio](#dados-educacionais-analises-descritivas-medio)
+    - [Regressão Linear: Ensino Médio](#dados-educacionais-regressao-linear-medio)
+    - [BASE DOS DADOS](#base-dos-dados-regressao)
+  - [Atlas do Desenvolvimento Humano](#atlas-desenvolvimento-humano)
+    - [Atlas do Desenvolvimento Humano — importando a base de dados](#atlas-desenvolvimento-humano-importando-base)
+  - [Mapas](#mapas-regressao)
+  - [Pacote `{wooldridge}`](#wooldridge)
+  - [Para saber mais!](#para-saber-mais-regressao)
+
+&lt;/div&gt;
+&lt;/div&gt;
 
 ---
 
@@ -77,7 +246,8 @@ name: r-rstudio
 
 ---
 
-## Instalação do R
+name: instalacao-r
+## Instalação do R 
 
 .pull-left[
 &lt;br&gt;
@@ -103,6 +273,7 @@ name: r-rstudio
 
 ---
 
+name: instalacao-rstudio
 ## Instalação do RStudio
 
 .pull-left[
@@ -131,6 +302,7 @@ name: r-rstudio
 
 ---
 
+name: o-que-e-o-r
 ### O que é o R?
 
 &gt; "R é um ambiente de software livre para computação estatística e gráficos." [R Development Core Team](https://cran.r-project.org/)
@@ -151,6 +323,7 @@ name: r-rstudio
     
 ---
 
+name: rstudio
 ### RStudio
 
 **RStudio** é uma IDE (*Integrated Development Environment*) da Linguagem R, isto é, um ambiente de desenvolvimento utilizado para editar e executar códigos em R. Ela é mantida pela [Posit](https://posit.co).
@@ -223,6 +396,7 @@ name: r-rstudio
 
 ---
 
+name: atalhos
 ### Atalhos
 
 Conhecer os atalhos do teclado ajuda bastante durante a programação no **RStudio**.
@@ -249,6 +423,7 @@ No MacOS, substitua **CTRL** por **CMD** e **ALT** por **OPT**.
 
 ---
 
+name: help
 ### Help! 
 
 Ficou com dúvida sobre determinado pacote ou função?
@@ -275,6 +450,7 @@ help(sum)
 
 ---
 
+name: cheat-sheets
 ### [Cheat Sheets](https://rstudio.com/resources/cheatsheets/)
 
 O **RStudio** disponibiliza algumas 'folhas de cola', as **Cheat Sheets**. Elas trazem um resumo de como utilizar diversos pacotes e até o próprio RStudio. Para acessá-las, basta clicar no menu `Help` e então em `Cheat Sheets`, ou através do site da [**Posit**](https://posit.co/resources/cheatsheets/).
@@ -283,12 +459,14 @@ O **RStudio** disponibiliza algumas 'folhas de cola', as **Cheat Sheets**. Elas 
 
 ---
 
+name: ciclo-ciencia-dados
 ### O Ciclo da Ciência de Dados
 
 &lt;img src="img/15-ciclo-ciencia-de-dados.png" width="700px" style="display: block; margin: auto;" /&gt;
 
 ---
 
+name: ciclo-ciencia-dados-r
 ### O Ciclo da Ciência de Dados no R
 
 &lt;img src="img/16-ciclo-ciencia-de-dados-no-r.png" width="700px" style="display: block; margin: auto;" /&gt;
@@ -304,6 +482,7 @@ name: introducao
 
 ---
 
+name: r-calculadora
 ### R como calculadora
 
 O **R** permite realizar muitas operações matemáticas!
@@ -384,6 +563,7 @@ A ordem matemática das operações também vale do R.
 
 ---
 
+name: funcoes-matematicas
 ### Funções matemáticas
 
 
@@ -421,6 +601,7 @@ exp(0.5) # exponencial e^(1/2)
 
 ---
 
+name: objetos
 ### Objetos
 
 O **R** permite armazenar (salvar) valores dentro de um objeto.
@@ -505,6 +686,7 @@ A
 
 ---
 
+name: operadores-relacionais
 ### Operadores Relacionais
 
 - Igual a: **==**
@@ -647,6 +829,7 @@ TRUE != FALSE
 
 ---
 
+name: operadores-logicos
 ### Operadores Lógicos
 
 - AND - E: **&amp;**
@@ -748,6 +931,7 @@ y &lt;- 8
 
 ---
 
+name: pertence
 ### Pertence
 
 É possível verificar se um valor está inserido dentro de um conjunto de valores (vetor).
@@ -789,6 +973,7 @@ y &lt;- 8
 
 ---
 
+name: tipos-basicos-dados
 ### Tipos Básicos de dados
 
 São os tipos de dados que podem ser representados na Linguagem R. É neles que são guardadas as informações.
@@ -809,6 +994,7 @@ A função `class()` retorna o tipo de dado de um objeto.
 
 ---
 
+name: numeros
 ### Números
 
 Um número inteiro seguido de `L` será considerado do tipo **integer**:
@@ -845,6 +1031,7 @@ class(5.1)
 
 ---
 
+name: logicos
 ### Lógicos
 
 Verdadeiro (`TRUE`) e Falso (`FALSE`) 
@@ -883,6 +1070,7 @@ TRUE + FALSE + FALSE + TRUE + TRUE + TRUE + FALSE
 
 ---
 
+name: textos
 ### Textos
 
 **Qualquer** código entre aspas (`""`) será interpretado como texto **character**:
@@ -916,6 +1104,7 @@ class("3")
 
 ---
 
+name: fatores
 ### Fatores
 
 Os fatores (ou factors) são usados para representar categorias.
@@ -950,6 +1139,7 @@ Na linha `levels` aparecem os rótupos do fator.
 
 ---
 
+name: NA
 ### NA
 
 **NA** representa um valor desconhecido ou ausente. As operações envolvendo um valor desconhecido também resultarão em valores desconhecidos (`NA`).
@@ -1065,6 +1255,7 @@ mean(vetor_numerico, na.rm = TRUE)
 
 ---
 
+name: conversao-classes
 ### Conversão de classes
 
 
@@ -1145,6 +1336,7 @@ as.factor(frutas)
 
 ---
 
+name: tipos-objetos
 ### Tipos de Objetos
 
 No **R**, os quatro principais objetos são:
@@ -1159,6 +1351,7 @@ No **R**, os quatro principais objetos são:
 
 ---
 
+name: vetores
 ### Vetores
 
 Armazenam elementos de uma **mesma classe** em apenas **uma dimensão**.
@@ -1516,6 +1709,7 @@ numeros[c(FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)]
 
 ---
 
+name: matrizes
 ### Matrizes
 
 São estruturas que correspondem às matrizes matemáticas, conjuntos bidimensionais contendo elementos dispostos em linhas e colunas. Assim como os vetores, todos os seus elementos são do mesmo tipo. São criadas utilizando a função `matrix()`:
@@ -1651,6 +1845,7 @@ matriz1 %% matriz2
 
 ---
 
+name: listas
 ### Listas
 
 São um tipo especial de vetor que podem conter uma **coleção de diferentes classes**. Possuem uma **estrutura unidimensional**, contando apenas o número de elementos integrantes. São criados usando a função `list()`
@@ -1717,6 +1912,7 @@ length(lista)
 
 ---
 
+name:data-frame
 ## Data Frame
 
 São tabelas **bidimensionais** (linhas e colunas), em que cada coluna pode ser de uma classe diferente. São criados com a função `data.frame()`:
@@ -2141,6 +2337,7 @@ median(mtcars$mpg)
 
 ---
 
+name: funcoes
 ### Funções
 
 Enquanto os objetos são nomes que armazenam valores, as **funções** são nomes que armazenam um **conjunto de instruções** em R. Sempre que uma função é executada, o código que ela contém roda automaticamente, e um resultado é devolvido.
@@ -2371,6 +2568,7 @@ Ou seja:
 
 ---
 
+name: pacotes
 ### Pacotes
 
 Pacotes são **coleções de funções, dados e documentação** que estendem as funcionalidades do R base.
@@ -2443,6 +2641,7 @@ dplyr::glimpse()
 
 ---
 
+name: para-saber-mais-introducao
 ## Para saber mais!
 
 .panelset[
@@ -2522,6 +2721,7 @@ Ao criar um projeto, o `RStudio` cria um arquivo `nome-do-projeto.Rproj` na past
 
 ---
 
+name: pacote-tidyverse
 ### Pacote: `tidyverse`
 
 É uma coleção de pacotes de `R` desenvolvidos para a Ciência de Dados. 
@@ -2554,6 +2754,7 @@ name: importacao
 
 ---
 
+name: caminhos
 ### Caminhos
 
 É importante na tarefa de **importação de dados** saber onde está o arquivo que se quer importar. Toda função de importação vai exigir um **caminho** (uma _string_) que representa o endereço do arquivo no computador.
@@ -2594,6 +2795,7 @@ O uso de **caminhos relativos** dentro de um projeto é considerado uma **boa pr
 
 ---
 
+name: tibbles
 ## Tibbles
 
 São uma evolução da classe `data.frame`.
@@ -2700,12 +2902,14 @@ tibble::as_tibble(mtcars, rownames = "cars")
 
 ---
 
+name: cheat-sheets-importacao
 ### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
 
 [![Cheat Sheets](img/23-cheatsheet-readr.png)](https://rstudio.github.io/cheatsheets/data-import.pdf)
 
 ---
 
+name: importacao-arquivos
 ### Importação de arquivos
 
 - Pacote [`readr`](https://readr.tidyverse.org): utilizados para ler arquivos de texto
@@ -2870,6 +3074,7 @@ Principais argumentos:
 
 ---
 
+name: exportacao-arquivos
 ### Exportação de arquivos
 
 Exportar objetos do **R** significa gravar as bases (ou objetos) em um arquivo no disco rígido (HD) do computador.
@@ -2902,6 +3107,7 @@ write_xlsx(pinguins, "dados/pinguins.xlsx")
 
 ---
 
+name: importacao-exportacao-arquivos-rds
 ### Importação e exportação de arquivos
 
 **Extensão `.rds`**
@@ -2931,7 +3137,8 @@ pinguins_rds &lt;- read_rds("dados/pinguins.rds")
 ```
 
 ---
-  
+
+name: visualizacao-objeto
 ### Visualização de um objeto
   
 **Para visualizar um objeto em aba separada:**
@@ -2985,6 +3192,7 @@ glimpse(pinguins_csv)
 
 ---
 
+name: base-dos-dados
 ### &lt;span style='color:#34a15a'&gt;BASE DOS DADOS&lt;/span&gt;
 
 A &lt;span style='color:#34a15a'&gt;&lt;b&gt;Base dos Dados&lt;/b&gt;&lt;/span&gt; é uma organização não governamental, sem fins lucrativos e &lt;span style='color:#34a15a'&gt;&lt;b&gt;open source&lt;/b&gt;&lt;/span&gt;, que atua para universalizar o acesso a &lt;span style='color:#34a15a'&gt;&lt;b&gt;dados públicos de qualidade&lt;/b&gt;&lt;/span&gt;.
@@ -3090,6 +3298,7 @@ No blog da [Base dos Dados](https://dev.to/basedosdados), há um tutorial de com
 
 ---
 
+name: base-dos-dados-sql
 ### &lt;span style='color:#34a15a'&gt;BASE DOS DADOS — SQL&lt;/span&gt;
 
 **SQL** (_Structured Query Language_, ou _Linguagem de Consulta Estruturada_) é a linguagem padrão para **consultas em bancos de dados relacionais**.
@@ -3326,6 +3535,7 @@ name: manipulacao
 
 ---
 
+name: pipe
 ### Pipe: `%&gt;%` ou `|&gt;`
 
 - `CTRL` + `SHIFT` + `M`: cria o `%&gt;%` &amp;nbsp; (ou `|&gt;`).
@@ -3424,6 +3634,7 @@ pinguins_raw &lt;- read_csv("dados/pinguins_raw.csv")
 
 ---
 
+name: pacote-dplyr
 ### Pacote &amp;nbsp; `dplyr`
 
 O `{dplyr}` é um dos **pacotes mais importantes** para a **manipulação de dados** no R. Ele oferece funções simples e poderosas para transformar linhas e colunas de uma base de dados.
@@ -3451,12 +3662,14 @@ Essas funções seguem um padrão simples:
   
 ---
 
+name: cheat-sheets-dplyr
 ### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
 
 [![Cheat Sheets](img/29-cheatsheet-dplyr.png)](https://rstudio.github.io/cheatsheets/data-transformation.pdf)
 
 ---
 
+name: dplyr-select
 ### Selecionando Colunas:  &amp;nbsp; `select()`
 
 A função `select()` é usada para escolher colunas específicas de uma base de dados.
@@ -3646,6 +3859,7 @@ Esse código retorna todas as colunas da base `pinguins`, exceto as colunas `yea
 
 ---
 
+name: dplyr-arrange
 ### Ordenando linhas: &amp;nbsp; `arrange()`
 
 A função `arrange()` serve para **ordenar as linhas** da base de dados.
@@ -3747,6 +3961,7 @@ arrange(pinguins, desc(bill_length_mm), bill_depth_mm)
 
 ---
 
+name: mais-de-uma-funcao
 ### Aplicando mais de uma função
 
 Em muitos casos, queremos aplicar **várias transformações** em sequência em uma base de dados.
@@ -3779,6 +3994,7 @@ O código fica mais **intuitivo**, com as operações organizadas em sequência 
 
 ---
 
+name: dplyr-filter
 ### Filtrando linhas: &amp;nbsp; `filter()`
 
 A função `filter()` é usada para **selecionar linhas** que atendem a uma determinada condição.
@@ -3916,6 +4132,7 @@ O argumento `na.rm = TRUE` serve para ignorar valores ausentes (`NA`) no cálcul
 
 ---
 
+name: dplyr-mutate
 ### Criando novas colunas: &amp;nbsp; `mutate()`
 
 A função `mutate()` é usada para:
@@ -4025,6 +4242,7 @@ pinguins |&gt;
 
 ---
 
+name: dplyr-summarise
 ### Sumarizando colunas: &amp;nbsp; `summarise()`
 
 A **sumarização** é uma forma de **resumir um conjunto de dados** usando alguma medida de interesse.
@@ -4107,6 +4325,7 @@ Neste exemplo, calculamos a **média ou mediana** de diferentes variáveis numé
 
 ---
 
+name: dplyr-group-by
 ### Sumarizando colunas agrupadas: &amp;nbsp; `group_by()`
 
 A função `group_by()` **não altera os dados da base**, mas indica que as operações seguintes devem ser feitas **por grupo**.
@@ -4208,6 +4427,7 @@ Ou seja, **agrupamos os dados por ilha**, **calculamos a média da massa corpora
 
 ---
 
+name: dplyr-relocate
 ### Ordenando colunas:  &amp;nbsp;  `relocate()`
 
 A função `relocate()` permite **mudar a ordem das colunas** de uma base, colocando-as em outra posição — seja com base no nome ou na posição de outra coluna.
@@ -4274,6 +4494,7 @@ Nesse exemplo, as colunas `species` e `island` foram movidas para **aparecer log
 
 ---
 
+name: dplyr-rename
 ### Renomeando colunas: &amp;nbsp; `rename()`
 
 A função `rename()` serve para **alterar os nomes das colunas** de uma base de dados.
@@ -4314,6 +4535,7 @@ pinguins |&gt;
 
 ---
 
+name: dplyr-slice-head
 ### Selecionando linhas: &amp;nbsp; `slice_head()`
 
 A função `slice_head()` é usada para **extrair as primeiras linhas** de uma tabela, de forma controlada.
@@ -4347,6 +4569,7 @@ Neste exemplo, são retornadas as **8 primeiras linhas** da base `pinguins`.
 
 ---
 
+name: dplyr-slice-tail
 ### Selecionando linhas: &amp;nbsp; `slice_tail()`
 
 A função `slice_tail()` é usada para **extrair as últimas linhas** de uma tabela.
@@ -4377,6 +4600,7 @@ Neste exemplo, são retornada s as **5 últimas linhas** da base `pinguins`.
 
 ---
 
+name: dplyr-slice-max
 ### Selecionando linhas: &amp;nbsp; `slice_max()`
 
 A função `slice_max()` seleciona as **linhas com os maiores valores** de uma coluna numérica específica.
@@ -4410,6 +4634,7 @@ Neste exemplo, são retornadas as **5 linhas com maior profundidade de bico** (`
 
 ---
 
+name: dplyr-slice-min
 ### Selecionando linhas: &amp;nbsp; `slice_min()`
 
 A função `slice_min()` seleciona as **linhas com os menores valores** de uma coluna numérica específica.
@@ -4444,6 +4669,7 @@ Neste exemplo, são retornadas as **5 linhas com menor comprimento de nadadeira*
 
 ---
 
+name: dplyr-slice-sample
 ### Selecionando linhas: &amp;nbsp; `slice_sample()`
 
 A função `slice_sample()` é usada para **selecionar linhas aleatoriamente** de uma base.
@@ -4462,18 +4688,18 @@ pinguins |&gt;
 ## # A tibble: 12 × 8
 ##    species   island   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
 ##    &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
-##  1 Gentoo    Biscoe             44            13.6               208        4350
-##  2 Adelie    Dream              40.2          20.1               200        3975
-##  3 Gentoo    Biscoe             46.8          15.4               215        5150
-##  4 Adelie    Torgers…           38.9          17.8               181        3625
-##  5 Gentoo    Biscoe             50            16.3               230        5700
-##  6 Adelie    Biscoe             41.1          18.2               192        4050
-##  7 Adelie    Dream              36.3          19.5               190        3800
-##  8 Gentoo    Biscoe             49.2          15.2               221        6300
-##  9 Chinstrap Dream              46.2          17.5               187        3650
-## 10 Adelie    Torgers…           36.2          16.1               187        3550
-## 11 Gentoo    Biscoe             48.4          16.3               220        5400
-## 12 Gentoo    Biscoe             43.4          14.4               218        4600
+##  1 Adelie    Dream              37.3          16.8               192        3000
+##  2 Gentoo    Biscoe             45.7          13.9               214        4400
+##  3 Gentoo    Biscoe             46.5          14.4               217        4900
+##  4 Adelie    Biscoe             42            19.5               200        4050
+##  5 Chinstrap Dream              46            18.9               195        4150
+##  6 Chinstrap Dream              46.5          17.9               192        3500
+##  7 Adelie    Torgers…           36.2          17.2               187        3150
+##  8 Adelie    Torgers…           37.8          17.1               186        3300
+##  9 Gentoo    Biscoe             45.2          14.8               212        5200
+## 10 Adelie    Torgers…           39.7          18.4               190        3900
+## 11 Adelie    Biscoe             41.4          18.6               191        3700
+## 12 Adelie    Biscoe             37.7          16                 183        3075
 ## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
 ```
 
@@ -4481,6 +4707,7 @@ Neste exemplo, são retornadas **12 linhas aleatórias** da base `pinguins`.
 
 ---
 
+name: dplyr-distinct
 ### Limpando a tabela: &amp;nbsp; `distinct()`
 
 A função `distinct()` remove **linhas duplicadas**, considerando os valores de um ou mais colunas.
@@ -4517,6 +4744,7 @@ Neste exemplo, a base retorna **apenas uma linha para cada valor distinto de `bo
 
 ---
 
+name: dplyr-count
 ### Contando valores: &amp;nbsp; `count()`
 
 A função `count()` é usada para **contar a frequência de valores** de cada categoria em uma coluna — especialmente útil para variáveis categóricas.
@@ -4563,6 +4791,7 @@ Neste exemplo, o código retorna a **quantidade de pinguins por espécie em cada
 
 ---
 
+name: dplyr-bind-rows
 ### Combinando dados: &amp;nbsp; `bind_rows()`
 
 A função `bind_rows()` serve para **juntar objetos pela linha** — ou seja, ela empilha os dados, mesmo que tenham colunas diferentes.
@@ -4600,6 +4829,7 @@ bind_rows(pinguins_01, pinguins_02, .id = "id")
 
 ---
 
+name: dplyr-bind-cols
 ### Combinando dados: &amp;nbsp; `bind_cols()`
 
 A função `bind_cols()` é usada para **juntar objetos lado a lado**, ou seja, **por colunas**.
@@ -4636,6 +4866,7 @@ bind_cols(pinguins_01, pinguins_02, .name_repair = "unique")
 
 ---
 
+name: dplyr-join
 ### Unindo bases: &amp;nbsp; `*_join()`
 
 Combina pares de bases de dados **com base em uma ou mais chaves** — colunas em comum entre elas.
@@ -4788,6 +5019,7 @@ glimpse(pinguins_left_join)
 
 ---
 
+name: pacote-tidyr
 ### Pacote &amp;nbsp; `tidyr`
 
 **O que são dados organizados (_tidy data_)?**
@@ -4828,12 +5060,14 @@ Principais funções:
 
 ---
 
+name: cheat-sheets-tidyr
 ### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
 
 [![Cheat Sheets](img/37-cheatsheet-tidyr.png)](https://rstudio.github.io/cheatsheets/tidyr.pdf)
 
 ---
 
+name: tidyr-unite
 ### União de colunas: &amp;nbsp; `unite()`
 
 A função `unite()` combina o conteúdo de duas ou mais colunas em uma **única coluna de texto**.
@@ -4867,6 +5101,7 @@ head(especie_ilha_unido)
 
 ---
 
+name: tidyr-separate
 ### Separação de colunas: &amp;nbsp; `separate()`
 
 A função `separate()` divide o conteúdo de uma coluna em **duas ou mais colunas**, com base em um separador.
@@ -4900,6 +5135,7 @@ head(especie_ilha_separado)
 
 ---
 
+name: tidyr-drop-na
 ### Remove NAs: &amp;nbsp; `drop_na()`
 
 A função `drop_na()` remove todas as **linhas que contêm valores ausentes (`NA`)**. 
@@ -4970,6 +5206,7 @@ pinguins |&gt;
 
 ---
 
+name: tidyr-pivot
 ### Pivotar os dados: &amp;nbsp; `pivot_*()`
 
 .pull-left[
@@ -4998,6 +5235,7 @@ Apesar de menos comum em dados _tidy_, é útil para criar **tabelas resumo** ou
 
 ---
 
+name: tidyr-pivot-longer
 ### Larga para longa: &amp;nbsp; `pivot_longer()`
 
 Transforma um banco de dados **do farmato largo para o formato longo** — ou seja, o número de **linhas aumenta** e o número de **colunas diminui**. Os principais argumentos da função `pivot_longer()` são:
@@ -5035,6 +5273,7 @@ pivot_longer(data = pinguins_raw[, c(2, 3, 10:13)],
 
 ---
 
+name: tidyr-pivot-wider
 ### Longa para larga: &amp;nbsp; `pivot_wider()`
 
 Transforma um banco de dados **do formato longo para o formato largo** — ou seja, o número de **colunas aumenta** e o número de **linhas diminui**. Os principais argumentos da função `pivot_wider()` são:
@@ -5080,6 +5319,7 @@ name: visualizacao
 
 ---
 
+name: para-que-servem-visualizacoes
 ## Para que servem as visualizações?
 
 .pull-left[
@@ -5142,6 +5382,7 @@ Ideal para relatar achados de forma clara e convincente ao público.
 
 ---
 
+name: gramatica-graficos-camadas
 ### Gramática de gráficos _em camadas_
 
 O pacote [`{ggplot2}`](https://ggplot2.tidyverse.org) segue duas ideias fundamentais que ajudam a entender como os gráficos são construídos:
@@ -5169,6 +5410,7 @@ pinguins &lt;- read_csv("dados/pinguins.csv")
 
 ---
 
+name: construindo-grafico-camadas
 ### Construindo um gráfico em Camadas
 
 No [`{ggplot2}`](https://ggplot2.tidyverse.org), cada gráfico é construído **em camadas**: começamos com a base de dados e adicionados, passo a passo, os elementos visuais que desejamos. Vamos ver isso em ação:
@@ -5257,6 +5499,7 @@ cars |&gt;
 
 ---
 
+name: curiosidade-pq-mais
 ### Curiosidade: por que o `+`?
 
 Diferente de outros pacotes do `tidyverse`, o `ggplot2` **não usa o pipe (`|&gt;` ou `%&gt;%`) para encadear operações**.
@@ -5274,6 +5517,7 @@ Segundo o próprio Hadley Wickham (criador do pacote), quando começou a desenvo
 
 ---
 
+name: qual-grafico-escolher
 # [Qual gráfico escolher?](https://www.data-to-viz.com)
 
 &lt;div style="text-align: center;"&gt;
@@ -5284,6 +5528,7 @@ Segundo o próprio Hadley Wickham (criador do pacote), quando começou a desenvo
 
 ---
 
+name: cheat-sheets-ggplot2
 ### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
 
 &lt;div style="text-align: center;"&gt;
@@ -5294,6 +5539,7 @@ Segundo o próprio Hadley Wickham (criador do pacote), quando começou a desenvo
 
 ---
 
+name: grafico-pontos
 ### Um gráfico de pontos (dispersão)
 
 
@@ -5464,6 +5710,7 @@ pinguins |&gt;
 
 ---
 
+name: grafico-linhas
 ### Gráfico de linhas
 
 Utilizamos a função `geom_line()` para criar um **gráfico de linhas**, que é idela para **representar séries temporais**. No exemplo a seguir, representamos a **massa corporal média dos pinguins** em cada ano, de 2007 a 2009.
@@ -5546,6 +5793,7 @@ pinguins |&gt;
 
 ---
 
+name: grafico-barras
 ### Gráfico de barras
 
 Vamos construir um **gráfico de barras** com o número de pinguins de cada espécie. Para isso, usamos a função `geom_col()`, que exibe **valores já agregados** (como contagens).
@@ -5712,6 +5960,7 @@ pinguins |&gt;
 
 ---
 
+name: histogramas
 ### Histogramas
 
 &lt;div class="panelset"&gt;
@@ -5788,6 +6037,7 @@ pinguins |&gt;
 
 ---
 
+name: boxplot
 ### Boxplot
 
 &lt;div class="panelset"&gt;
@@ -5838,6 +6088,7 @@ O boxplot exibe:
 
 ---
 
+name: titulos-labels-escalas
 ### Títulos, _labels_ e escalas
 
 &lt;div class="panelset"&gt;
@@ -5916,6 +6167,7 @@ pinguins |&gt;
 
 ---
 
+name: cores
 ### Cores
 
 &lt;div class="panelset"&gt;
@@ -6120,6 +6372,7 @@ Ambos os gráficos utilizam **escalas manuais de cor** com a família `scale_*_m
 
 ---
 
+name: trocando-textos-legenda
 ### Trocando os textos da legenda
 
 &lt;div class="panelset"&gt;
@@ -6166,6 +6419,7 @@ pinguins |&gt;
 
 ---
 
+name: temas
 ### Temas
 
 &lt;div class="panelset"&gt;
@@ -6337,6 +6591,7 @@ pinguins |&gt;
 
 ---
 
+name: mapas
 ### Mapas
 
 &lt;div class="panelset"&gt;
@@ -6553,6 +6808,7 @@ ideb_mapa |&gt;
 
 ---
 
+name: para-saber-mais-visualizacao
 ## Para saber mais!
 
 .panelset[
@@ -6607,11 +6863,12 @@ name: regressao
 ---
 
 &lt;!-- class: inverse center middle --&gt;
-
+name: dados-educacionais
 # Dados Educacionais
 
 ---
 
+name: dados-educacionais-importando-bases
 ### Importando as bases
 
 .tiny[
@@ -6797,6 +7054,7 @@ A base `pib_pop` traz os seguintes dados para o ano de 2020:
 
 ---
 
+name: dados-educacionais-padronizando-bases
 ### Padronizando as bases de dados
 
 Preparamos as bases para análise selecionando apenas as variáveis relevantes de cada uma. Também criamos o PIB per capita a partir do PIB total e da população.
@@ -6967,6 +7225,7 @@ pib_pc
 
 ---
 
+name: dados-educacionais-juntando-bases-fundamental
 ### Juntando as bases de dados: Ensino Fundamental
 
 Reunimos em uma única base (`fundamental`) as variáveis de desempenho (`ideb`), permanência escolar (`tx_aprov`, `tx_aband`, `tdi`, `hrs_aula`) e contexto socioeconômico (`pib_pc`), usando `id_municipio` como chave.
@@ -7041,7 +7300,7 @@ fundamental
 &lt;/div&gt;
 
 ---
-
+name: dados-educacionais-analises-descritivas-fundamental
 ### Análise Descritivas: Ensino Fundamental
 
 &lt;!-- O objetivo é **identificar padrões gerais, possíveis outliers e assimetrias**. --&gt;
@@ -7138,6 +7397,7 @@ fundamental |&gt;
 
 ---
 
+name: dados-educacionais-regressao-linear-fundamental
 ### Regressão Linear: Ensino Fundamental
 
 &lt;!-- **Será que a taxa de distorção idade-série (`tdi`) está positivamente relacionada à taxa de abandono escolar (`tx_aband`)?** --&gt;
@@ -7410,6 +7670,7 @@ $$
 
 ---
 
+name: dados-educacionais-juntando-bases-medio
 ### Juntando as bases de dados: Ensino Médio
 
 Reunimos em uma única base (`medio`) as variáveis de desempenho (`ideb`), permanência escolar (`tx_aprov`, `tx_aband`, `tdi`, `hrs_aula`) e contexto socioeconômico (`pib_pc`), usando `id_municipio` como chave.
@@ -7485,6 +7746,7 @@ medio
 
 ---
 
+name: dados-educacionais-analises-descritivas-medio
 ### Análise Descritivas: Ensino Médio
 
 &lt;!-- O objetivo é **identificar padrões gerais, possíveis outliers e assimetrias**. --&gt;
@@ -7581,6 +7843,7 @@ medio |&gt;
 
 ---
 
+name: dados-educacionais-regressao-linear-medio
 ### Regressão Linear: Ensino Médio
 
 **Existe relação entre `ideb` e a `tx_aband`?**
@@ -7972,6 +8235,7 @@ $$
 
 ---
 
+name: BASE DOS DADOS
 ### &lt;span style='color:#34a15a'&gt;BASE DOS DADOS&lt;/span&gt;
 
 &lt;span style='color:#34a15a'&gt;&lt;b&gt;Importando a base da BigQuery para o R:&lt;/b&gt;&lt;/span&gt;
@@ -8005,6 +8269,7 @@ WHERE coluna1 = 'valor1' AND coluna2 = 'valor2'
 
 ---
 
+name: atlas-desenvolvimento-humano
 ### Atlas do Desenvolvimento Humano
 
 O **Atlas do Desenvolvimento Humano no Brasil** é uma plataforma criada em parceria entre o Programa das Nações Unidas para o Desenvolvimento (PNUD), o Instituto de Pesquisa Econômica Aplicada (IPEA) e a Fundação João Pinheiro (FJP). Seu objetivo é **facilitar o acesso a informações estatísticas sobre as características e desigualdades sociais do país**, sendo uma das principais ferramentas de divulgação de dados sobre o desenvolvimento humano no Brasil.
@@ -8019,6 +8284,7 @@ Além dos dados provenientes dos Censos Demográficos de 1991, 2000 e 2010, o pr
 
 ---
 
+name: atlas-desenvolvimento-humano-importando-base
 ### Atlas do Desenvolvimento Humano — importando a base de dados
 
 
@@ -8437,6 +8703,7 @@ Os gráficos mostram duas formas de representar a **média da mortalidade infant
 
 ---
 
+name: mapas-regressao
 ### Mapas
 
 &lt;div class="panelset"&gt;
@@ -8595,7 +8862,7 @@ muni_dados |&gt;
 ---
 
 class: inverse center middle
-name: "wooldridge"
+name: wooldridge
 
 # Pacote [`{wooldridge}`](https://justinmshea.github.io/wooldridge/)
 
@@ -8953,6 +9220,7 @@ Todos os coeficientes são estatisticamente significativos, com p-valores próxi
 
 ---
 
+name: para-saber-mais-regressao
 ## Para saber mais!
 
 &lt;div class="panelset"&gt;

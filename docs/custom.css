@@ -33,3 +33,18 @@ li{
   font-size: 0.5em; /* você pode ajustar aqui */
   max-height: 400px; /* evita que quebre o layout vertical */
 }
+
+.link-sumario {
+  position: absolute;
+  bottom: 0.8em;         /* mesma altura da numeração do slide */
+  right: 5.8em;          /* distância ajustada à esquerda da numeração */
+  font-size: 0.9rem;     /* igual à .remark-slide-number */
+  color: #005c8b;        /* mesma cor da numeração */
+  opacity: 1;
+  z-index: 100;
+}
+
+.link-sumario a {
+  color: inherit;
+  text-decoration: none;
+}

@@ -59,7 +59,8 @@ xaringanExtra::use_tachyons()
 xaringanExtra::use_panelset()
 ```
 
-# Sumário
+name: sumario
+# Sumário 
 
 <div class="panelset">
 
@@ -245,6 +246,10 @@ name: r-rstudio
 
 # R e RStudio 
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: instalacao-r
@@ -268,6 +273,10 @@ knitr::include_graphics("img/01-r-logo.svg")
 ```
 ]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ## Instalação do R
@@ -275,6 +284,10 @@ knitr::include_graphics("img/01-r-logo.svg")
 ```{r, fig.align='center', out.width="80%", echo=FALSE}
 knitr::include_graphics("img/02-r-install.png")
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -301,6 +314,10 @@ knitr::include_graphics("img/03-rstudio.png")
 ```
 ]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ## Instalação do RStudio
@@ -308,6 +325,10 @@ knitr::include_graphics("img/03-rstudio.png")
 ```{r, fig.align='center', out.width="80%", echo=FALSE}
 knitr::include_graphics("img/04-rstudio-install.png")
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -329,7 +350,11 @@ name: o-que-e-o-r
     - Está disponível gratuitamente em diferentes plataformas: Linux, MacOS e Windows;
     
     - Mantido pela [R Development Core Team](https://cran.r-project.org/).
-    
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: rstudio
@@ -341,6 +366,10 @@ name: rstudio
 knitr::include_graphics("img/05-rstudio.png")
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### RStudio
@@ -350,6 +379,10 @@ knitr::include_graphics("img/05-rstudio.png")
 ```{r, fig.align='center', out.width="700px", echo=FALSE}
 knitr::include_graphics("img/06-rstudio-haydee.jpg")
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -361,6 +394,10 @@ knitr::include_graphics("img/06-rstudio-haydee.jpg")
 knitr::include_graphics("img/07-rstudio-haydee.jpg")
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### RStudio
@@ -370,6 +407,10 @@ knitr::include_graphics("img/07-rstudio-haydee.jpg")
 ```{r, fig.align='center', out.width="700px", echo=FALSE}
 knitr::include_graphics("img/08-rstudio-haydee.jpg")
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -381,6 +422,10 @@ knitr::include_graphics("img/08-rstudio-haydee.jpg")
 knitr::include_graphics("img/09-rstudio-haydee.jpg")
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### RStudio
@@ -390,6 +435,10 @@ knitr::include_graphics("img/09-rstudio-haydee.jpg")
 ```{r, fig.align='center', out.width="700px", echo=FALSE}
 knitr::include_graphics("img/10-rstudio-haydee.jpg")
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -401,6 +450,10 @@ knitr::include_graphics("img/10-rstudio-haydee.jpg")
 knitr::include_graphics("img/11-rstudio-haydee.jpg")
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### RStudio
@@ -411,6 +464,10 @@ knitr::include_graphics("img/11-rstudio-haydee.jpg")
 knitr::include_graphics("img/12-rstudio-haydee.jpg")
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### RStudio
@@ -420,6 +477,10 @@ knitr::include_graphics("img/12-rstudio-haydee.jpg")
 ```{r, fig.align='center', out.width="700px", echo=FALSE}
 knitr::include_graphics("img/13-rstudio-haydee.jpg")
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -448,6 +509,10 @@ Conhecer os atalhos do teclado ajuda bastante durante a programação no **RStud
 
 No MacOS, substitua **CTRL** por **CMD** e **ALT** por **OPT**.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: help
@@ -474,6 +539,10 @@ help(sum)
   
     - há diversos grupos de Telegram, Twitter, Discourse e em outras redes sociais.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: cheat-sheets
@@ -482,6 +551,10 @@ name: cheat-sheets
 O **RStudio** disponibiliza algumas 'folhas de cola', as **Cheat Sheets**. Elas trazem um resumo de como utilizar diversos pacotes e até o próprio RStudio. Para acessá-las, basta clicar no menu `Help` e então em `Cheat Sheets`, ou através do site da [**Posit**](https://posit.co/resources/cheatsheets/).
 
 [![Cheat Sheets](img/14-cheatsheet-rstudio.png)](https://rstudio.github.io/cheatsheets/rstudio-ide.pdf)
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -492,6 +565,10 @@ name: ciclo-ciencia-dados
 knitr::include_graphics("img/15-ciclo-ciencia-de-dados.png")
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: ciclo-ciencia-dados-r
@@ -501,6 +578,10 @@ name: ciclo-ciencia-dados-r
 knitr::include_graphics("img/16-ciclo-ciencia-de-dados-no-r.png")
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 class: inverse center middle
@@ -509,6 +590,10 @@ name: introducao
 # Introdução
 
 .center[(Acompanhe no arquivo `01-introducao.R`)]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -529,6 +614,10 @@ O **R** permite realizar muitas operações matemáticas!
 
 - **CTRL + ENTER:** executa a linha selecionada no script
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### R como calculadora
@@ -545,6 +634,10 @@ sqrt(1024) # radiciação
 
 A ordem matemática das operações também vale do R.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: funcoes-matematicas
@@ -560,6 +653,10 @@ log10(10) # logaritmo na base 10
 exp(0.5) # exponencial e^(1/2)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: objetos
@@ -574,6 +671,10 @@ Um **objeto** é um nome que guarda um valor, uma função ou uma base de dados.
 .center[`nome_do_objeto <- valor`]
 
 - Atalho: **ALT** + **–**: cria o `<-` sinal de atribuição.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -593,6 +694,10 @@ salario <- 12000.00
 salario
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Nomes dos Objetos
@@ -611,6 +716,10 @@ A <- 4
 A
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: operadores-relacionais
@@ -627,6 +736,10 @@ name: operadores-relacionais
 - Menor que: **<**
 
 - Menor ou igual a: **<=**
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -648,6 +761,10 @@ TRUE != TRUE
 TRUE != FALSE
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Operadores Relacionais
@@ -667,6 +784,10 @@ TRUE != FALSE
 
 10 < 5
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -688,6 +809,10 @@ TRUE != FALSE
 10 <= 8
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: operadores-logicos
@@ -707,6 +832,10 @@ y <- 7
   y > 10 & y <= 15
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Operadores Lógicos
@@ -724,6 +853,10 @@ y <- 2
 
   y >= 5 | y == 0
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -745,6 +878,10 @@ y <- 8
   (!y < 5)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: pertence
@@ -763,6 +900,10 @@ name: pertence
 
 "a" %in% c("c", "d", "e")
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -785,6 +926,10 @@ São os tipos de dados que podem ser representados na Linguagem R. É neles que 
 
 A função `class()` retorna o tipo de dado de um objeto.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: numeros
@@ -805,6 +950,10 @@ class(5)
 
 class(5.1)
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -829,6 +978,10 @@ Isso significa que é possível realizar operações matemáticas com ele (por e
 TRUE + FALSE + FALSE + TRUE + TRUE + TRUE + FALSE
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: textos
@@ -845,6 +998,10 @@ class(ensino)
 
 class("3")
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -869,6 +1026,10 @@ A função `as.factor()` cria um objeto do tipo `factor` ou converte um objeto j
 
 Na linha `levels` aparecem os rótupos do fator.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: NA
@@ -885,6 +1046,10 @@ NA / 5
 
 10 == NA
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -907,6 +1072,10 @@ is.na(vetor_numerico)
 !is.na(vetor_numerico)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### na.rm = TRUE
@@ -922,6 +1091,10 @@ mean(vetor_numerico)
 
 mean(vetor_numerico, na.rm = TRUE)
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -940,6 +1113,10 @@ as.character(vetor_logical) # converte para texto
 as.factor(vetor_logical) # converte para fator
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Conversão de classes
@@ -956,6 +1133,10 @@ as.character(frutas)
 as.factor(frutas)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: tipos-objetos
@@ -970,6 +1151,10 @@ No **R**, os quatro principais objetos são:
 - Lista;
 
 - Data Frame.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -992,6 +1177,10 @@ primeiro_semestre
 length(primeiro_semestre)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Vetores
@@ -1012,6 +1201,10 @@ Para criar um vetor com uma sequência de números, basta utilizar o operador **
 -5:5
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Vetores
@@ -1029,6 +1222,10 @@ primeiro_semestre[1]
 
 primeiro_semestre[1:2]
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1054,6 +1251,10 @@ primeiro_semestre[c(1, 3, 5)]
 
 Essas operações são chamadas de **subsetting**, pois são acessados os subconjuntos de valores de um vetor.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Vetores
@@ -1076,6 +1277,10 @@ anos_bissextos <- c(2000, 2004, 2008, 2012, 2016, 2020, 2024)
 class(anos_bissextos)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Vetores
@@ -1095,6 +1300,10 @@ class(segundo_semestre)
 Todos os elementos do vetor se transformaram em **texto**. Como um vetor só pode ter uma classe de objeto dentro dele, classes mais fracas serão sempre reprimidas pelas classes mais fortes.
 
 .center[`character > numeric > integer > logical`]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1118,6 +1327,10 @@ vetor_numerico * 2 # multiplica todos os elementos do vetor por 2
 vetor_numerico - 1 # subtrai todos os elementos do vetor por 1
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Vetores
@@ -1137,6 +1350,10 @@ vetor1 + vetor2
 <br>
 
 O **R** vai alinhar os dois vetores e somar os elementos que estão na mesma posição.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1158,6 +1375,10 @@ vetor1 + vetor2
 
 O **R** alinhou os dois vetores e, como eles não possuem o mesmo tamanho, os elementos do `vetor1` foram repetidos para ficar do mesmo tamanho do `vetor2`. É como se o primeiro vetor fosse `c(1, 2, 1, 2)`.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Vetores 
@@ -1177,6 +1398,10 @@ vetor1 + vetor2
 O **R** realizou a operação, repetindo cada valor do primeiro vetor até que os dois tivessem o mesmo tamanho. Na realidade, a operação realizada foi `c(1, 2, 3, 1, 2) + c(10, 20, 30, 40, 50)`.
 
 Como essa operação não é intuitiva, o **R** devolveu um aviso dizendo que o comprimento do primeiro vetor não é múltiplo do comprimento do segundo vetor.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1201,6 +1426,10 @@ A segunda operação retornou as posições que receberam `TRUE` e não retornou
 numeros[c(FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)]
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: matrizes
@@ -1218,6 +1447,10 @@ class(matriz1)
 dim(matriz1)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Matrizes
@@ -1234,6 +1467,10 @@ class(matriz2)
 dim(matriz2)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Matrizes
@@ -1245,6 +1482,10 @@ cbind(matriz1, rep(99, 3))
 
 rbind(matriz1, rep(99, 4))
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1262,6 +1503,10 @@ matriz1 * 2
 matriz1 %% matriz2 
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: listas
@@ -1276,6 +1521,10 @@ lista
 ```
 
 - Os dois primeiros elementos têm nomes (`$a` e `$b`), enquanto os dois últimos são acessados por índices (`[[3]]` e `[[4]]`) pois não foram nomeados.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1299,6 +1548,10 @@ length(lista)
 
 - A lista apresenta 4 elementos, mesmo que alguns deles contenham vetores maiores por dentro.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name:data-frame
@@ -1311,6 +1564,10 @@ mtcars |>
   head(n = 10) |> 
   knitr::kable()
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1330,6 +1587,10 @@ nrow(mtcars)
 dim(mtcars)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Data Frame
@@ -1342,6 +1603,10 @@ dim(mtcars)
 str(mtcars)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Data Frame
@@ -1353,6 +1618,10 @@ head(mtcars)
 # retorna as seis últimas linhas de uma tabela
 tail(mtcars)
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1374,6 +1643,10 @@ mtcars$gear
 mtcars$mpg
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Data Frame
@@ -1392,6 +1665,10 @@ mtcars[, 1]
 # retorna todas as colunas da linha 1
 mtcars[1, ]
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1414,6 +1691,10 @@ mtcars[, c(1, 2, 4)]
 mtcars[, c("mpg", "cyl", "hp")]
 ```
 ]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1449,6 +1730,10 @@ mtcars[mtcars$hp < 100, ]
 
 ]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Data Frame
@@ -1468,6 +1753,10 @@ mean(mtcars$mpg)
 # valor da mediana da coluna mpg
 median(mtcars$mpg)
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1489,6 +1778,10 @@ Na prática, as funções são tão comuns e intuitivas que você provavelmente 
 - `mean()` — calcula a média de um vetor;
 
 - `max()` — retorna o valor máximo de um vetor.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1516,6 +1809,10 @@ nome_da_funcao <- function(argumentos) {
 nome_da_funcao(argumentos = ...)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Funções
@@ -1540,6 +1837,10 @@ Nesse caso, os valores `1`, `5` e `10` são os **argumentos** passados para a fu
 📌 &nbsp;&nbsp;&nbsp;&nbsp; **Dica:** os argumentos de uma função são sempre **separados por vírgulas**.
 ]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Funções
@@ -1562,6 +1863,10 @@ sum(c(1, 3))
 
 Ou seja, a função `sum()` sabe lidar tanto com **valores separados** quanto com **vetores** como entrada.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Funções
@@ -1583,6 +1888,10 @@ mean(c(1, 3))
 ```
 
 Ou seja, ao contrário de `sum()`, que aceita múltiplos argumentos separados, a `mean()` precisa receber **um único vetor** como entrada.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1607,6 +1916,10 @@ seq(4, 10, 2)
 ```
 
 Ou seja, usar os nomes dos argumentos torna o código **mais legível** — mas não é obrigatório, se a ordem for respeitada.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1634,6 +1947,10 @@ Ou seja:
 
 - `r emo::ji("x")` &nbsp;&nbsp; **sem nomes:** a ordem correta deve ser seguida para obter o resultado esperado.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Funções
@@ -1653,6 +1970,10 @@ Ou seja:
 |   `rbind()`  |      empilha duas tabelas     |    `min()`   |    valor mínimo    |
 |   `class()`  |        classe do objeto       |   `round()`  |  valor arredondado |
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: pacotes
@@ -1667,6 +1988,10 @@ Um dos pacotes mais populares e poderosos do R é o `tidyverse`, que reúne dive
 ```{r, fig.align='center', echo=FALSE, out.width='400px', dpi=300}
 knitr::include_graphics("img/17-icon-packages.jpg")
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1693,6 +2018,10 @@ install.packages("tidyverse")
 ```{r, include=TRUE, eval=FALSE}
 devtools::install_github("tidyverse/dplyr")
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1723,6 +2052,10 @@ dplyr::glimpse()
 2. Para **instalar** um pactore, use aspas: &nbsp;&nbsp; `install.packages("nome_do_pacote")`.
 
 3. Para **carregar** um pacote, não use aspas: &nbsp;&nbsp; `library(nome_do_pacote)`.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1755,12 +2088,20 @@ knitr::include_graphics("img/19-r4ds.jpg")
 
 ]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 class: inverse center middle
 name: projetos
 
 # Projetos 
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1784,6 +2125,11 @@ Ao criar um projeto, o `RStudio` cria um arquivo `nome-do-projeto.Rproj` na past
 
 .footnote[Com o `Git` instalado, pode usar projetos para conectar com repositórios remotos e versionar o código ([GitHub](https://github.com], por exemplo). Para isso, basta clicar em `Version Control`. Para maiores informações, acesse o [Zen do R](https://blog.curso-r.com/posts/2019-07-23-zen-do-r-4/) e o <i>workshop</i> [Introdução a utilização do Git e Github no RStudio](https://www.youtube.com/watch?v=uQL6NOSd9cc) da [Beatriz Milz](https://twitter.com/BeaMilz).]
 
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Projetos
@@ -1793,6 +2139,10 @@ Ao criar um projeto, o `RStudio` cria um arquivo `nome-do-projeto.Rproj` na past
 ```{r, echo=FALSE, out.width="80%", fig.align='center'}
 knitr::include_graphics("img/20-criar-projeto.gif")
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1804,6 +2154,10 @@ knitr::include_graphics("img/20-criar-projeto.gif")
 knitr::include_graphics("img/21-exemplo-projeto-aberto.png")
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Projetos
@@ -1813,6 +2167,10 @@ knitr::include_graphics("img/21-exemplo-projeto-aberto.png")
 ```{r, echo=FALSE, out.width="70%", fig.align='center'}
 knitr::include_graphics("img/22-exemplo-lista-projetos.png")
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1838,6 +2196,10 @@ Embora o `tidyverse` instale diversos outros pacotes, apenas esses são carrrega
 |      `purrr`      |                 programação funcional                |
 |     `ggplot2`     |           visualização de dados (gráficos)           |
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 class: inverse center middle
@@ -1846,6 +2208,10 @@ name: importacao
 # Importação de dados
 
 .center[(Acompanhe no arquivo `02-importacao.R`)]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1868,6 +2234,10 @@ Se não estiver usando um Projeto ou não souber qual é o diretório de trabalh
 
 A função `setwd()` pode ser utilizada para mudar o diretório de trabalho. Como argumento, ela recebe o caminho para o novo diretório.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Caminhos
@@ -1887,6 +2257,10 @@ São aqueles que têm início na pasta raiz do computador/usuário. Por exemplo:
 São aqueles que têm início no diretório de trabalho da sessão. Usando o exemplo de caminho absoluto acima, o caminho relativo é: `workshop-r`.
 
 O uso de **caminhos relativos** dentro de um projeto é considerado uma **boa prática**, pois quando a pasta do projeto for compartilhado com alguém, todos os caminhos existentes no código continuarão funcionando em qualquer computador.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1909,6 +2283,10 @@ Quanto a isso, as diferenças são:
 
 - `tibbles` não nomeiam linhas (`row.names`).
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Tibbles
@@ -1918,6 +2296,10 @@ Quanto a isso, as diferenças são:
 ```{r, echo=FALSE}
 head(mtcars, n = 15)
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1931,6 +2313,10 @@ tibble::as_tibble(mtcars)
 
 **Perceba que a coluna com os nomes dos modelos dos veículos desaparece na `tibble`.** Isso acontece porque, no `data.frame`, esses nomes fazem parte dos **nomes das linhas (`row.names`)**, e não de uma coluna propriamente dita. Já nas `tibbles`, os nomes das linhas **não são exibidos nem armazenados da mesma forma**, o que pode dar a impressão de que a "coluna" foi excluída.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Tibbles
@@ -1943,12 +2329,20 @@ Uma maneira de **preservar os nomes dos modelos dos veículos** como coluna ao c
 tibble::as_tibble(mtcars, rownames = "cars")
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: cheat-sheets-importacao
 ### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
 
 [![Cheat Sheets](img/23-cheatsheet-readr.png)](https://rstudio.github.io/cheatsheets/data-import.pdf)
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -1978,7 +2372,11 @@ name: importacao-arquivos
   - `read_dta()`: lê arquivos `.dta`
   
   - `read_stata()`: lê arquivos `.dta`
-  
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Importação de arquivos
@@ -1999,6 +2397,10 @@ library(readr) # carrega o pacote responsável pela importação
 pinguins_csv <- read_csv("dados/pinguins.csv")
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Importação de arquivos
@@ -2008,6 +2410,10 @@ O objeto resultante será um `tibble`:
 ```{r}
 pinguins_csv
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2036,6 +2442,10 @@ library(readr) # carrega o pacote responsável pela importação
 
 pinguins_txt <- read_delim("dados/pinguins.txt", delim = "\t")
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2067,6 +2477,10 @@ library(readxl) # carrega o pacote
 readxl::pinguins_xlsx <- read_excel("dados/pinguins.xlsx")
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Importação de arquivos
@@ -2090,6 +2504,10 @@ Principais argumentos:
 - `n_max =`: define quantas linhas devem ser lidas.  _(Padrão: `Inf`)_
 
 - `NA =`: indica quais valores devem ser interpretados como `NA`.  _(Padrão: `""`)_
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2122,6 +2540,10 @@ library(writexl) # carrega o pacote
 write_xlsx(pinguins, "dados/pinguins.xlsx")
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: importacao-exportacao-arquivos-rds
@@ -2152,6 +2574,10 @@ read_rds("dados/pinguins.rds")
 pinguins_rds <- read_rds("dados/pinguins.rds")
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: visualizacao-objeto
@@ -2173,6 +2599,10 @@ Isso abrirá o conteúdo do objeto em uma nova aba, com aparência de planilha.
 knitr::include_graphics("img/24-view-pinguins.png")
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Visualização de um objeto
@@ -2193,6 +2623,10 @@ library(dplyr)  # carrega o pacote necessário
 glimpse(pinguins_csv)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: base-dos-dados
@@ -2205,6 +2639,10 @@ Em seu repositório, você encontra <span style='color:#34a15a'><b>dados brasile
 Além disso, os responsáveis pela <span style='color:#34a15a'><b>Base dos Dados</b></span> mantêm um repositório com os códigos das análises que publicam em _workshops_, redes sociais, artigos e tutoriais.
 
 [![GitHub da Base dos Dados](img/25-base-dos-dados-github.png)](https://github.com/basedosdados/analises)
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2234,6 +2672,10 @@ Um serviço de banco de dados em nuvem da Google, que permite realizar consultar
   </strong>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### <span style='color:#34a15a'>BASE DOS DADOS</span>
@@ -2256,6 +2698,10 @@ Para mais detalhes, consulte a [documentação oficial](https://cloud.google.com
 <span style='color:#34a15a'><b>Por que é preciso criar um projeto no Google Cloud?</b></span>
 A Google oferece <span style='color:#34a15a'><b>1 TB gratuito por mês</b></span> de uso do BigQuery <span style='color:#34a15a'><b>para cada projeto</b></span>. Você <span style='color:#34a15a'><b>não precisa cadastrar cartão de crédito</b></span> — o BigQuery inicia automaticamente no modo _Sandbox_, que permite usar os recursos <span style='color:#34a15a'><b>sem configurar forma de pagamento</b></span>.
 ]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2282,6 +2728,9 @@ No canal da [Base dos Dados](https://www.youtube.com/@BasedosDados) no Youtube, 
 
 No blog da [Base dos Dados](https://dev.to/basedosdados), há um tutorial de como usar a biblioteca [`basedosdados`](https://basedosdados.org/blog/como-acessar-dados-publicos-em-r) no **R**: [acesse aqui](https://dev.to/basedosdados/como-usar-a-biblioteca-basedosdados-no-r-capitulo-1-46kb).
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2293,6 +2742,10 @@ No blog da [Base dos Dados](https://dev.to/basedosdados), há um tutorial de com
 knitr::include_graphics("img/26-big-query-projeto-r.gif")
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### <span style='color:#34a15a'>BASE DOS DADOS</span>
@@ -2302,6 +2755,10 @@ knitr::include_graphics("img/26-big-query-projeto-r.gif")
 ```{r echo=FALSE, out.width="80%", fig.align='center'}
 knitr::include_graphics("img/27-fixa-bd-no-bigquery.gif")
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2331,6 +2788,10 @@ Ela permite selecionar, filtrar, agrupar e combinar dados de forma declarativa �
   - **DISTINCT**: remove valores duplicados da seleção  
 
   - **UNION**: combina os resultados de duas consultas SQL em uma só tabela
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2362,6 +2823,10 @@ Ela permite selecionar, filtrar, agrupar e combinar dados de forma declarativa �
 
 - **VARIANCE**: calcula a variância dos valores
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### <span style='color:#34a15a'>BASE DOS DADOS — SQL</span>
@@ -2387,6 +2852,10 @@ Ela permite selecionar, filtrar, agrupar e combinar dados de forma declarativa �
 - **LIKE**: seleciona registros que **correspondem a um padrão de texto**  
 
 - **IN**: seleciona registros cujo valor **está presente em uma lista definida**
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2487,6 +2956,10 @@ ON pib.id_municipio = pop.id_municipio
 
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### <span style='color:#34a15a'>BASE DOS DADOS — SQL</span>
@@ -2494,6 +2967,10 @@ ON pib.id_municipio = pop.id_municipio
 ```{r echo=FALSE, out.width="90%", fig.align='center'}
 knitr::include_graphics("img/28-ex-download-bigquery-r.gif")
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2525,6 +3002,10 @@ FROM `basedosdados.br_bd_diretorios_brasil.municipio`" |>
   read_sql()
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 class: inverse center middle
@@ -2533,6 +3014,10 @@ name: manipulacao
 # Manipulação de dados
 
 .center[(Acompanhe no arquivo `04-manipulacao.R`)]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2565,6 +3050,10 @@ Agora veja como a mesma receita é escrita usando o operador `|>`:
 
 .footnote[Para MacOs, use `CMD` + `SHIFT` + `M` para inserir o pipe `|>`.]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Pipe: `%>%` ou `|>`
@@ -2592,6 +3081,10 @@ Agora a leitura do código segue **de cima para baixo**, como uma lista de etapa
 O `%>%` vem do pacote `{magrittr}` e funciona como o `|>`, mas com algumas diferenças. Ainda é muito usado em pacotes como o `{dplyr}`. Quer saber mais? Dá uma olhada:  [magrittr: Ceci n’est pas un pipe](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html)  [R 4.1: novidades e o pipe nativo `|>`](https://www.jumpingrivers.com/blog/new-features-r410-pipe-anonymous-functions/)
 ]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 Os exemplos apresentados aqui serão das base abaixo:
@@ -2612,6 +3105,10 @@ head(pinguins, n = 3)
 ```{r echo=FALSE}
 head(pinguins_raw, n = 3)
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2640,13 +3137,21 @@ Essas funções seguem um padrão simples:
 
   - Sempre recebem uma `tibble` como primeiro argumento;
   - Sempre retornam uma `tibble` como resultado.
-  
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: cheat-sheets-dplyr
 ### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
 
 [![Cheat Sheets](img/29-cheatsheet-dplyr.png)](https://rstudio.github.io/cheatsheets/data-transformation.pdf)
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2665,6 +3170,10 @@ _Não é necessário usar aspas para os nomes das colunas!_
 select(pinguins, species)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Selecionando Colunas:  &nbsp; `select()`
@@ -2677,6 +3186,10 @@ select(pinguins, species, sex, body_mass_g)
 
 Esse exemplo retorna apenas as colunas `species`, `sex` e `body_mass_g` da base `pinguins`.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Selecionando Colunas:  &nbsp; `select()`
@@ -2688,6 +3201,10 @@ select(pinguins, island:body_mass_g)
 ```
 
 Esse código seleciona todas as colunas de `island` até `body_mass_g`, na ordem em que aparecem na base.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2705,6 +3222,10 @@ O `{dplyr}` oferece algumas **funções auxiliares** muito úteis para seleciona
 select(pinguins, ends_with("mm"))
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Selecionando Colunas:  &nbsp; `select()`
@@ -2717,6 +3238,10 @@ select(pinguins, -year)
 
 Esse código retorna todas as colunas da base `pinguins`, exceto a coluna `year`.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Selecionando Colunas:  &nbsp; `select()`
@@ -2728,6 +3253,10 @@ select(pinguins, -c(year, sex))
 ```
 
 Esse código retorna todas as colunas da base `pinguins`, exceto as colunas `year` e `sex`.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2746,6 +3275,10 @@ Por padrão, a ordenação é feita em ordem **crescente**.
 arrange(pinguins, body_mass_g)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Ordenando linhas: &nbsp; `arrange()`
@@ -2757,6 +3290,10 @@ No exemplo abaixo, os pinguins são organizados da **maior para a menor massa co
 ```{r}
 arrange(pinguins, desc(body_mass_g))
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2773,6 +3310,10 @@ No exemplo abaixo, as linhas são ordenadas:
 ```{r}
 arrange(pinguins, desc(bill_length_mm), bill_depth_mm)
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2805,6 +3346,10 @@ O que está acontecendo aqui?
 
 O código fica mais **intuitivo**, com as operações organizadas em sequência lógica.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: dplyr-filter
@@ -2817,6 +3362,10 @@ No exemplo abaixo, são filtradas apenas as observações em que o **comprimento
 ```{r}
 filter(pinguins, flipper_length_mm > 140)
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2836,6 +3385,10 @@ pinguins |>
   filter(flipper_length_mm > 140)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Filtrando linhas: &nbsp; `filter()`
@@ -2853,6 +3406,10 @@ pinguins |>
   filter(island == "Torgersen", bill_depth_mm > 15)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Filtrando linhas: &nbsp; `filter()`
@@ -2867,6 +3424,10 @@ pinguins |>
 ```
 
 O argumento `na.rm = TRUE` serve para ignorar valores ausentes (`NA`) no cálculo da média.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2886,6 +3447,10 @@ pinguins |>
   mutate(bill_length_mm = bill_length_mm / 10)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Criando novas colunas: &nbsp; `mutate()`
@@ -2900,6 +3465,10 @@ pinguins |>
 ```
 
 A nova coluna será adicionada **no final da tabela**.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2922,6 +3491,10 @@ pinguins |>
   select(species, island, bill_length_mm, mean_bill_length_mm, country)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: dplyr-summarise
@@ -2943,6 +3516,10 @@ pinguins |>
 
 .footnote[Também pode ser usado a função `summarize()` — ambas as formas funcionam.]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Sumarizando colunas: &nbsp; `summarise()`
@@ -2961,6 +3538,10 @@ pinguins |>
 ```
 
 .footnote[Também pode ser usado a função `summarize()` — ambas as formas funcionam.]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -2981,6 +3562,10 @@ Neste exemplo, calculamos a **média ou mediana** de diferentes variáveis numé
 
 .footnote[Também pode ser usado a função `summarize()` — ambas as formas funcionam.]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: dplyr-group-by
@@ -2997,6 +3582,10 @@ pinguins |>
 
 <!-- .footnote[Essa marcação só tem efeito real quando combinada com funções como `summarise()`.] -->
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Sumarizando colunas agrupadas: &nbsp; `group_by()`
@@ -3011,6 +3600,10 @@ pinguins |>
 Neste caso, os dados são agrupados **por combinação de `island` e `species`** — ou seja, cada grupo representa uma espécie dentro de uma determinada ilha.
 
 <!-- .footnote[Essa marcação só tem efeito real quando combinada com funções como `summarise()`.] -->
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -3033,6 +3626,10 @@ Ou seja, **agrupamos os dados por ilha**, **calculamos a média da massa corpora
 
 .footnote[Também pode ser usado a função `summarize()` — ambas as formas funcionam.]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: dplyr-relocate
@@ -3049,6 +3646,10 @@ pinguins |>
 
 No exemplo abaixo, as colunas `sex` e `year` foram movidas para **aparecer logo após** a coluna `island`.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Ordenando colunas:  &nbsp;  `relocate()`
@@ -3061,6 +3662,10 @@ pinguins |>
 ```
 
 Nesse exemplo, as colunas `species` e `island` foram movidas para **aparecer logo antes** da coluna `island`.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -3083,6 +3688,10 @@ pinguins |>
   )
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: dplyr-slice-head
@@ -3101,6 +3710,10 @@ pinguins |>
 
 Neste exemplo, são retornadas as **8 primeiras linhas** da base `pinguins`.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: dplyr-slice-tail
@@ -3118,6 +3731,10 @@ pinguins |>
 ```
 
 Neste exemplo, são retornada s as **5 últimas linhas** da base `pinguins`.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -3139,6 +3756,10 @@ pinguins |>
 
 Neste exemplo, são retornadas as **5 linhas com maior profundidade de bico** (`bill_depth_mm`) da base `pinguins`.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: dplyr-slice-min
@@ -3159,6 +3780,10 @@ pinguins |>
 
 Neste exemplo, são retornadas as **5 linhas com menor comprimento de nadadeira** (`flipper_length_mm`) da base `pinguins`.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: dplyr-slice-sample
@@ -3177,6 +3802,10 @@ pinguins |>
 
 Neste exemplo, são retornadas **12 linhas aleatórias** da base `pinguins`.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: dplyr-distinct
@@ -3194,6 +3823,10 @@ pinguins |>
 ```
 
 Neste exemplo, a base retorna **apenas uma linha para cada valor distinto de `body_mass_g`**, mantendo as demais colunas associadas à primeira ocorrência de cada valor.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -3220,6 +3853,10 @@ pinguins |>
 Neste exemplo, o código retorna a **quantidade de pinguins por espécie em cada ilha**, ou seja, uma contagem para cada combinação de `species` e `island`.
 ]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: dplyr-bind-rows
@@ -3240,6 +3877,10 @@ pinguins_02 <- slice(pinguins, 51:55) |> select(4:6)
 bind_rows(pinguins_01, pinguins_02, .id = "id")
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: dplyr-bind-cols
@@ -3259,6 +3900,10 @@ bind_cols(pinguins_01, pinguins_02, .name_repair = "unique")
 ```
 
 <!-- Neste exemplo, os dados são combinados **horizontalmente**, formando uma nova tabela com mais colunas. -->
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -3298,6 +3943,10 @@ Selecionam linhas de x com base na existência de correspondência em y:
 
 ]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Unindo bases: &nbsp; `*_join()`
@@ -3327,6 +3976,10 @@ knitr::include_graphics("img/34-full-join.gif")
 ```
 
 ]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -3366,6 +4019,10 @@ glimpse(pinguins_left_join)
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Operações de conjuntos e comparações de dados
@@ -3398,6 +4055,10 @@ knitr::include_graphics("img/35-operacoes.png")
 
 ]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: pacote-tidyr
@@ -3416,6 +4077,10 @@ Dados organizados seguem uma **estrutura padrão**, que facilita a análise e a 
 - Cada **linha** representa uma **observação**
 
 - Cada **célula** contém **um único valor**
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -3441,12 +4106,20 @@ Principais funções:
 
 - `pivot_longer()`: transforma dados do formato largo para o formato longo
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: cheat-sheets-tidyr
 ### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
 
 [![Cheat Sheets](img/37-cheatsheet-tidyr.png)](https://rstudio.github.io/cheatsheets/tidyr.pdf)
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -3468,6 +4141,10 @@ especie_ilha_unido <- pinguins |>
 head(especie_ilha_unido)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: tidyr-separate
@@ -3487,6 +4164,10 @@ especie_ilha_separado <- especie_ilha_unido |>
 
 head(especie_ilha_separado)
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -3521,6 +4202,10 @@ pinguins |>
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: tidyr-pivot
@@ -3552,6 +4237,10 @@ knitr::include_graphics("img/38-original-dfs-tidy.png")
 
 ]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: tidyr-pivot-longer
@@ -3572,6 +4261,10 @@ pivot_longer(data = pinguins_raw[, c(2, 3, 10:13)],
 ```
 ]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: tidyr-pivot-wider
@@ -3589,6 +4282,10 @@ pivot_wider(data = pinguins_raw[, c(2, 3, 13)],
             values_from = `Body Mass (g)`)
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 class: inverse center middle
@@ -3597,6 +4294,10 @@ name: visualizacao
 # Visualização de dados
 
 .center[(Acompanhe no arquivo `04-visualizacao.R`)]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -3626,6 +4327,10 @@ knitr::include_graphics("img/39-visualizacao-scatter-plot.png")
 .center[Ilustração por [Allison Horst](https://allisonhorst.com/)]
 
 ]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -3682,6 +4387,10 @@ Ideal para relatar achados de forma clara e convincente ao público.
 
 ]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: gramatica-graficos-camadas
@@ -3708,6 +4417,10 @@ pinguins <- read_csv("dados/pinguins.csv")
 ```
 
 .footnote[Curiosidade: o `gg` em `ggplot` vem de _Grammar of Graphics_.]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -3747,6 +4460,10 @@ cars |>
   aes(x = speed, y = dist) +
   geom_point() #<<
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -3803,6 +4520,10 @@ cars |>
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: curiosidade-pq-mais
@@ -3821,6 +4542,10 @@ Segundo o próprio Hadley Wickham (criador do pacote), quando começou a desenvo
 
 <!-- [![Comentário de Hadley Wickham no Reddit](img/40-reddit-ggplot.png)](https://www.reddit.com/r/dataisbeautiful/comments/3mp9r7/comment/cvi19ly/?utm_source=embedv2&utm_medium=comment_embed&utm_content=whitespace) -->
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: qual-grafico-escolher
@@ -3830,6 +4555,10 @@ name: qual-grafico-escolher
   <a href="https://www.data-to-viz.com">
     <img src="img/41-data-to-viz.png" style="width:85%;">
   </a>
+</div>
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
 </div>
 
 ---
@@ -3843,6 +4572,10 @@ name: cheat-sheets-ggplot2
   </a>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: grafico-pontos
@@ -3854,6 +4587,10 @@ pinguins |>
   aes(x = flipper_length_mm, y = body_mass_g) + 
   geom_point() #<<
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -3916,6 +4653,10 @@ geom_point(aes(x = comprimento_nadadeira, y = massa_corporal))
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Gráfico de pontos (dispersão)
@@ -3929,6 +4670,10 @@ pinguins |>
   geom_point() +
   geom_smooth(method = "lm", formula = "y ~ x", se = FALSE) #<<
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -3950,6 +4695,10 @@ pinguins |>
 
 - O argumento `se = FALSE` serve para **remover a faixa de confiança** (erro padrão) que é exibida por padrão junto à linha de tendência.
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Gráfico de pontos (dispersão)
@@ -3963,6 +4712,10 @@ pinguins |>
   geom_smooth(method = "lm", formula = "y ~ x", se = FALSE) +  # linha primeiro
   geom_point()                                                 # pontos depois
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -3979,6 +4732,10 @@ pinguins |>
   geom_point(aes(color = species)) #<<
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Gráfico de pontos (dispersão)
@@ -3991,6 +4748,10 @@ pinguins |>
   aes(x = flipper_length_mm, y = body_mass_g) + 
   geom_point(aes(color = species, shape = sex)) #<<
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -4008,6 +4769,10 @@ pinguins |>
   geom_line(aes(x = year, y = mean_body_mass_g)) #<<
 ```
 ]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -4027,6 +4792,10 @@ pinguins |>
 ```
 ]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Gráfico de linhas
@@ -4043,6 +4812,10 @@ pinguins |>
   geom_point()                                   # gráfico de pontos (usa o aes definido acima) #<<
 ```
 ]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -4063,6 +4836,10 @@ pinguins |>
 ```
 ]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: grafico-barras
@@ -4078,6 +4855,10 @@ pinguins |>
   geom_col(aes(x = species, y = n))             # gráfico de barras #<<
 ```
 ]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -4122,6 +4903,10 @@ Para **colorir barras por categorias**, usamos o atibuto `fill`, e não `color`.
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Gráfico de barras
@@ -4135,6 +4920,10 @@ pinguins |>
   geom_col(aes(x = species, y = n, fill = species), show.legend = FALSE) +
   coord_flip()                              # inverte os eixos: x vira y, y vira x #<<
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -4165,6 +4954,10 @@ pinguins |>
 
 <br>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ----
 
 <br>
@@ -4194,6 +4987,10 @@ pinguins |>
 
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Gráfico de barras
@@ -4211,6 +5008,10 @@ pinguins |>
   coord_flip()
 ```
 ]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -4274,6 +5075,10 @@ pinguins |>
 ```
 ]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: boxplot
@@ -4315,6 +5120,10 @@ O boxplot exibe:
 É ideal para avaliar a **dispersão, simetria e presença de valores extremos**.
 
 </div>
+</div>
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
 </div>
 
 ---
@@ -4415,6 +5224,10 @@ pinguins |>
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: cores
@@ -4475,6 +5288,10 @@ A escolha entre `color` e `fill` depende da **geometria** utilizada:
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 ### Cores
@@ -4518,6 +5335,10 @@ pinguins |>
 ]
 
 </div>
+</div>
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
 </div>
 
 ---
@@ -4608,6 +5429,10 @@ Ambos os gráficos utilizam **escalas manuais de cor** com a família `scale_*_m
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: trocando-textos-legenda
@@ -4650,6 +5475,10 @@ pinguins |>
 ```
 
 </div>
+</div>
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
 </div>
 
 ---
@@ -4800,6 +5629,10 @@ pinguins |>
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: mapas
@@ -4852,6 +5685,10 @@ dplyr::glimpse(ideb_mapa)
 <!-- Essas duas colunas são essenciais para criar **mapas coropléticos** (mapas onde as cores representam valores). -->
 
 </div>
+</div>
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
 </div>
 
 ---
@@ -4969,6 +5806,10 @@ ideb_mapa |>
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 <div class="panelset">
@@ -5063,6 +5904,10 @@ ideb_mapa |>
 
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: para-saber-mais-visualizacao
@@ -5116,6 +5961,10 @@ knitr::include_graphics("img/46-fundamentalz-data-viz.png")
 
 ]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 class: inverse center middle
@@ -5125,11 +5974,19 @@ name: regressao
 
 .center[(Acompanhe no arquivo `05-regressao.R`)]
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 <!-- class: inverse center middle -->
 name: dados-educacionais
 # Dados Educacionais
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -5165,6 +6022,10 @@ pib_pop <- readr::read_csv(
 )
 ```
 ]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -5254,6 +6115,10 @@ A base `pib_pop` traz os seguintes dados para o ano de 2020:
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: dados-educacionais-padronizando-bases
@@ -5335,6 +6200,10 @@ pib_pc
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: dados-educacionais-juntando-bases-fundamental
@@ -5373,6 +6242,10 @@ fundamental
 .right[<span style='font-size:80%'>`reduce(left_join)` é mais eficiente quando há muitas bases.</span>]
 
 </div>
+</div>
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
 </div>
 
 ---
@@ -5447,6 +6320,10 @@ fundamental |>
 ]
 
 </div>
+</div>
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
 </div>
 
 ---
@@ -5524,6 +6401,10 @@ $$
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 <!-- ### Regressão Linear: Ensino Fundamental -->
@@ -5586,6 +6467,10 @@ $$
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 **Qual a relação entre `tdi`, `tx_aprov`, `pib_pc` e a `tx_aband`?**
@@ -5644,6 +6529,10 @@ $$
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: dados-educacionais-juntando-bases-medio
@@ -5682,6 +6571,10 @@ medio
 .right[<span style='font-size:80%'>`reduce(left_join)` é mais eficiente quando há muitas bases.</span>]
 
 </div>
+</div>
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
 </div>
 
 ---
@@ -5759,6 +6652,10 @@ medio |>
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: dados-educacionais-regressao-linear-medio
@@ -5833,6 +6730,10 @@ $$
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 **Qual a relação entre `hrs_aula` e a `tx_aband`?**
@@ -5901,6 +6802,10 @@ $$
 - Esse efeito é estatisticamente significativo e indica uma **forte associação inversa** entre as variáveis: **quanto maior a aprovação, menor o abandono**.
 
 </div>
+</div>
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
 </div>
 
 ---
@@ -5972,6 +6877,10 @@ $$
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 **Qual a relação entre `tx_aprov`, `tdi`, `hrs_aula`, `pib_pc` e a `tx_aband`?**
@@ -6039,6 +6948,10 @@ $$
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: BASE DOS DADOS
@@ -6071,6 +6984,10 @@ FROM `basedosdados.projeto.tabela`
 WHERE coluna1 = 'valor1' AND coluna2 = 'valor2'
 ```
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: atlas-desenvolvimento-humano
@@ -6085,6 +7002,10 @@ Além dos dados provenientes dos Censos Demográficos de 1991, 2000 e 2010, o pr
 <br>
 
 .right[Fonte: [Atlas Brasil](http://www.atlasbrasil.org.br)]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -6106,6 +7027,10 @@ FROM `basedosdados.mundo_onu_adh.municipio`" |>
 # visualiza a estrutura da base
 glimpse(adh)
 ```
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -6176,6 +7101,10 @@ $$
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 **Relação entre a proporção de extrema pobreza em crianças e a mortalidade infantil (até 5 anos)**
@@ -6243,6 +7172,10 @@ $$
 - Um **aumento de 1 p.p. na `prop_pobreza_extrema_criancas`** está associado a um **aumento de 0.9543 óbitos por mil nascidos vivos** na `mortalidade_5`, _ceteris paribus_.
 
 </div>
+</div>
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
 </div>
 
 ---
@@ -6327,6 +7260,10 @@ Esse tipo de visualização reforça a importância de **análises desagregadas 
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 **Relação entre crianças fora da escola (4 e 5 anos) e a proporção de crianças na extrema pobreza**
@@ -6408,6 +7345,10 @@ Os gráficos mostram duas formas de representar a **média da mortalidade infant
 - **Sul:** redução de `r round(med_mort_inf_red_reg_bras$reducao[10], 2)` p.p. (1991–2000); redução de `r round(med_mort_inf_red_reg_bras$reducao[15], 2)` p.p. (2000–2010)
 
 </div>
+</div>
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
 </div>
 
 ---
@@ -6595,6 +7536,10 @@ muni_dados |>
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 class: inverse center middle
@@ -6606,6 +7551,10 @@ name: wooldridge
 <br>
 
 .right[<span style='font-size:80%'>Este pacote contém a documentação completa <br>para cada conjunto e todos os dados <br> utilizados no livro <span style='color:#f58634'><b>Introdução à Econometria</b></span> <br> de Jeffrey M. Wooldridge</span>]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -6628,6 +7577,10 @@ wage <- wooldridge::wage1
 glimpse(wage)
 ```
 ]
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
 
 ---
 
@@ -6671,6 +7624,10 @@ $$
 $$
 
 </div>
+</div>
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
 </div>
 
 ---
@@ -6719,6 +7676,10 @@ $$
 A cada **1 ano adicional de escolaridade** (`educ`), o **salário aumenta em média 8.3%**, dado que o modelo está em log-linear (interpretação aproximadade $\beta \cdot 100$).
 
 </div>
+</div>
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
 </div>
 
 ---
@@ -6770,6 +7731,10 @@ $$
 - Cada **ano adicional de experiência** (`exper`) implica em **aumento médio de `r round(mincer$coefficients[3]*100, 2)`%** no salário por hora (`lwage`), _ceteris paribus_.
 
 </div>
+</div>
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
 </div>
 
 ---
@@ -6826,6 +7791,10 @@ Todos os coeficientes são estatisticamente significativos, com p-valores próxi
 </div>
 </div>
 
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
 ---
 
 name: para-saber-mais-regressao
@@ -6861,6 +7830,10 @@ knitr::include_graphics("img/48-introduction-statistical-learning.png")
 ]
 
 </div>
+</div>
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
 </div>
 
 ---
@@ -6906,3 +7879,7 @@ knitr::include_graphics("img/49-luisa.jpg")
 <script src="https://kit.fontawesome.com/1f72d6921a.js" crossorigin="anonymous"></script>
 
 <!-- final font awesome -->
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>

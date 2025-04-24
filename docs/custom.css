@@ -48,3 +48,50 @@ li{
   color: inherit;
   text-decoration: none;
 }
+
+.faixa-lateral {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2.2em;
+  height: 100%;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  color: white;
+  /* font-weight: bold; */
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* justify-content: flex-start; /* alinha o conteúdo na parte superior (rotacionado) */
+  padding-top: 0.8em;   /* <-- afasta o texto do topo */
+  padding-left: 0.4em;  /* <-- AFASTA O TEXTO da borda esquerda da faixa */
+  padding-right: 0.4em; /* <-- AFASTA O TEXTO da borda direita da faixa */
+  z-index: 50;
+}
+
+/* Cores diferentes por seção */
+.faixa-r-rstudio {
+  background-color: #C0EBF2; /* azul */
+}
+.faixa-introducao {
+  background-color: #B3D7F5; /* azul */
+}
+.faixa-projetos {
+  background-color: #FFD6C0; /* rosa escuro */
+}
+.faixa-importacao {
+  background-color: #BDE5D0; /* rosa escuro */
+}
+.faixa-manipulacao {
+  background-color: #DCCDFB; /* rosa escuro */
+}
+.faixa-visualizacao {
+  background-color: #FFE5B4; /* azul claro */
+}
+.faixa-regressao {
+  background-color: #C9D6E2; /* verde */
+}
+
+

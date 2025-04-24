@@ -253,6 +253,11 @@ name: r-rstudio
 ---
 
 name: instalacao-r
+
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
+
 ## Instalação do R 
 
 .pull-left[
@@ -279,6 +284,10 @@ knitr::include_graphics("img/01-r-logo.svg")
 
 ---
 
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
+
 ## Instalação do R
 
 ```{r, fig.align='center', out.width="80%", echo=FALSE}
@@ -292,6 +301,11 @@ knitr::include_graphics("img/02-r-install.png")
 ---
 
 name: instalacao-rstudio
+
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
+
 ## Instalação do RStudio
 
 .pull-left[
@@ -320,6 +334,10 @@ knitr::include_graphics("img/03-rstudio.png")
 
 ---
 
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
+
 ## Instalação do RStudio
 
 ```{r, fig.align='center', out.width="80%", echo=FALSE}
@@ -333,6 +351,11 @@ knitr::include_graphics("img/04-rstudio-install.png")
 ---
 
 name: o-que-e-o-r
+
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
+
 ### O que é o R?
 
 > "R é um ambiente de software livre para computação estatística e gráficos." [R Development Core Team](https://cran.r-project.org/)
@@ -358,6 +381,11 @@ name: o-que-e-o-r
 ---
 
 name: rstudio
+
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
+
 ### RStudio
 
 **RStudio** é uma IDE (*Integrated Development Environment*) da Linguagem R, isto é, um ambiente de desenvolvimento utilizado para editar e executar códigos em R. Ela é mantida pela [Posit](https://posit.co).
@@ -371,6 +399,10 @@ knitr::include_graphics("img/05-rstudio.png")
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
 
 ### RStudio
 
@@ -386,6 +418,10 @@ knitr::include_graphics("img/06-rstudio-haydee.jpg")
 
 ---
 
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
+
 ### RStudio
 
 **Console:** onde os códigos são executados e os resultados são exibidos. **O R vive aqui!**
@@ -399,6 +435,10 @@ knitr::include_graphics("img/07-rstudio-haydee.jpg")
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
 
 ### RStudio
 
@@ -414,6 +454,10 @@ knitr::include_graphics("img/08-rstudio-haydee.jpg")
 
 ---
 
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
+
 ### RStudio
 
 **History:** painel com um histórico dos comandos rodados.
@@ -427,6 +471,10 @@ knitr::include_graphics("img/09-rstudio-haydee.jpg")
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
 
 ### RStudio
 
@@ -442,6 +490,10 @@ knitr::include_graphics("img/10-rstudio-haydee.jpg")
 
 ---
 
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
+
 ### RStudio
 
 **Plots:** painel onde os gráficos serão apresentados.
@@ -456,6 +508,10 @@ knitr::include_graphics("img/11-rstudio-haydee.jpg")
 
 ---
 
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
+
 ### RStudio
 
 **Packages:** apresenta todos os pacotes instalados e carregados.
@@ -469,6 +525,10 @@ knitr::include_graphics("img/12-rstudio-haydee.jpg")
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
 
 ### RStudio
 
@@ -485,6 +545,11 @@ knitr::include_graphics("img/13-rstudio-haydee.jpg")
 ---
 
 name: atalhos
+
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
+
 ### Atalhos
 
 Conhecer os atalhos do teclado ajuda bastante durante a programação no **RStudio**.
@@ -516,6 +581,11 @@ No MacOS, substitua **CTRL** por **CMD** e **ALT** por **OPT**.
 ---
 
 name: help
+
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
+
 ### Help! 
 
 Ficou com dúvida sobre determinado pacote ou função?
@@ -546,6 +616,11 @@ help(sum)
 ---
 
 name: cheat-sheets
+
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
+
 ### [Cheat Sheets](https://rstudio.com/resources/cheatsheets/)
 
 O **RStudio** disponibiliza algumas 'folhas de cola', as **Cheat Sheets**. Elas trazem um resumo de como utilizar diversos pacotes e até o próprio RStudio. Para acessá-las, basta clicar no menu `Help` e então em `Cheat Sheets`, ou através do site da [**Posit**](https://posit.co/resources/cheatsheets/).
@@ -559,6 +634,11 @@ O **RStudio** disponibiliza algumas 'folhas de cola', as **Cheat Sheets**. Elas 
 ---
 
 name: ciclo-ciencia-dados
+
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
+
 ### O Ciclo da Ciência de Dados
 
 ```{r, fig.align='center', out.width="700px", echo=FALSE}
@@ -572,6 +652,11 @@ knitr::include_graphics("img/15-ciclo-ciencia-de-dados.png")
 ---
 
 name: ciclo-ciencia-dados-r
+
+<div class="faixa-lateral faixa-r-rstudio">
+  <span>R e RStudio</span>
+</div>
+
 ### O Ciclo da Ciência de Dados no R
 
 ```{r, fig.align='center', out.width="700px", echo=FALSE}
@@ -598,6 +683,11 @@ name: introducao
 ---
 
 name: r-calculadora
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### R como calculadora
 
 O **R** permite realizar muitas operações matemáticas!
@@ -620,6 +710,10 @@ O **R** permite realizar muitas operações matemáticas!
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### R como calculadora
 
 ```{r}
@@ -641,6 +735,11 @@ A ordem matemática das operações também vale do R.
 ---
 
 name: funcoes-matematicas
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Funções matemáticas
 
 ```{r}
@@ -660,6 +759,11 @@ exp(0.5) # exponencial e^(1/2)
 ---
 
 name: objetos
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Objetos
 
 O **R** permite armazenar (salvar) valores dentro de um objeto.
@@ -677,6 +781,10 @@ Um **objeto** é um nome que guarda um valor, uma função ou uma base de dados.
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 #### Exemplo:
 
@@ -699,6 +807,10 @@ salario
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Nomes dos Objetos
 
@@ -723,6 +835,11 @@ A
 ---
 
 name: operadores-relacionais
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Operadores Relacionais
 
 - Igual a: **==**
@@ -742,6 +859,10 @@ name: operadores-relacionais
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Operadores Relacionais
 
@@ -767,6 +888,10 @@ TRUE != FALSE
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Operadores Relacionais
 
 - Maior que: **>**
@@ -790,6 +915,10 @@ TRUE != FALSE
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Operadores Relacionais
 
@@ -816,6 +945,11 @@ TRUE != FALSE
 ---
 
 name: operadores-logicos
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Operadores Lógicos
 
 - AND - E: **&**
@@ -838,6 +972,10 @@ y <- 7
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Operadores Lógicos
 
 - OR - OU: **|**
@@ -859,6 +997,10 @@ y <- 2
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Operadores Lógicos
 
@@ -885,6 +1027,11 @@ y <- 8
 ---
 
 name: pertence
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Pertence
 
 É possível verificar se um valor está inserido dentro de um conjunto de valores (vetor).
@@ -908,6 +1055,11 @@ name: pertence
 ---
 
 name: tipos-basicos-dados
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Tipos Básicos de dados
 
 São os tipos de dados que podem ser representados na Linguagem R. É neles que são guardadas as informações.
@@ -933,6 +1085,11 @@ A função `class()` retorna o tipo de dado de um objeto.
 ---
 
 name: numeros
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Números
 
 Um número inteiro seguido de `L` será considerado do tipo **integer**:
@@ -958,6 +1115,11 @@ class(5.1)
 ---
 
 name: logicos
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Lógicos
 
 Verdadeiro (`TRUE`) e Falso (`FALSE`) 
@@ -985,6 +1147,11 @@ TRUE + FALSE + FALSE + TRUE + TRUE + TRUE + FALSE
 ---
 
 name: textos
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Textos
 
 **Qualquer** código entre aspas (`""`) será interpretado como texto **character**:
@@ -1006,6 +1173,11 @@ class("3")
 ---
 
 name: fatores
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Fatores
 
 Os fatores (ou factors) são usados para representar categorias.
@@ -1033,6 +1205,11 @@ Na linha `levels` aparecem os rótupos do fator.
 ---
 
 name: NA
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### NA
 
 **NA** representa um valor desconhecido ou ausente. As operações envolvendo um valor desconhecido também resultarão em valores desconhecidos (`NA`).
@@ -1052,6 +1229,10 @@ NA / 5
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### NA
 
@@ -1078,6 +1259,10 @@ is.na(vetor_numerico)
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### na.rm = TRUE
 
 Quando um vetor contém valores ausentes (`NA`), muitas funções não conseguem realizar os cálculos corretamente e retornam `NA` como resultado. Na maioria dos casos, o que se deseja é calcular o resultado ignorando os valores ausentes. Para isso, utiliza-se o argumento `na.rm = TRUE`, que instrui a função a remover os `NAs` antes de calcular.
@@ -1099,6 +1284,11 @@ mean(vetor_numerico, na.rm = TRUE)
 ---
 
 name: conversao-classes
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Conversão de classes
 
 ```{r}
@@ -1118,6 +1308,10 @@ as.factor(vetor_logical) # converte para fator
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Conversão de classes
 
@@ -1140,6 +1334,11 @@ as.factor(frutas)
 ---
 
 name: tipos-objetos
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Tipos de Objetos
 
 No **R**, os quatro principais objetos são:
@@ -1159,6 +1358,11 @@ No **R**, os quatro principais objetos são:
 ---
 
 name: vetores
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Vetores
 
 Armazenam elementos de uma **mesma classe** em apenas **uma dimensão**.
@@ -1182,6 +1386,10 @@ length(primeiro_semestre)
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Vetores
 
@@ -1207,6 +1415,10 @@ Para criar um vetor com uma sequência de números, basta utilizar o operador **
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Vetores
 
 Por serem conjuntos indexados, cada valor dentro de um vetor tem uma posição. Essa posição é dada pela ordem em que os elementos foram dispostos no momento em que o vetor é criado. Dessa forma, é possível acessar individualmente cada valor de um vetor.
@@ -1228,6 +1440,10 @@ primeiro_semestre[1:2]
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Vetores
 
@@ -1257,6 +1473,10 @@ Essas operações são chamadas de **subsetting**, pois são acessados os subcon
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Vetores
 
 **Classe do Vetor:**
@@ -1283,6 +1503,10 @@ class(anos_bissextos)
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Vetores
 
 **Coerção:**
@@ -1306,6 +1530,10 @@ Todos os elementos do vetor se transformaram em **texto**. Como um vetor só pod
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Vetores
 
@@ -1333,6 +1561,10 @@ vetor_numerico - 1 # subtrai todos os elementos do vetor por 1
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Vetores
 
 **Vetorização:**
@@ -1356,6 +1588,10 @@ O **R** vai alinhar os dois vetores e somar os elementos que estão na mesma pos
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Vetores
 
@@ -1381,6 +1617,10 @@ O **R** alinhou os dois vetores e, como eles não possuem o mesmo tamanho, os el
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Vetores 
 
 **Reciclagem:**
@@ -1404,6 +1644,10 @@ Como essa operação não é intuitiva, o **R** devolveu um aviso dizendo que o 
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Vetores
 
@@ -1433,6 +1677,11 @@ numeros[c(FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)]
 ---
 
 name: matrizes
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Matrizes
 
 São estruturas que correspondem às matrizes matemáticas, conjuntos bidimensionais contendo elementos dispostos em linhas e colunas. Assim como os vetores, todos os seus elementos são do mesmo tipo. São criadas utilizando a função `matrix()`:
@@ -1452,6 +1701,10 @@ dim(matriz1)
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Matrizes
 
@@ -1473,6 +1726,10 @@ dim(matriz2)
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Matrizes
 
 Também é possível adicionar colunas com `cbind()` e linhas com `rbind()`
@@ -1488,6 +1745,10 @@ rbind(matriz1, rep(99, 4))
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Matrizes
 
@@ -1510,6 +1771,11 @@ matriz1 %% matriz2
 ---
 
 name: listas
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Listas
 
 São um tipo especial de vetor que podem conter uma **coleção de diferentes classes**. Possuem uma **estrutura unidimensional**, contando apenas o número de elementos integrantes. São criados usando a função `list()`
@@ -1527,6 +1793,10 @@ lista
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Listas
 
@@ -1555,6 +1825,11 @@ length(lista)
 ---
 
 name:data-frame
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ## Data Frame
 
 São tabelas **bidimensionais** (linhas e colunas), em que cada coluna pode ser de uma classe diferente. São criados com a função `data.frame()`:
@@ -1570,6 +1845,10 @@ mtcars |>
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Data Frame
 
@@ -1593,6 +1872,10 @@ dim(mtcars)
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Data Frame
 
 ```{r}
@@ -1609,6 +1892,10 @@ str(mtcars)
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Data Frame
 
 ```{r}
@@ -1624,6 +1911,10 @@ tail(mtcars)
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Data Frame
 
@@ -1649,6 +1940,10 @@ mtcars$mpg
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Data Frame
 
 **Subsetting:**
@@ -1671,6 +1966,10 @@ mtcars[1, ]
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Data Frame
 
@@ -1697,6 +1996,10 @@ mtcars[, c("mpg", "cyl", "hp")]
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Data Frame
 
@@ -1736,6 +2039,10 @@ mtcars[mtcars$hp < 100, ]
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Data Frame
 
 É possível aplicar funções diretamente nas colunas de um `data.frame`:
@@ -1761,6 +2068,11 @@ median(mtcars$mpg)
 ---
 
 name: funcoes
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Funções
 
 Enquanto os objetos são nomes que armazenam valores, as **funções** são nomes que armazenam um **conjunto de instruções** em R. Sempre que uma função é executada, o código que ela contém roda automaticamente, e um resultado é devolvido.
@@ -1784,6 +2096,10 @@ Na prática, as funções são tão comuns e intuitivas que você provavelmente 
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Funções
 
@@ -1815,6 +2131,10 @@ nome_da_funcao(argumentos = ...)
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Funções
 
 **Argumentos:**
@@ -1843,6 +2163,10 @@ Nesse caso, os valores `1`, `5` e `10` são os **argumentos** passados para a fu
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Funções
 
 **Argumentos:**
@@ -1869,6 +2193,10 @@ Ou seja, a função `sum()` sabe lidar tanto com **valores separados** quanto co
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Funções
 
 **Argumentos:**
@@ -1894,6 +2222,10 @@ Ou seja, ao contrário de `sum()`, que aceita múltiplos argumentos separados, a
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Funções
 
@@ -1922,6 +2254,10 @@ Ou seja, usar os nomes dos argumentos torna o código **mais legível** — mas 
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Funções
 
@@ -1953,6 +2289,10 @@ Ou seja:
 
 ---
 
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Funções
 
 **Algumas Funções importantes do R base:**
@@ -1977,6 +2317,11 @@ Ou seja:
 ---
 
 name: pacotes
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ### Pacotes
 
 Pacotes são **coleções de funções, dados e documentação** que estendem as funcionalidades do R base.
@@ -1994,6 +2339,10 @@ knitr::include_graphics("img/17-icon-packages.jpg")
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Pacotes
 
@@ -2024,6 +2373,10 @@ devtools::install_github("tidyverse/dplyr")
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
 
 ### Pacotes
 
@@ -2060,6 +2413,11 @@ dplyr::glimpse()
 ---
 
 name: para-saber-mais-introducao
+
+<div class="faixa-lateral faixa-introducao">
+  <span>Introdução</span>
+</div>
+
 ## Para saber mais!
 
 .panelset[
@@ -2107,6 +2465,10 @@ name: projetos
 
 ## Projetos
 
+<div class="faixa-lateral faixa-projetos">
+  <span>Projetos</span>
+</div>
+
 Um Projeto é uma pasta no computador que reúne todos os arquivos necessários para realizar uma análise de dados.
 
 A principal razão para a utilização dos Projetos é a **organização**. Com eles, é muito mais fácil importar bases de dados para dentro do `R`, criar análises reprodutíveis e compartilhar o trabalho com outras pessoas.
@@ -2132,6 +2494,10 @@ Ao criar um projeto, o `RStudio` cria um arquivo `nome-do-projeto.Rproj` na past
 
 ---
 
+<div class="faixa-lateral faixa-projetos">
+  <span>Projetos</span>
+</div>
+
 ### Projetos
 
 **Criando um novo Projeto:**
@@ -2146,6 +2512,10 @@ knitr::include_graphics("img/20-criar-projeto.gif")
 
 ---
 
+<div class="faixa-lateral faixa-projetos">
+  <span>Projetos</span>
+</div>
+
 ### Projetos
 
 **RStudio com um Projeto aberto:**
@@ -2159,6 +2529,10 @@ knitr::include_graphics("img/21-exemplo-projeto-aberto.png")
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-projetos">
+  <span>Projetos</span>
+</div>
 
 ### Projetos
 
@@ -2216,6 +2590,11 @@ name: importacao
 ---
 
 name: caminhos
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 ### Caminhos
 
 É importante na tarefa de **importação de dados** saber onde está o arquivo que se quer importar. Toda função de importação vai exigir um **caminho** (uma _string_) que representa o endereço do arquivo no computador.
@@ -2239,6 +2618,10 @@ A função `setwd()` pode ser utilizada para mudar o diretório de trabalho. Com
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
 
 ### Caminhos
 
@@ -2265,6 +2648,11 @@ O uso de **caminhos relativos** dentro de um projeto é considerado uma **boa pr
 ---
 
 name: tibbles
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 ## Tibbles
 
 São uma evolução da classe `data.frame`.
@@ -2289,6 +2677,10 @@ Quanto a isso, as diferenças são:
 
 ---
 
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 ### Tibbles
 
 **Exemplo: base `mtcars` como `data.frame`**
@@ -2302,6 +2694,10 @@ head(mtcars, n = 15)
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
 
 ### Tibbles
 
@@ -2319,6 +2715,10 @@ tibble::as_tibble(mtcars)
 
 ---
 
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 ### Tibbles
 
 **Exemplo: base `mtcars` como `tibble`**
@@ -2335,6 +2735,10 @@ tibble::as_tibble(mtcars, rownames = "cars")
 
 ---
 
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 name: cheat-sheets-importacao
 ### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
 
@@ -2347,6 +2751,11 @@ name: cheat-sheets-importacao
 ---
 
 name: importacao-arquivos
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 ### Importação de arquivos
 
 - Pacote [`readr`](https://readr.tidyverse.org): utilizados para ler arquivos de texto
@@ -2379,6 +2788,10 @@ name: importacao-arquivos
 
 ---
 
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 ### Importação de arquivos
 
 Para ler arquivos de texto (`.csv` ou `.txt`), são utilizadas funções do pacote [`readr`](https://readr.tidyverse.org).
@@ -2403,6 +2816,10 @@ pinguins_csv <- read_csv("dados/pinguins.csv")
 
 ---
 
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 ### Importação de arquivos
 
 O objeto resultante será um `tibble`:
@@ -2416,6 +2833,10 @@ pinguins_csv
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
 
 ### Importação de arquivos
 
@@ -2448,6 +2869,10 @@ pinguins_txt <- read_delim("dados/pinguins.txt", delim = "\t")
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
 
 ### Importação de arquivos
 
@@ -2483,6 +2908,10 @@ readxl::pinguins_xlsx <- read_excel("dados/pinguins.xlsx")
 
 ---
 
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 ### Importação de arquivos
 
 **Arquivos Excel: argumentos úteis**
@@ -2512,6 +2941,11 @@ Principais argumentos:
 ---
 
 name: exportacao-arquivos
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 ### Exportação de arquivos
 
 Exportar objetos do **R** significa gravar as bases (ou objetos) em um arquivo no disco rígido (HD) do computador.
@@ -2547,6 +2981,11 @@ write_xlsx(pinguins, "dados/pinguins.xlsx")
 ---
 
 name: importacao-exportacao-arquivos-rds
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 ### Importação e exportação de arquivos
 
 **Extensão `.rds`**
@@ -2581,6 +3020,11 @@ pinguins_rds <- read_rds("dados/pinguins.rds")
 ---
 
 name: visualizacao-objeto
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 ### Visualização de um objeto
   
 **Para visualizar um objeto em aba separada:**
@@ -2604,6 +3048,10 @@ knitr::include_graphics("img/24-view-pinguins.png")
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
 
 ### Visualização de um objeto
 
@@ -2630,6 +3078,11 @@ glimpse(pinguins_csv)
 ---
 
 name: base-dos-dados
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 ### <span style='color:#34a15a'>BASE DOS DADOS</span>
 
 A <span style='color:#34a15a'><b>Base dos Dados</b></span> é uma organização não governamental, sem fins lucrativos e <span style='color:#34a15a'><b>open source</b></span>, que atua para universalizar o acesso a <span style='color:#34a15a'><b>dados públicos de qualidade</b></span>.
@@ -2645,6 +3098,10 @@ Além disso, os responsáveis pela <span style='color:#34a15a'><b>Base dos Dados
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
 
 ### <span style='color:#34a15a'>BASE DOS DADOS</span>
 
@@ -2678,6 +3135,10 @@ Um serviço de banco de dados em nuvem da Google, que permite realizar consultar
 
 ---
 
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 ### <span style='color:#34a15a'>BASE DOS DADOS</span>
 
 <span style='color:#34a15a'><b>Como criar um projeto no BigQuery:</b></span>
@@ -2704,6 +3165,10 @@ A Google oferece <span style='color:#34a15a'><b>1 TB gratuito por mês</b></span
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
 
 ### <span style='color:#34a15a'>BASE DOS DADOS</span>
 
@@ -2734,6 +3199,10 @@ No blog da [Base dos Dados](https://dev.to/basedosdados), há um tutorial de com
 
 ---
 
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 ### <span style='color:#34a15a'>BASE DOS DADOS</span>
 
 <span style='color:#34a15a'><b>Como criar um projeto no BigQuery</b></span>
@@ -2747,6 +3216,10 @@ knitr::include_graphics("img/26-big-query-projeto-r.gif")
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
 
 ### <span style='color:#34a15a'>BASE DOS DADOS</span>
 
@@ -2763,6 +3236,11 @@ knitr::include_graphics("img/27-fixa-bd-no-bigquery.gif")
 ---
 
 name: base-dos-dados-sql
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 ### <span style='color:#34a15a'>BASE DOS DADOS — SQL</span>
 
 **SQL** (_Structured Query Language_, ou _Linguagem de Consulta Estruturada_) é a linguagem padrão para **consultas em bancos de dados relacionais**.
@@ -2794,6 +3272,10 @@ Ela permite selecionar, filtrar, agrupar e combinar dados de forma declarativa �
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
 
 ### <span style='color:#34a15a'>BASE DOS DADOS — SQL</span>
 
@@ -2829,6 +3311,10 @@ Ela permite selecionar, filtrar, agrupar e combinar dados de forma declarativa �
 
 ---
 
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 ### <span style='color:#34a15a'>BASE DOS DADOS — SQL</span>
 
 <span style='color:#34a15a'><b>Palavras-chave – Operadores relacionais:</b></span>
@@ -2858,6 +3344,10 @@ Ela permite selecionar, filtrar, agrupar e combinar dados de forma declarativa �
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
 
 ### <span style='color:#34a15a'>BASE DOS DADOS — SQL</span>
 
@@ -2962,6 +3452,10 @@ ON pib.id_municipio = pop.id_municipio
 
 ---
 
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
 ### <span style='color:#34a15a'>BASE DOS DADOS — SQL</span>
 
 ```{r echo=FALSE, out.width="90%", fig.align='center'}
@@ -2973,6 +3467,10 @@ knitr::include_graphics("img/28-ex-download-bigquery-r.gif")
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
 
 ### <span style='color:#34a15a'>BASE DOS DADOS — SQL</span>
 
@@ -3022,6 +3520,11 @@ name: manipulacao
 ---
 
 name: pipe
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Pipe: `%>%` ou `|>`
 
 - `CTRL` + `SHIFT` + `M`: cria o `%>%` &nbsp; (ou `|>`).
@@ -3056,6 +3559,10 @@ Agora veja como a mesma receita é escrita usando o operador `|>`:
 
 ---
 
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Pipe: `%>%` ou `|>`
 
 - `CTRL` + `SHIFT` + `M`: cria o `%>%` &nbsp; (ou `|>`).
@@ -3087,6 +3594,10 @@ O `%>%` vem do pacote `{magrittr}` e funciona como o `|>`, mas com algumas difer
 
 ---
 
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 Os exemplos apresentados aqui serão das base abaixo:
 
 ```{r}
@@ -3113,6 +3624,11 @@ head(pinguins_raw, n = 3)
 ---
 
 name: pacote-dplyr
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Pacote &nbsp; `dplyr`
 
 O `{dplyr}` é um dos **pacotes mais importantes** para a **manipulação de dados** no R. Ele oferece funções simples e poderosas para transformar linhas e colunas de uma base de dados.
@@ -3145,6 +3661,11 @@ Essas funções seguem um padrão simples:
 ---
 
 name: cheat-sheets-dplyr
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
 
 [![Cheat Sheets](img/29-cheatsheet-dplyr.png)](https://rstudio.github.io/cheatsheets/data-transformation.pdf)
@@ -3156,6 +3677,11 @@ name: cheat-sheets-dplyr
 ---
 
 name: dplyr-select
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Selecionando Colunas:  &nbsp; `select()`
 
 A função `select()` é usada para escolher colunas específicas de uma base de dados.
@@ -3176,6 +3702,10 @@ select(pinguins, species)
 
 ---
 
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Selecionando Colunas:  &nbsp; `select()`
 
 Você também pode selecionar **várias colunas ao mesmo tempo**, separando os nomes por vírgulas:
@@ -3192,6 +3722,10 @@ Esse exemplo retorna apenas as colunas `species`, `sex` e `body_mass_g` da base 
 
 ---
 
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Selecionando Colunas:  &nbsp; `select()`
 
 O operador `:` é útil para selecionar **colunas consecutivas** — ou seja, de uma coluna até outra, seguindo a ordem da base:
@@ -3207,6 +3741,10 @@ Esse código seleciona todas as colunas de `island` até `body_mass_g`, na ordem
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
 
 ### Selecionando Colunas:  &nbsp; `select()`
 
@@ -3228,6 +3766,10 @@ select(pinguins, ends_with("mm"))
 
 ---
 
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Selecionando Colunas:  &nbsp; `select()`
 
 Você pode **remover colunas** usando o sinal de menos (`—`) antes do nome da coluna:
@@ -3243,6 +3785,10 @@ Esse código retorna todas as colunas da base `pinguins`, exceto a coluna `year`
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
 
 ### Selecionando Colunas:  &nbsp; `select()`
 
@@ -3261,6 +3807,11 @@ Esse código retorna todas as colunas da base `pinguins`, exceto as colunas `yea
 ---
 
 name: dplyr-arrange
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Ordenando linhas: &nbsp; `arrange()`
 
 A função `arrange()` serve para **ordenar as linhas** da base de dados.
@@ -3281,6 +3832,10 @@ arrange(pinguins, body_mass_g)
 
 ---
 
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Ordenando linhas: &nbsp; `arrange()`
 
 Para ordenar de forma **descrescente**, basta usar a função `desc()` dentro do `arrange()`.
@@ -3296,6 +3851,10 @@ arrange(pinguins, desc(body_mass_g))
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
 
 ### Ordenando linhas: &nbsp; `arrange()`
 
@@ -3318,6 +3877,11 @@ arrange(pinguins, desc(bill_length_mm), bill_depth_mm)
 ---
 
 name: mais-de-uma-funcao
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Aplicando mais de uma função
 
 Em muitos casos, queremos aplicar **várias transformações** em sequência em uma base de dados.
@@ -3353,6 +3917,11 @@ O código fica mais **intuitivo**, com as operações organizadas em sequência 
 ---
 
 name: dplyr-filter
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Filtrando linhas: &nbsp; `filter()`
 
 A função `filter()` é usada para **selecionar linhas** que atendem a uma determinada condição.
@@ -3368,6 +3937,10 @@ filter(pinguins, flipper_length_mm > 140)
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
 
 ### Filtrando linhas: &nbsp; `filter()`
 
@@ -3391,6 +3964,10 @@ pinguins |>
 
 ---
 
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Filtrando linhas: &nbsp; `filter()`
 
 Você pode aplicar **dois ou mais filtros** ao mesmo tempo, separando as condições por vírgula dentro do `filter()`.
@@ -3412,6 +3989,10 @@ pinguins |>
 
 ---
 
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Filtrando linhas: &nbsp; `filter()`
 
 Você também pode fazer **operações diretamente dentro do `filter()`**, comparando os valores das colunas com cálculos feitos na hora.
@@ -3432,6 +4013,11 @@ O argumento `na.rm = TRUE` serve para ignorar valores ausentes (`NA`) no cálcul
 ---
 
 name: dplyr-mutate
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Criando novas colunas: &nbsp; `mutate()`
 
 A função `mutate()` é usada para:
@@ -3453,6 +4039,10 @@ pinguins |>
 
 ---
 
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Criando novas colunas: &nbsp; `mutate()`
 
 Você também pode usar `mutate()` para **criar uma nova coluna**, mantendo a variável original intacta.
@@ -3471,6 +4061,10 @@ A nova coluna será adicionada **no final da tabela**.
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
 
 ### Criando novas colunas: &nbsp; `mutate()`
 
@@ -3498,6 +4092,11 @@ pinguins |>
 ---
 
 name: dplyr-summarise
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Sumarizando colunas: &nbsp; `summarise()`
 
 A **sumarização** é uma forma de **resumir um conjunto de dados** usando alguma medida de interesse.
@@ -3522,6 +4121,10 @@ pinguins |>
 
 ---
 
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Sumarizando colunas: &nbsp; `summarise()`
 
 Você pode calcular **várias estatísticas ao mesmo tempo** dentro de um único `summarise()`.
@@ -3544,6 +4147,10 @@ pinguins |>
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
 
 ### Sumarizando colunas: &nbsp; `summarise()`
 
@@ -3569,6 +4176,11 @@ Neste exemplo, calculamos a **média ou mediana** de diferentes variáveis numé
 ---
 
 name: dplyr-group-by
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Sumarizando colunas agrupadas: &nbsp; `group_by()`
 
 A função `group_by()` **não altera os dados da base**, mas indica que as operações seguintes devem ser feitas **por grupo**.
@@ -3588,6 +4200,10 @@ pinguins |>
 
 ---
 
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Sumarizando colunas agrupadas: &nbsp; `group_by()`
 
 Você também pode agrupar por **mais de uma variável ao mesmo tempo**.
@@ -3606,6 +4222,10 @@ Neste caso, os dados são agrupados **por combinação de `island` e `species`**
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
 
 ### Sumarizando colunas agrupadas
 
@@ -3633,6 +4253,11 @@ Ou seja, **agrupamos os dados por ilha**, **calculamos a média da massa corpora
 ---
 
 name: dplyr-relocate
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Ordenando colunas:  &nbsp;  `relocate()`
 
 A função `relocate()` permite **mudar a ordem das colunas** de uma base, colocando-as em outra posição — seja com base no nome ou na posição de outra coluna.
@@ -3652,6 +4277,10 @@ No exemplo abaixo, as colunas `sex` e `year` foram movidas para **aparecer logo 
 
 ---
 
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Ordenando colunas:  &nbsp;  `relocate()`
 
 Da mesma forma, é possível usar o argumento `.before` para **mover colunas para antes** de outra coluna específica:
@@ -3670,6 +4299,11 @@ Nesse exemplo, as colunas `species` e `island` foram movidas para **aparecer log
 ---
 
 name: dplyr-rename
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Renomeando colunas: &nbsp; `rename()`
 
 A função `rename()` serve para **alterar os nomes das colunas** de uma base de dados.
@@ -3695,6 +4329,11 @@ pinguins |>
 ---
 
 name: dplyr-slice-head
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Selecionando linhas: &nbsp; `slice_head()`
 
 A função `slice_head()` é usada para **extrair as primeiras linhas** de uma tabela, de forma controlada.
@@ -3717,6 +4356,11 @@ Neste exemplo, são retornadas as **8 primeiras linhas** da base `pinguins`.
 ---
 
 name: dplyr-slice-tail
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Selecionando linhas: &nbsp; `slice_tail()`
 
 A função `slice_tail()` é usada para **extrair as últimas linhas** de uma tabela.
@@ -3739,6 +4383,11 @@ Neste exemplo, são retornada s as **5 últimas linhas** da base `pinguins`.
 ---
 
 name: dplyr-slice-max
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Selecionando linhas: &nbsp; `slice_max()`
 
 A função `slice_max()` seleciona as **linhas com os maiores valores** de uma coluna numérica específica.
@@ -3763,6 +4412,11 @@ Neste exemplo, são retornadas as **5 linhas com maior profundidade de bico** (`
 ---
 
 name: dplyr-slice-min
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Selecionando linhas: &nbsp; `slice_min()`
 
 A função `slice_min()` seleciona as **linhas com os menores valores** de uma coluna numérica específica.
@@ -3787,6 +4441,11 @@ Neste exemplo, são retornadas as **5 linhas com menor comprimento de nadadeira*
 ---
 
 name: dplyr-slice-sample
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Selecionando linhas: &nbsp; `slice_sample()`
 
 A função `slice_sample()` é usada para **selecionar linhas aleatoriamente** de uma base.
@@ -3809,6 +4468,11 @@ Neste exemplo, são retornadas **12 linhas aleatórias** da base `pinguins`.
 ---
 
 name: dplyr-distinct
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Limpando a tabela: &nbsp; `distinct()`
 
 A função `distinct()` remove **linhas duplicadas**, considerando os valores de um ou mais colunas.
@@ -3831,6 +4495,11 @@ Neste exemplo, a base retorna **apenas uma linha para cada valor distinto de `bo
 ---
 
 name: dplyr-count
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Contando valores: &nbsp; `count()`
 
 A função `count()` é usada para **contar a frequência de valores** de cada categoria em uma coluna — especialmente útil para variáveis categóricas.
@@ -3860,6 +4529,11 @@ Neste exemplo, o código retorna a **quantidade de pinguins por espécie em cada
 ---
 
 name: dplyr-bind-rows
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Combinando dados: &nbsp; `bind_rows()`
 
 A função `bind_rows()` serve para **juntar objetos pela linha** — ou seja, ela empilha os dados, mesmo que tenham colunas diferentes.
@@ -3884,6 +4558,11 @@ bind_rows(pinguins_01, pinguins_02, .id = "id")
 ---
 
 name: dplyr-bind-cols
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Combinando dados: &nbsp; `bind_cols()`
 
 A função `bind_cols()` é usada para **juntar objetos lado a lado**, ou seja, **por colunas**.
@@ -3908,6 +4587,11 @@ bind_cols(pinguins_01, pinguins_02, .name_repair = "unique")
 ---
 
 name: dplyr-join
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Unindo bases: &nbsp; `*_join()`
 
 Combina pares de bases de dados **com base em uma ou mais chaves** — colunas em comum entre elas.
@@ -3949,6 +4633,10 @@ Selecionam linhas de x com base na existência de correspondência em y:
 
 ---
 
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Unindo bases: &nbsp; `*_join()`
 
 .pull-left[
@@ -3982,6 +4670,10 @@ knitr::include_graphics("img/34-full-join.gif")
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
 
 ### Unindo bases: &nbsp; `*_join()` — Exemplo
 
@@ -4025,6 +4717,10 @@ glimpse(pinguins_left_join)
 
 ---
 
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Operações de conjuntos e comparações de dados
 
 .pull-left[
@@ -4062,6 +4758,11 @@ knitr::include_graphics("img/35-operacoes.png")
 ---
 
 name: pacote-tidyr
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Pacote &nbsp; `tidyr`
 
 **O que são dados organizados (_tidy data_)?**
@@ -4083,6 +4784,10 @@ Dados organizados seguem uma **estrutura padrão**, que facilita a análise e a 
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
 
 ### Pacote &nbsp; `tidyr`
 
@@ -4113,6 +4818,11 @@ Principais funções:
 ---
 
 name: cheat-sheets-tidyr
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
 
 [![Cheat Sheets](img/37-cheatsheet-tidyr.png)](https://rstudio.github.io/cheatsheets/tidyr.pdf)
@@ -4124,6 +4834,11 @@ name: cheat-sheets-tidyr
 ---
 
 name: tidyr-unite
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### União de colunas: &nbsp; `unite()`
 
 A função `unite()` combina o conteúdo de duas ou mais colunas em uma **única coluna de texto**.
@@ -4148,6 +4863,11 @@ head(especie_ilha_unido)
 ---
 
 name: tidyr-separate
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Separação de colunas: &nbsp; `separate()`
 
 A função `separate()` divide o conteúdo de uma coluna em **duas ou mais colunas**, com base em um separador.
@@ -4172,6 +4892,11 @@ head(especie_ilha_separado)
 ---
 
 name: tidyr-drop-na
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Remove NAs: &nbsp; `drop_na()`
 
 A função `drop_na()` remove todas as **linhas que contêm valores ausentes (`NA`)**. 
@@ -4209,6 +4934,11 @@ pinguins |>
 ---
 
 name: tidyr-pivot
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Pivotar os dados: &nbsp; `pivot_*()`
 
 .pull-left[
@@ -4244,6 +4974,11 @@ knitr::include_graphics("img/38-original-dfs-tidy.png")
 ---
 
 name: tidyr-pivot-longer
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Larga para longa: &nbsp; `pivot_longer()`
 
 Transforma um banco de dados **do farmato largo para o formato longo** — ou seja, o número de **linhas aumenta** e o número de **colunas diminui**. Os principais argumentos da função `pivot_longer()` são:
@@ -4268,6 +5003,11 @@ pivot_longer(data = pinguins_raw[, c(2, 3, 10:13)],
 ---
 
 name: tidyr-pivot-wider
+
+<div class="faixa-lateral faixa-manipulacao">
+  <span>Manipulação de dados</span>
+</div>
+
 ### Longa para larga: &nbsp; `pivot_wider()`
 
 Transforma um banco de dados **do formato longo para o formato largo** — ou seja, o número de **colunas aumenta** e o número de **linhas diminui**. Os principais argumentos da função `pivot_wider()` são:
@@ -4302,6 +5042,11 @@ name: visualizacao
 ---
 
 name: para-que-servem-visualizacoes
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ## Para que servem as visualizações?
 
 .pull-left[
@@ -4333,6 +5078,10 @@ knitr::include_graphics("img/39-visualizacao-scatter-plot.png")
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
 
 .pull-left[
 
@@ -4394,6 +5143,11 @@ Ideal para relatar achados de forma clara e convincente ao público.
 ---
 
 name: gramatica-graficos-camadas
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Gramática de gráficos _em camadas_
 
 O pacote [`{ggplot2}`](https://ggplot2.tidyverse.org) segue duas ideias fundamentais que ajudam a entender como os gráficos são construídos:
@@ -4425,6 +5179,11 @@ pinguins <- read_csv("dados/pinguins.csv")
 ---
 
 name: construindo-grafico-camadas
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Construindo um gráfico em Camadas
 
 No [`{ggplot2}`](https://ggplot2.tidyverse.org), cada gráfico é construído **em camadas**: começamos com a base de dados e adicionados, passo a passo, os elementos visuais que desejamos. Vamos ver isso em ação:
@@ -4466,6 +5225,10 @@ cars |>
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
 
 ### Exemplo completo de gráfico em camadas
 
@@ -4527,6 +5290,11 @@ cars |>
 ---
 
 name: curiosidade-pq-mais
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Curiosidade: por que o `+`?
 
 Diferente de outros pacotes do `tidyverse`, o `ggplot2` **não usa o pipe (`|>` ou `%>%`) para encadear operações**.
@@ -4549,6 +5317,11 @@ Segundo o próprio Hadley Wickham (criador do pacote), quando começou a desenvo
 ---
 
 name: qual-grafico-escolher
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 # [Qual gráfico escolher?](https://www.data-to-viz.com)
 
 <div style="text-align: center;">
@@ -4564,6 +5337,11 @@ name: qual-grafico-escolher
 ---
 
 name: cheat-sheets-ggplot2
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
 
 <div style="text-align: center;">
@@ -4579,6 +5357,11 @@ name: cheat-sheets-ggplot2
 ---
 
 name: grafico-pontos
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Um gráfico de pontos (dispersão)
 
 ```{r echo=TRUE, warning=TRUE, out.width='85%'}
@@ -4593,6 +5376,10 @@ pinguins |>
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
 
 ### Gráfico de pontos (dispersão)
 
@@ -4659,6 +5446,10 @@ geom_point(aes(x = comprimento_nadadeira, y = massa_corporal))
 
 ---
 
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Gráfico de pontos (dispersão)
 
 Vamos adicionar uma **reta de tendência** ao gráfico com a função `geom_smooth()`.
@@ -4676,6 +5467,10 @@ pinguins |>
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
 
 ### Gráfico de pontos (dispersão)
 
@@ -4701,6 +5496,10 @@ pinguins |>
 
 ---
 
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Gráfico de pontos (dispersão)
 
 Veja como o [`ggplot2`](https://ggplot2.tidyverse.org) é realmente construído em **camadas sobrepostas**. Se colocarmos a camada da **linha de tendência** antes da camada dos **pontos**, os **pontos serão desenhados por cima da linha**.
@@ -4718,6 +5517,10 @@ pinguins |>
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
 
 ### Gráfico de pontos (dispersão)
 
@@ -4738,6 +5541,10 @@ pinguins |>
 
 ---
 
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Gráfico de pontos (dispersão)
 
 Podemos adicionar mais de um atributo estético no mesmo gráfico. Neste exemplo, além da cor por espécie, o **formato dos pontos** (`shape`) é usado para representar o sexo (`sex`) dos pinguins.
@@ -4756,6 +5563,11 @@ pinguins |>
 ---
 
 name: grafico-linhas
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Gráfico de linhas
 
 Utilizamos a função `geom_line()` para criar um **gráfico de linhas**, que é idela para **representar séries temporais**. No exemplo a seguir, representamos a **massa corporal média dos pinguins** em cada ano, de 2007 a 2009.
@@ -4775,6 +5587,10 @@ pinguins |>
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
 
 ### Gráfico de linhas
 
@@ -4798,6 +5614,10 @@ pinguins |>
 
 ---
 
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Gráfico de linhas
 
 Quando diferentes `geoms` compartilham os mesmos mapeamentos estéticos (`aes()`), podemos definir o `aes()` **diretamente na função `ggplot()`**. Dessa forma, **o mapeamento é aplicado automaticamente a todos os `geoms`**, tornando o código mais limpo e conciso. O exemplo anterior pode ser reescrito assim:
@@ -4818,6 +5638,10 @@ pinguins |>
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
 
 ### Gráfico de linhas
 
@@ -4843,6 +5667,11 @@ pinguins |>
 ---
 
 name: grafico-barras
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Gráfico de barras
 
 Vamos construir um **gráfico de barras** com o número de pinguins de cada espécie. Para isso, usamos a função `geom_col()`, que exibe **valores já agregados** (como contagens).
@@ -4861,6 +5690,10 @@ pinguins |>
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
 
 ### Gráfico de barras
 
@@ -4909,6 +5742,10 @@ Para **colorir barras por categorias**, usamos o atibuto `fill`, e não `color`.
 
 ---
 
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Gráfico de barras
 
 Para **melhorar a legibilidade das _labels_ no eixo x**, uma boa prática é **inverter os eixos** do gráfico, transformando-o em barras horizontais. Isso é feito com a função `coord_flip()`.
@@ -4926,6 +5763,10 @@ pinguins |>
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
 
 ### Gráfico de barras
 
@@ -4993,6 +5834,10 @@ pinguins |>
 
 ---
 
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Gráfico de barras
 
 Por fim, podemos **adicionar rótulos (labels)** dentro das barras para mostrar os valores numéricos (quantidade de pinguins por espécie).
@@ -5016,6 +5861,11 @@ pinguins |>
 ---
 
 name: histogramas
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Histogramas
 
 <div class="panelset">
@@ -5082,6 +5932,11 @@ pinguins |>
 ---
 
 name: boxplot
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Boxplot
 
 <div class="panelset">
@@ -5129,6 +5984,11 @@ O boxplot exibe:
 ---
 
 name: titulos-labels-escalas
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Títulos, _labels_ e escalas
 
 <div class="panelset">
@@ -5231,6 +6091,11 @@ pinguins |>
 ---
 
 name: cores
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Cores
 
 <div class="panelset">
@@ -5294,6 +6159,10 @@ A escolha entre `color` e `fill` depende da **geometria** utilizada:
 
 ---
 
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Cores
 
 <div class="panelset">
@@ -5342,6 +6211,10 @@ pinguins |>
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
 
 ### Cores
 
@@ -5436,6 +6309,11 @@ Ambos os gráficos utilizam **escalas manuais de cor** com a família `scale_*_m
 ---
 
 name: trocando-textos-legenda
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Trocando os textos da legenda
 
 <div class="panelset">
@@ -5484,6 +6362,11 @@ pinguins |>
 ---
 
 name: temas
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Temas
 
 <div class="panelset">
@@ -5636,6 +6519,11 @@ pinguins |>
 ---
 
 name: mapas
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ### Mapas
 
 <div class="panelset">
@@ -5692,6 +6580,10 @@ dplyr::glimpse(ideb_mapa)
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
 
 <div class="panelset">
 
@@ -5812,6 +6704,10 @@ ideb_mapa |>
 
 ---
 
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 <div class="panelset">
 
 <div class="panel">
@@ -5911,6 +6807,11 @@ ideb_mapa |>
 ---
 
 name: para-saber-mais-visualizacao
+
+<div class="faixa-lateral faixa-visualizacao">
+  <span>Visualização de dados</span>
+</div>
+
 ## Para saber mais!
 
 .panelset[
@@ -5982,6 +6883,7 @@ name: regressao
 
 <!-- class: inverse center middle -->
 name: dados-educacionais
+
 # Dados Educacionais
 
 <div class="link-sumario">
@@ -5991,6 +6893,11 @@ name: dados-educacionais
 ---
 
 name: dados-educacionais-importando-bases
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 ### Importando as bases
 
 .tiny[
@@ -6028,6 +6935,10 @@ pib_pop <- readr::read_csv(
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
 
 <div class="panelset">
 
@@ -6122,6 +7033,11 @@ A base `pib_pop` traz os seguintes dados para o ano de 2020:
 ---
 
 name: dados-educacionais-padronizando-bases
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 ### Padronizando as bases de dados
 
 Preparamos as bases para análise selecionando apenas as variáveis relevantes de cada uma. Também criamos o PIB per capita a partir do PIB total e da população.
@@ -6207,6 +7123,11 @@ pib_pc
 ---
 
 name: dados-educacionais-juntando-bases-fundamental
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 ### Juntando as bases de dados: Ensino Fundamental
 
 Reunimos em uma única base (`fundamental`) as variáveis de desempenho (`ideb`), permanência escolar (`tx_aprov`, `tx_aband`, `tdi`, `hrs_aula`) e contexto socioeconômico (`pib_pc`), usando `id_municipio` como chave.
@@ -6250,6 +7171,11 @@ fundamental
 
 ---
 name: dados-educacionais-analises-descritivas-fundamental
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 ### Análise Descritivas: Ensino Fundamental
 
 <!-- O objetivo é **identificar padrões gerais, possíveis outliers e assimetrias**. -->
@@ -6329,6 +7255,11 @@ fundamental |>
 ---
 
 name: dados-educacionais-regressao-linear-fundamental
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 ### Regressão Linear: Ensino Fundamental
 
 <!-- **Será que a taxa de distorção idade-série (`tdi`) está positivamente relacionada à taxa de abandono escolar (`tx_aband`)?** -->
@@ -6407,6 +7338,10 @@ $$
 
 ---
 
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 <!-- ### Regressão Linear: Ensino Fundamental -->
 
 <!-- **Qual a relação entre a taxa de distorção idade-série (`tdi`), a taxa de aprovação (`tx_aprov`), as horas-aula (`hrs_aula`) e a taxa de abandono escolar (`tx_aband`)?** -->
@@ -6473,6 +7408,10 @@ $$
 
 ---
 
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 **Qual a relação entre `tdi`, `tx_aprov`, `pib_pc` e a `tx_aband`?**
 
 <div class="panelset">
@@ -6536,6 +7475,11 @@ $$
 ---
 
 name: dados-educacionais-juntando-bases-medio
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 ### Juntando as bases de dados: Ensino Médio
 
 Reunimos em uma única base (`medio`) as variáveis de desempenho (`ideb`), permanência escolar (`tx_aprov`, `tx_aband`, `tdi`, `hrs_aula`) e contexto socioeconômico (`pib_pc`), usando `id_municipio` como chave.
@@ -6580,6 +7524,11 @@ medio
 ---
 
 name: dados-educacionais-analises-descritivas-medio
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 ### Análise Descritivas: Ensino Médio
 
 <!-- O objetivo é **identificar padrões gerais, possíveis outliers e assimetrias**. -->
@@ -6659,6 +7608,11 @@ medio |>
 ---
 
 name: dados-educacionais-regressao-linear-medio
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 ### Regressão Linear: Ensino Médio
 
 **Existe relação entre `ideb` e a `tx_aband`?**
@@ -6736,6 +7690,10 @@ $$
 
 ---
 
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 **Qual a relação entre `hrs_aula` e a `tx_aband`?**
 
 <div class="panelset">
@@ -6810,6 +7768,10 @@ $$
 
 ---
 
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 **Qual a relação entre `hrs_aula` e a `tx_aband`?**
 
 <div class="panelset">
@@ -6883,6 +7845,10 @@ $$
 
 ---
 
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 **Qual a relação entre `tx_aprov`, `tdi`, `hrs_aula`, `pib_pc` e a `tx_aband`?**
 
 <div class="panelset">
@@ -6934,7 +7900,7 @@ O **Teste F** confirma a significância conjunta dos parâmetros.
 **Equação estimada:**
 
 $$
-\text{tx_aband} = 49.94 - 0.504 \cdot \text{tx_aprov} + 0.083 \cdot \text{tdi} - 0.136 \cdot \text{hrs_aula} - 0.00001 \cdot \text{pibpc}
+\text{tx_aband} = 49.94 - 0.504 \cdot \text{tx_aprov} + 0.083 \cdot \text{tdi} - 0.136 \cdot \text{hrs_aula} - 0.00001 \cdot \text{pib_pc}
 $$
 
 **Interpretação:**
@@ -6954,7 +7920,12 @@ $$
 
 ---
 
-name: BASE DOS DADOS
+name: base-dos-dados-regressao
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 ### <span style='color:#34a15a'>BASE DOS DADOS</span>
 
 <span style='color:#34a15a'><b>Importando a base da BigQuery para o R:</b></span>
@@ -6991,6 +7962,11 @@ WHERE coluna1 = 'valor1' AND coluna2 = 'valor2'
 ---
 
 name: atlas-desenvolvimento-humano
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 ### Atlas do Desenvolvimento Humano
 
 O **Atlas do Desenvolvimento Humano no Brasil** é uma plataforma criada em parceria entre o Programa das Nações Unidas para o Desenvolvimento (PNUD), o Instituto de Pesquisa Econômica Aplicada (IPEA) e a Fundação João Pinheiro (FJP). Seu objetivo é **facilitar o acesso a informações estatísticas sobre as características e desigualdades sociais do país**, sendo uma das principais ferramentas de divulgação de dados sobre o desenvolvimento humano no Brasil.
@@ -7010,6 +7986,11 @@ Além dos dados provenientes dos Censos Demográficos de 1991, 2000 e 2010, o pr
 ---
 
 name: atlas-desenvolvimento-humano-importando-base
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 ### Atlas do Desenvolvimento Humano — importando a base de dados
 
 ```{r config, include=FALSE}
@@ -7033,6 +8014,10 @@ glimpse(adh)
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
 
 **Será que a mortalidade infantil (até 1 ano) se relaciona com a taxa de água e esgoto inadequados?**
 
@@ -7107,6 +8092,10 @@ $$
 
 ---
 
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 **Relação entre a proporção de extrema pobreza em crianças e a mortalidade infantil (até 5 anos)**
 
 <div class="panelset">
@@ -7179,6 +8168,10 @@ $$
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
 
 **Padrão regional: pobreza infantil extrema e mortalidade até 5 anos**
 
@@ -7266,6 +8259,10 @@ Esse tipo de visualização reforça a importância de **análises desagregadas 
 
 ---
 
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 **Relação entre crianças fora da escola (4 e 5 anos) e a proporção de crianças na extrema pobreza**
 
 .tiny[
@@ -7282,6 +8279,10 @@ dados |>
 <span style='font-size:90%'>Observa-se <b>variação na inclinação da relação entre pobreza extrema e crianças fora da escola entre as regiões</b>. No Sul, essa associação é mais forte — indicando que o aumento da pobreza extrema está mais fortemente ligado à evasão escolar nessa faixa etária — enquanto no Nordeste o efeito é menos pronunciado.</span>
 
 ---
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
 
 **Evolução da Mortalidade Infantil (até 1 ano) por Região — 1991, 2000 e 2010**
 
@@ -7354,6 +8355,11 @@ Os gráficos mostram duas formas de representar a **média da mortalidade infant
 ---
 
 name: mapas-regressao
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 ### Mapas
 
 <div class="panelset">
@@ -7558,6 +8564,10 @@ name: wooldridge
 
 ---
 
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 ### Dado utilizado: `wage`
 
 ```{r include=FALSE}
@@ -7583,6 +8593,10 @@ glimpse(wage)
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
 
 **A relação entre educação e salário**
 
@@ -7631,6 +8645,10 @@ $$
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
 
 **A relação entre educação e log-salário**
 
@@ -7683,6 +8701,10 @@ A cada **1 ano adicional de escolaridade** (`educ`), o **salário aumenta em mé
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
 
 **Mincer — o salário é estimado por meio da escolaridade e da experiência**
 
@@ -7738,6 +8760,10 @@ $$
 </div>
 
 ---
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
 
 **Mincer com efeito não linear da experiência sobre o salário**
 
@@ -7798,6 +8824,11 @@ Todos os coeficientes são estatisticamente significativos, com p-valores próxi
 ---
 
 name: para-saber-mais-regressao
+
+<div class="faixa-lateral faixa-regressao">
+  <span>Regressão Linear</span>
+</div>
+
 ## Para saber mais!
 
 <div class="panelset">

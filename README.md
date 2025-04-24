@@ -13,7 +13,9 @@ Materiais utilizados no minicurso "Análise de dados com R", ministrado por Luis
 
 Para fazer o download, clique sobre a base desejada e depois no botão `Dowload raw file`.
 
-![Exemplo de como realizar o Download](raw/ex-download.png){width=200px}
+<center>
+![Exemplo de como realizar o Download](raw/ex-download.png){width=400px}
+</center>
 
 
 ## Materiais extras

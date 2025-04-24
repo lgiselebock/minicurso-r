@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="Yihui Xie" />
     <meta name="author" content="Garrick Aden-Buie" />
-    <meta name="date" content="2025-04-23" />
+    <meta name="date" content="2025-04-24" />
     <script src="index_files/header-attrs/header-attrs.js"></script>
     <script src="index_files/clipboard/clipboard.min.js"></script>
     <link href="index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
@@ -46,7 +46,7 @@ class: center, middle, inverse, title-slide
 ### Garrick Aden-Buie
 ]
 .date[
-### 2025-04-23
+### 2025-04-24
 ]
 
 ---
@@ -126,8 +126,9 @@ name: sumario
 - **[Importação de dados](#importacao)**
 
   - [Caminhos](#caminhos)
+  - [Arquivos `.RData` e `.Rhistory`](#rdata-rhistory)
   - [Tibbles](#tibbles)
-  - [Cheat Sheets](#cheat-sheets-importacao)
+  - [Cheat Sheets](#cheat-sheets-readr)
   - [Importação de arquivos](#importacao-arquivos)
   - [Exportação de arquivos](#exportacao-arquivos)
   - [Importação e exportação de arquivos](#importacao-exportacao-arquivos-rds)
@@ -3552,6 +3553,64 @@ O uso de **caminhos relativos** dentro de um projeto é considerado uma **boa pr
 
 ---
 
+name: rdata-rhistory
+
+&lt;div class="faixa-lateral faixa-importacao"&gt;
+  &lt;span&gt;Importação de dados&lt;/span&gt;
+&lt;/div&gt;
+
+## Arquivos `.RData` e `.Rhistory`
+
+Por padrão, o **RStudio** salva automaticamente o que você faz na sessão. Isso inclui:
+
+  - Todos os **objetos criados** (variáveis, listas, data.frames, etc);
+  - Todos os **comandos executados**.
+  
+&lt;br&gt;
+  
+Essas informações são armazenadas em **dois arquivos ocultos**:
+
+  - **`.RData`**: guarda os **objetos** da sessão;
+  - **`.Rhistory`**: guarda o **histórico de comandos**.
+
+&lt;br&gt;
+
+Ao reabrir o RStudio, o conteúdo desses arquivos é **carregado automaticamente** no ambiente de trabalho, como se você nunca tivesse fechado o programa ou saído do projeto.
+
+&lt;div class="link-sumario"&gt;
+  &lt;a href="#sumario" title="Ir para o sumário"&gt;Sumário&lt;/a&gt;
+&lt;/div&gt;
+
+---
+
+&lt;div class="faixa-lateral faixa-importacao"&gt;
+  &lt;span&gt;Importação de dados&lt;/span&gt;
+&lt;/div&gt;
+
+## Por que evitar usar `.RData` e `.Rhistory`?
+
+- **Reduz a reprodutibilidade**: se tudo está salvo automaticamente, você pode deixar de escrever _scripts_ limpos, completos e reprodutíveis.
+
+- **Dificulta experimentos controlados**: o histórico pode conter comandos não organizados, tornando difícil enterder o que foi feito e por que foi feito.
+
+- **Risco de sobrescrever dados importantes**: se um objeto for substituído e o código original não estiver salvo, você pode **perdê-lo para sempre**.
+
+- **Dificulta o compartilhamento**: sem um _script_ bem escrito, outras pessoas **não conseguem reproduzir** sua análise.
+
+- O **`.RData`** pode se tornar um arquivo **gigantesco e pesado**, pois armazena todas as bases e objetos da sessão — inclusive aqueles que não são mais necessários.
+
+&lt;br&gt;
+
+&lt;div style="text-align: center;"&gt;
+  &lt;strong style="font-size: 150%;"&gt;Melhor prática: escreva scripts bem comentados e evite depender do que está salvo na memória!&lt;/strong&gt;
+&lt;/div&gt;
+
+&lt;div class="link-sumario"&gt;
+  &lt;a href="#sumario" title="Ir para o sumário"&gt;Sumário&lt;/a&gt;
+&lt;/div&gt;
+
+---
+
 name: tibbles
 
 &lt;div class="faixa-lateral faixa-importacao"&gt;
@@ -3692,11 +3751,12 @@ tibble::as_tibble(mtcars, rownames = "cars")
 
 ---
 
+name: cheat-sheets-readr
+
 &lt;div class="faixa-lateral faixa-importacao"&gt;
   &lt;span&gt;Importação de dados&lt;/span&gt;
 &lt;/div&gt;
 
-name: cheat-sheets-importacao
 ### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
 
 [![Cheat Sheets](img/23-cheatsheet-readr.png)](https://rstudio.github.io/cheatsheets/data-import.pdf)
@@ -5970,20 +6030,20 @@ pinguins |&gt;
 
 ```
 ## # A tibble: 12 × 8
-##    species   island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
-##    &lt;chr&gt;     &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
-##  1 Gentoo    Biscoe           46.7          15.3               219        5200
-##  2 Chinstrap Dream            51.4          19                 201        3950
-##  3 Gentoo    Biscoe           48.7          15.7               208        5350
-##  4 Gentoo    Biscoe           44.5          14.3               216        4100
-##  5 Gentoo    Biscoe           45.3          13.7               210        4300
-##  6 Adelie    Biscoe           39.6          20.7               191        3900
-##  7 Adelie    Biscoe           38.1          16.5               198        3825
-##  8 Gentoo    Biscoe           47.2          13.7               214        4925
-##  9 Adelie    Biscoe           40.6          18.6               183        3550
-## 10 Chinstrap Dream            43.2          16.6               187        2900
-## 11 Adelie    Biscoe           37.7          18.7               180        3600
-## 12 Gentoo    Biscoe           48.5          15                 219        4850
+##    species   island   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Adelie    Biscoe             43.2          19                 197        4775
+##  2 Gentoo    Biscoe             46.2          14.1               217        4375
+##  3 Adelie    Dream              32.1          15.5               188        3050
+##  4 Gentoo    Biscoe             48.5          15                 219        4850
+##  5 Chinstrap Dream              52            18.1               201        4050
+##  6 Adelie    Torgers…           36.2          16.1               187        3550
+##  7 Gentoo    Biscoe             50            15.9               224        5350
+##  8 Chinstrap Dream              49            19.5               210        3950
+##  9 Chinstrap Dream              46.4          17.8               191        3700
+## 10 Adelie    Torgers…           42.9          17.6               196        4700
+## 11 Gentoo    Biscoe             48.4          16.3               220        5400
+## 12 Gentoo    Biscoe             48.2          15.6               221        5100
 ## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
 ```
 

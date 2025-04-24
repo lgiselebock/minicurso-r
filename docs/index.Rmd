@@ -127,8 +127,9 @@ name: sumario
 - **[Importação de dados](#importacao)**
 
   - [Caminhos](#caminhos)
+  - [Arquivos `.RData` e `.Rhistory`](#rdata-rhistory)
   - [Tibbles](#tibbles)
-  - [Cheat Sheets](#cheat-sheets-importacao)
+  - [Cheat Sheets](#cheat-sheets-readr)
   - [Importação de arquivos](#importacao-arquivos)
   - [Exportação de arquivos](#exportacao-arquivos)
   - [Importação e exportação de arquivos](#importacao-exportacao-arquivos-rds)
@@ -2647,6 +2648,64 @@ O uso de **caminhos relativos** dentro de um projeto é considerado uma **boa pr
 
 ---
 
+name: rdata-rhistory
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
+## Arquivos `.RData` e `.Rhistory`
+
+Por padrão, o **RStudio** salva automaticamente o que você faz na sessão. Isso inclui:
+
+  - Todos os **objetos criados** (variáveis, listas, data.frames, etc);
+  - Todos os **comandos executados**.
+  
+<br>
+  
+Essas informações são armazenadas em **dois arquivos ocultos**:
+
+  - **`.RData`**: guarda os **objetos** da sessão;
+  - **`.Rhistory`**: guarda o **histórico de comandos**.
+
+<br>
+
+Ao reabrir o RStudio, o conteúdo desses arquivos é **carregado automaticamente** no ambiente de trabalho, como se você nunca tivesse fechado o programa ou saído do projeto.
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
+---
+
+<div class="faixa-lateral faixa-importacao">
+  <span>Importação de dados</span>
+</div>
+
+## Por que evitar usar `.RData` e `.Rhistory`?
+
+- **Reduz a reprodutibilidade**: se tudo está salvo automaticamente, você pode deixar de escrever _scripts_ limpos, completos e reprodutíveis.
+
+- **Dificulta experimentos controlados**: o histórico pode conter comandos não organizados, tornando difícil enterder o que foi feito e por que foi feito.
+
+- **Risco de sobrescrever dados importantes**: se um objeto for substituído e o código original não estiver salvo, você pode **perdê-lo para sempre**.
+
+- **Dificulta o compartilhamento**: sem um _script_ bem escrito, outras pessoas **não conseguem reproduzir** sua análise.
+
+- O **`.RData`** pode se tornar um arquivo **gigantesco e pesado**, pois armazena todas as bases e objetos da sessão — inclusive aqueles que não são mais necessários.
+
+<br>
+
+<div style="text-align: center;">
+  <strong style="font-size: 150%;">Melhor prática: escreva scripts bem comentados e evite depender do que está salvo na memória!</strong>
+</div>
+
+<div class="link-sumario">
+  <a href="#sumario" title="Ir para o sumário">Sumário</a>
+</div>
+
+---
+
 name: tibbles
 
 <div class="faixa-lateral faixa-importacao">
@@ -2735,11 +2794,12 @@ tibble::as_tibble(mtcars, rownames = "cars")
 
 ---
 
+name: cheat-sheets-readr
+
 <div class="faixa-lateral faixa-importacao">
   <span>Importação de dados</span>
 </div>
 
-name: cheat-sheets-importacao
 ### [Cheat Sheets](https://posit.co/resources/cheatsheets/) 
 
 [![Cheat Sheets](img/23-cheatsheet-readr.png)](https://rstudio.github.io/cheatsheets/data-import.pdf)

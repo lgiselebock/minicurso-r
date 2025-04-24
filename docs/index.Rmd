@@ -1,10 +1,10 @@
 ---
-title: "Presentation Ninja"
-subtitle: "&#x2694;&#xFE0F; xaringan +<br/>&#x1F60E; xaringanthemer"  
+title: "Análise de dados com R"
+subtitle: "Minicurso" 
 author: 
-  - "Yihui Xie"
-  - "Garrick Aden-Buie"
-date: '`r Sys.Date()`'
+  - "Luísa Gisele Böck"
+  # - "Garrick Aden-Buie"
+date: '25/04/2025'
 output:
   xaringan::moon_reader:
     css: ["xaringan-themer.css", "custom.css"]
@@ -703,7 +703,7 @@ O **R** permite realizar muitas operações matemáticas!
 7 / 5 # divisão
 ```
 
-- **CTRL + ENTER:** executa a linha selecionada no script
+- **CTRL + ENTER (ou CMD + ENTER):** executa a linha selecionada no script
 
 <div class="link-sumario">
   <a href="#sumario" title="Ir para o sumário">Sumário</a>
@@ -749,6 +749,8 @@ sin(1) # funções trigonométricas
 log(1) # logaritmo natural (base e)
 
 log10(10) # logaritmo na base 10
+
+log(10, base = 10) # logaritmo na base 10
 
 exp(0.5) # exponencial e^(1/2)
 ```
@@ -2628,7 +2630,7 @@ A função `setwd()` pode ser utilizada para mudar o diretório de trabalho. Com
 
 **Caminhos absolutos:**
 
-São aqueles que têm início na pasta raiz do computador/usuário. Por exemplo: `/Users/luisagisele/Repositorio/workshop-r`.
+São aqueles que têm início na pasta raiz do computador/usuário. Por exemplo: `/Users/luisagisele/Repositorio/minicurso-r`.
 
 **Caminhos absolutos** são uma **má prática**. Se você trocar de computador ou passar o _script_ para outra pessoa, o código não vai funcionar. Isso ocorre porque o caminho absoluto de um arquivo, muito provavelmente, será diferente entre os computadores.
 
@@ -2638,7 +2640,7 @@ São aqueles que têm início na pasta raiz do computador/usuário. Por exemplo:
 
 **Caminhos relativos:**
 
-São aqueles que têm início no diretório de trabalho da sessão. Usando o exemplo de caminho absoluto acima, o caminho relativo é: `workshop-r`.
+São aqueles que têm início no diretório de trabalho da sessão. Usando o exemplo de caminho absoluto acima, o caminho relativo é: `minicurso-r`.
 
 O uso de **caminhos relativos** dentro de um projeto é considerado uma **boa prática**, pois quando a pasta do projeto for compartilhado com alguém, todos os caminhos existentes no código continuarão funcionando em qualquer computador.
 
@@ -3571,7 +3573,7 @@ name: manipulacao
 
 # Manipulação de dados
 
-.center[(Acompanhe no arquivo `04-manipulacao.R`)]
+.center[(Acompanhe no arquivo `03-manipulacao.R`)]
 
 <div class="link-sumario">
   <a href="#sumario" title="Ir para o sumário">Sumário</a>
@@ -3630,11 +3632,11 @@ Agora veja como a mesma receita é escrita usando o operador `|>`:
 Veja como a **mesma receita** fica muito mais clara com o uso do `|>`:
 
 ```{r, eval = FALSE, include = TRUE}
-recipiente(rep("farinha", 2), "água", "fermento", "leite", "óleo") %>%
-  acrescente("farinha", até = "macio") %>%
-  bata(duração = "3min") %>%
-  coloque(lugar = "forma", tipo = "grande", untada = TRUE) %>%
-  asse(duração = "50min") %>%
+recipiente(rep("farinha", 2), "água", "fermento", "leite", "óleo") |> 
+  acrescente("farinha", até = "macio") |> 
+  bata(duração = "3min") |> 
+  coloque(lugar = "forma", tipo = "grande", untada = TRUE) |> 
+  asse(duração = "50min") |> 
   esfrie("geladeira", "20min")
 ```
 
@@ -8066,7 +8068,7 @@ FROM `basedosdados.mundo_onu_adh.municipio`" |>
   basedosdados::read_sql()
 
 # visualiza a estrutura da base
-glimpse(adh)
+dplyr::glimpse(adh)
 ```
 
 <div class="link-sumario">

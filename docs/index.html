@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Presentation Ninja</title>
+    <title>Análise de dados com R</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Yihui Xie" />
-    <meta name="author" content="Garrick Aden-Buie" />
-    <meta name="date" content="2025-04-24" />
+    <meta name="author" content="Luísa Gisele Böck" />
     <script src="index_files/header-attrs/header-attrs.js"></script>
     <script src="index_files/clipboard/clipboard.min.js"></script>
     <link href="index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
@@ -34,19 +32,16 @@
 class: center, middle, inverse, title-slide
 
 .title[
-# Presentation Ninja
+# Análise de dados com R
 ]
 .subtitle[
-## ⚔️ xaringan +<br/>😎 xaringanthemer
+## Minicurso
 ]
 .author[
-### Yihui Xie
-]
-.author[
-### Garrick Aden-Buie
+### Luísa Gisele Böck
 ]
 .date[
-### 2025-04-24
+### 25/04/2025
 ]
 
 ---
@@ -696,7 +691,7 @@ O **R** permite realizar muitas operações matemáticas!
 ## [1] 1.4
 ```
 
-- **CTRL + ENTER:** executa a linha selecionada no script
+- **CTRL + ENTER (ou CMD + ENTER):** executa a linha selecionada no script
 
 &lt;div class="link-sumario"&gt;
   &lt;a href="#sumario" title="Ir para o sumário"&gt;Sumário&lt;/a&gt;
@@ -778,6 +773,14 @@ log(1) # logaritmo natural (base e)
 
 ``` r
 log10(10) # logaritmo na base 10
+```
+
+```
+## [1] 1
+```
+
+``` r
+log(10, base = 10) # logaritmo na base 10
 ```
 
 ```
@@ -3533,7 +3536,7 @@ A função `setwd()` pode ser utilizada para mudar o diretório de trabalho. Com
 
 **Caminhos absolutos:**
 
-São aqueles que têm início na pasta raiz do computador/usuário. Por exemplo: `/Users/luisagisele/Repositorio/workshop-r`.
+São aqueles que têm início na pasta raiz do computador/usuário. Por exemplo: `/Users/luisagisele/Repositorio/minicurso-r`.
 
 **Caminhos absolutos** são uma **má prática**. Se você trocar de computador ou passar o _script_ para outra pessoa, o código não vai funcionar. Isso ocorre porque o caminho absoluto de um arquivo, muito provavelmente, será diferente entre os computadores.
 
@@ -3543,7 +3546,7 @@ São aqueles que têm início na pasta raiz do computador/usuário. Por exemplo:
 
 **Caminhos relativos:**
 
-São aqueles que têm início no diretório de trabalho da sessão. Usando o exemplo de caminho absoluto acima, o caminho relativo é: `workshop-r`.
+São aqueles que têm início no diretório de trabalho da sessão. Usando o exemplo de caminho absoluto acima, o caminho relativo é: `minicurso-r`.
 
 O uso de **caminhos relativos** dentro de um projeto é considerado uma **boa prática**, pois quando a pasta do projeto for compartilhado com alguém, todos os caminhos existentes no código continuarão funcionando em qualquer computador.
 
@@ -4570,7 +4573,7 @@ name: manipulacao
 
 # Manipulação de dados
 
-.center[(Acompanhe no arquivo `04-manipulacao.R`)]
+.center[(Acompanhe no arquivo `03-manipulacao.R`)]
 
 &lt;div class="link-sumario"&gt;
   &lt;a href="#sumario" title="Ir para o sumário"&gt;Sumário&lt;/a&gt;
@@ -4631,11 +4634,11 @@ Veja como a **mesma receita** fica muito mais clara com o uso do `|&gt;`:
 
 
 ``` r
-recipiente(rep("farinha", 2), "água", "fermento", "leite", "óleo") %&gt;%
-  acrescente("farinha", até = "macio") %&gt;%
-  bata(duração = "3min") %&gt;%
-  coloque(lugar = "forma", tipo = "grande", untada = TRUE) %&gt;%
-  asse(duração = "50min") %&gt;%
+recipiente(rep("farinha", 2), "água", "fermento", "leite", "óleo") |&gt; 
+  acrescente("farinha", até = "macio") |&gt; 
+  bata(duração = "3min") |&gt; 
+  coloque(lugar = "forma", tipo = "grande", untada = TRUE) |&gt; 
+  asse(duração = "50min") |&gt; 
   esfrie("geladeira", "20min")
 ```
 
@@ -6032,18 +6035,18 @@ pinguins |&gt;
 ## # A tibble: 12 × 8
 ##    species   island   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
 ##    &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
-##  1 Adelie    Biscoe             43.2          19                 197        4775
-##  2 Gentoo    Biscoe             46.2          14.1               217        4375
-##  3 Adelie    Dream              32.1          15.5               188        3050
-##  4 Gentoo    Biscoe             48.5          15                 219        4850
-##  5 Chinstrap Dream              52            18.1               201        4050
-##  6 Adelie    Torgers…           36.2          16.1               187        3550
-##  7 Gentoo    Biscoe             50            15.9               224        5350
-##  8 Chinstrap Dream              49            19.5               210        3950
-##  9 Chinstrap Dream              46.4          17.8               191        3700
-## 10 Adelie    Torgers…           42.9          17.6               196        4700
-## 11 Gentoo    Biscoe             48.4          16.3               220        5400
-## 12 Gentoo    Biscoe             48.2          15.6               221        5100
+##  1 Gentoo    Biscoe             43.8          13.9               208        4300
+##  2 Adelie    Biscoe             38.1          17                 181        3175
+##  3 Gentoo    Biscoe             50.8          17.3               228        5600
+##  4 Chinstrap Dream              51.4          19                 201        3950
+##  5 Chinstrap Dream              49.6          18.2               193        3775
+##  6 Adelie    Dream              44.1          19.7               196        4400
+##  7 Adelie    Torgers…           37.8          17.1               186        3300
+##  8 Adelie    Biscoe             39.6          17.7               186        3500
+##  9 Chinstrap Dream              50.9          19.1               196        3550
+## 10 Adelie    Biscoe             40.6          18.8               193        3800
+## 11 Adelie    Torgers…           NA            NA                  NA          NA
+## 12 Gentoo    Biscoe             46.9          14.6               222        4875
 ## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
 ```
 
@@ -10261,7 +10264,7 @@ FROM `basedosdados.mundo_onu_adh.municipio`" |&gt;
   basedosdados::read_sql()
 
 # visualiza a estrutura da base
-glimpse(adh)
+dplyr::glimpse(adh)
 ```
 
 ```

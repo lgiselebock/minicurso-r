@@ -204,7 +204,7 @@ name: sumario
 .pull-right[
 - **[Visualização de dados](#visualizacao)**
 
-  - [Histogramas](#histrogramas)
+  - [Histogramas](#histogramas)
   - [Boxplot](#boxplot)
   - [Títulos, _labels_ e escalas](#titulos-labels-escalas)
   - [Cores](#cores)
@@ -5043,7 +5043,7 @@ name: tidyr-pivot-longer
 
 ### Larga para longa: &nbsp; `pivot_longer()`
 
-Transforma um banco de dados **do farmato largo para o formato longo** — ou seja, o número de **linhas aumenta** e o número de **colunas diminui**. Os principais argumentos da função `pivot_longer()` são:
+Transforma um banco de dados **do formato largo para o formato longo** — ou seja, o número de **linhas aumenta** e o número de **colunas diminui**. Os principais argumentos da função `pivot_longer()` são:
 
 - `cols`: colunas que serão _"derretidas"_ em uma única coluna
 - `names_to`: nome da nova coluna que irá conter os **nomes originais das colunas** (variáveis)

@@ -112,6 +112,9 @@ Download</figcaption>
   R](https://hastie.su.domains/ISLRv2_website.pdf) - Gareth James,
   Daniela Witten, Trevor Hastie and Robert Tibshirani
 
+- [Beautiful R](https://curso-r.github.io/beautiful-r/) - Caio Lente +
+  Curso-R
+
 - [Ciência de dados econômicos](https://tidyeconomics.netlify.app/) -
   Felipe O. Gonçalves
 
@@ -121,6 +124,8 @@ Download</figcaption>
 
 - [R for Data Science](https://r4ds.had.co.nz/) - Hadley Wickham and
   Garrett Grolemund
+
+- [R para Ciência de Dados (2ª edição)](https://pt.r4ds.hadley.nz)
 
 - [R: Uma Introdução para
   economistas](https://danmrc.github.io/R-para-Economistas/) - Daniel

@@ -29,29 +29,42 @@
   </head>
   <body>
     <textarea id="source">
-class: center, middle, inverse, title-slide
 
-.title[
-# Análise de dados com R
+
+
+
+
+
+
+
+.pull-left[
+&lt;br&gt;
+&lt;br&gt;
+## Análise de dados com R
+
+&lt;br&gt;
+
+### Introdução a &lt;br&gt; Linguagem R
+
+&lt;br&gt;
+&lt;br&gt;
+
+**[Luísa Gisele Böck](https://luisa.rbind.io/)**&amp;nbsp;&amp;nbsp;    &lt;a href='mailto:luisa.bock@acad.ufsm.br'&gt;&lt;i class="far fa-envelope"&gt;&lt;/i&gt;&lt;/a&gt; &amp;nbsp;   &lt;a href='https://github.com/lgiselebock'&gt;&lt;i class="fab fa-github"&gt;&lt;/i&gt;&lt;/a&gt;
+
+__.can-edit[Abril de 2025]__
+
 ]
-.subtitle[
-## Minicurso
-]
-.author[
-### Luísa Gisele Böck
-]
-.date[
-### 25/04/2025
+
+.pull-right[
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;img src="img/00-intro-allison-horst.png" width="400px" /&gt;
+
+.center[Ilustração por [Allison Horst](https://allisonhorst.com/)]
 ]
 
 ---
-
-
-
-
-
-
-
 
 name: sumario
 # Sumário 
@@ -198,7 +211,7 @@ name: sumario
 .pull-right[
 - **[Visualização de dados](#visualizacao)**
 
-  - [Histogramas](#histrogramas)
+  - [Histogramas](#histogramas)
   - [Boxplot](#boxplot)
   - [Títulos, _labels_ e escalas](#titulos-labels-escalas)
   - [Cores](#cores)
@@ -6035,18 +6048,18 @@ pinguins |&gt;
 ## # A tibble: 12 × 8
 ##    species   island   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
 ##    &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
-##  1 Gentoo    Biscoe             43.8          13.9               208        4300
-##  2 Adelie    Biscoe             38.1          17                 181        3175
-##  3 Gentoo    Biscoe             50.8          17.3               228        5600
-##  4 Chinstrap Dream              51.4          19                 201        3950
-##  5 Chinstrap Dream              49.6          18.2               193        3775
-##  6 Adelie    Dream              44.1          19.7               196        4400
-##  7 Adelie    Torgers…           37.8          17.1               186        3300
-##  8 Adelie    Biscoe             39.6          17.7               186        3500
-##  9 Chinstrap Dream              50.9          19.1               196        3550
-## 10 Adelie    Biscoe             40.6          18.8               193        3800
-## 11 Adelie    Torgers…           NA            NA                  NA          NA
-## 12 Gentoo    Biscoe             46.9          14.6               222        4875
+##  1 Chinstrap Dream              45.2          16.6               191        3250
+##  2 Adelie    Torgers…           34.6          17.2               189        3200
+##  3 Gentoo    Biscoe             51.5          16.3               230        5500
+##  4 Adelie    Torgers…           38.8          17.6               191        3275
+##  5 Adelie    Dream              40.6          17.2               187        3475
+##  6 Adelie    Biscoe             36.5          16.6               181        2850
+##  7 Adelie    Dream              41.1          18.1               205        4300
+##  8 Chinstrap Dream              49.8          17.3               198        3675
+##  9 Gentoo    Biscoe             45.4          14.6               211        4800
+## 10 Gentoo    Biscoe             46.2          14.9               221        5300
+## 11 Adelie    Biscoe             38.1          17                 181        3175
+## 12 Adelie    Biscoe             41.6          18                 192        3950
 ## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
 ```
 
@@ -6725,7 +6738,7 @@ name: tidyr-pivot-longer
 
 ### Larga para longa: &amp;nbsp; `pivot_longer()`
 
-Transforma um banco de dados **do farmato largo para o formato longo** — ou seja, o número de **linhas aumenta** e o número de **colunas diminui**. Os principais argumentos da função `pivot_longer()` são:
+Transforma um banco de dados **do formato largo para o formato longo** — ou seja, o número de **linhas aumenta** e o número de **colunas diminui**. Os principais argumentos da função `pivot_longer()` são:
 
 - `cols`: colunas que serão _"derretidas"_ em uma única coluna
 - `names_to`: nome da nova coluna que irá conter os **nomes originais das colunas** (variáveis)
@@ -6873,7 +6886,7 @@ name: para-que-servem-visualizacoes
 - deve ser **rápida** de executar
 - objetivo: **aprender**
 
-&lt;img src="index_files/figure-html/unnamed-chunk-183-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-184-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 Ideal para entender padrões iniciais, identificar _outliers_ e gerar hipóteses.
 
@@ -6891,7 +6904,7 @@ Ideal para entender padrões iniciais, identificar _outliers_ e gerar hipóteses
 - deve ser **customizável**
 - objetivo: **transmitir informações com clareza**
 
-&lt;img src="index_files/figure-html/unnamed-chunk-184-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-185-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 Ideal para relatar achados de forma clara e convincente ao público.
 
@@ -6960,7 +6973,7 @@ cars |&gt;
 * ggplot()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-186-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-187-1.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 &lt;/div&gt;
 
@@ -6974,7 +6987,7 @@ cars |&gt;
 * aes(x = speed, y = dist)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-187-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-188-1.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 &lt;/div&gt;
 
@@ -6989,7 +7002,7 @@ cars |&gt;
 * geom_point()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-188-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-189-1.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 &lt;div class="link-sumario"&gt;
   &lt;a href="#sumario" title="Ir para o sumário"&gt;Sumário&lt;/a&gt;
@@ -7008,7 +7021,7 @@ cars |&gt;
 &lt;div class="panel"&gt;
 &lt;div class="panel-name"&gt;Visualização Final&lt;/div&gt;
 
-&lt;img src="index_files/figure-html/unnamed-chunk-189-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-190-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 &lt;/div&gt;
 
@@ -7134,7 +7147,7 @@ pinguins |&gt;
 ## (`geom_point()`).
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-191-1.png" width="85%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-192-1.png" width="85%" /&gt;
 
 &lt;div class="link-sumario"&gt;
   &lt;a href="#sumario" title="Ir para o sumário"&gt;Sumário&lt;/a&gt;
@@ -7230,7 +7243,7 @@ pinguins |&gt;
 * geom_smooth(method = "lm", formula = "y ~ x", se = FALSE)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-194-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-195-1.png" width="100%" /&gt;
 
 &lt;div class="link-sumario"&gt;
   &lt;a href="#sumario" title="Ir para o sumário"&gt;Sumário&lt;/a&gt;
@@ -7283,7 +7296,7 @@ pinguins |&gt;
   geom_point()                                                 # pontos depois
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-195-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-196-1.png" width="100%" /&gt;
 
 &lt;div class="link-sumario"&gt;
   &lt;a href="#sumario" title="Ir para o sumário"&gt;Sumário&lt;/a&gt;
@@ -7309,7 +7322,7 @@ pinguins |&gt;
 * geom_point(aes(color = species))
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-196-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-197-1.png" width="100%" /&gt;
 
 &lt;div class="link-sumario"&gt;
   &lt;a href="#sumario" title="Ir para o sumário"&gt;Sumário&lt;/a&gt;
@@ -7333,7 +7346,7 @@ pinguins |&gt;
 * geom_point(aes(color = species, shape = sex))
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-197-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-198-1.png" width="100%" /&gt;
 
 &lt;div class="link-sumario"&gt;
   &lt;a href="#sumario" title="Ir para o sumário"&gt;Sumário&lt;/a&gt;
@@ -7361,7 +7374,7 @@ pinguins |&gt;
 * geom_line(aes(x = year, y = mean_body_mass_g))
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-198-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-199-1.png" width="100%" /&gt;
 ]
 
 &lt;div class="link-sumario"&gt;
@@ -7390,7 +7403,7 @@ pinguins |&gt;
 * geom_point(aes(x = year, y = mean_body_mass_g))    # gráfico de pontos
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-199-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-200-1.png" width="100%" /&gt;
 ]
 
 &lt;div class="link-sumario"&gt;
@@ -7418,7 +7431,7 @@ pinguins |&gt;
 * geom_point()                                   # gráfico de pontos (usa o aes definido acima)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-200-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-201-1.png" width="100%" /&gt;
 ]
 
 &lt;div class="link-sumario"&gt;
@@ -7448,7 +7461,7 @@ pinguins |&gt;
 * geom_label(aes(label = mean_body_mass_g))      # adiciona um label (usa o aes global + o label)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-201-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-202-1.png" width="100%" /&gt;
 ]
 
 &lt;div class="link-sumario"&gt;
@@ -7476,7 +7489,7 @@ pinguins |&gt;
 * geom_col(aes(x = species, y = n))             # gráfico de barras
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-202-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-203-1.png" width="100%" /&gt;
 ]
 
 &lt;div class="link-sumario"&gt;
@@ -7508,7 +7521,7 @@ pinguins |&gt;
   )
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-203-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-204-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -7556,7 +7569,7 @@ pinguins |&gt;
 * coord_flip()                              # inverte os eixos: x vira y, y vira x
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-204-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-205-1.png" width="100%" /&gt;
 
 &lt;div class="link-sumario"&gt;
   &lt;a href="#sumario" title="Ir para o sumário"&gt;Sumário&lt;/a&gt;
@@ -7585,7 +7598,7 @@ pinguins |&gt;
   coord_flip()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-205-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-206-1.png" width="100%" /&gt;
 
 &lt;/div&gt;
 
@@ -7630,7 +7643,7 @@ pinguins |&gt;
   coord_flip()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-206-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-207-1.png" width="100%" /&gt;
 
 &lt;/div&gt;
 
@@ -7660,7 +7673,7 @@ pinguins |&gt;
   coord_flip()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-207-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-208-1.png" width="100%" /&gt;
 ]
 
 &lt;div class="link-sumario"&gt;
@@ -7700,7 +7713,7 @@ pinguins |&gt;
 ## (`stat_bin()`).
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-208-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-209-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -7746,7 +7759,7 @@ pinguins |&gt;
                 )
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-209-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-210-1.png" width="100%" /&gt;
 ]
 
 &lt;div class="link-sumario"&gt;
@@ -7781,7 +7794,7 @@ pinguins |&gt;
 ## (`stat_boxplot()`).
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-210-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-211-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -7828,7 +7841,7 @@ name: titulos-labels-escalas
 &lt;div class="panel"&gt;
 &lt;div class="panel-name"&gt;Gráfico &lt;code&gt;labs()&lt;/code&gt;&lt;/div&gt;
 
-&lt;img src="index_files/figure-html/unnamed-chunk-211-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-212-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 &lt;/div&gt;
 
@@ -7866,7 +7879,7 @@ pinguins |&gt;
 &lt;div class="panel"&gt;
 &lt;div class="panel-name"&gt;Gráfico &lt;code&gt;scale_()&lt;/code&gt;&lt;/div&gt;
 
-&lt;img src="index_files/figure-html/unnamed-chunk-213-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-214-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 &lt;/div&gt;
 
@@ -7997,7 +8010,7 @@ pinguins |&gt;
 * scale_fill_manual(values = c("red", "blue", "purple"))
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-215-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-216-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -8019,7 +8032,7 @@ pinguins |&gt;
 * scale_fill_manual(values = c("#ff0000", "#0000ff", "#a020f0"))
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-216-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-217-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -8054,7 +8067,7 @@ pinguins  |&gt;
   theme_minimal() 
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-217-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-218-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -8074,7 +8087,7 @@ pinguins |&gt;
   theme_minimal()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-218-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-219-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -8178,7 +8191,7 @@ pinguins |&gt;
   theme_minimal()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-219-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-220-1.png" width="100%" /&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -8228,7 +8241,7 @@ pinguins |&gt;
   geom_point()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-220-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-221-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -8246,7 +8259,7 @@ pinguins |&gt;
 * theme_bw()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-221-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-222-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -8264,7 +8277,7 @@ pinguins |&gt;
 * theme_classic()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-222-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-223-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -8282,7 +8295,7 @@ pinguins |&gt;
 * theme_light()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-223-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-224-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -8300,7 +8313,7 @@ pinguins |&gt;
 * theme_minimal()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-224-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-225-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -8318,7 +8331,7 @@ pinguins |&gt;
 * theme_void()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-225-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-226-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -8336,7 +8349,7 @@ pinguins |&gt;
 * theme_dark()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-226-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-227-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -8358,7 +8371,7 @@ pinguins |&gt;
 *   panel.grid = element_blank())
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-227-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-228-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -8463,7 +8476,7 @@ dplyr::glimpse(ideb_mapa)
 &lt;div class="panel"&gt;
 &lt;div class="panel-name"&gt;1. Mapa Brasil&lt;/div&gt;
 
-&lt;img src="index_files/figure-html/unnamed-chunk-232-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-233-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 &lt;/div&gt;
 
@@ -8499,7 +8512,7 @@ ggplot(ideb_mapa) +
 &lt;div class="panel"&gt;
 &lt;div class="panel-name"&gt;3. Mapa RS&lt;/div&gt;
 
-&lt;img src="index_files/figure-html/unnamed-chunk-234-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-235-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 &lt;/div&gt;
 
@@ -8549,7 +8562,7 @@ ideb_mapa |&gt;
 &lt;div class="panel"&gt;
 &lt;div class="panel-name"&gt;1. Mapa RS + Cidades&lt;/div&gt;
 
-&lt;img src="index_files/figure-html/unnamed-chunk-236-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-237-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 &lt;/div&gt;
 
@@ -9213,7 +9226,7 @@ fundamental |&gt;
 * geom_histogram()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-255-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-256-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 &lt;/div&gt;
@@ -9230,7 +9243,7 @@ fundamental |&gt;
 * geom_boxplot()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-256-1.png" width="87%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-257-1.png" width="87%" style="display: block; margin: auto;" /&gt;
 ]
 
 &lt;/div&gt;
@@ -9251,7 +9264,7 @@ fundamental |&gt;
 ]
 
 .pull-right[
-&lt;img src="index_files/figure-html/unnamed-chunk-258-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-259-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 &lt;/div&gt;
@@ -9288,7 +9301,7 @@ fundamental |&gt;
   geom_point() 
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-259-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-260-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -9305,7 +9318,7 @@ fundamental |&gt;
 * geom_smooth(method = "lm", se = FALSE)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-260-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-261-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -9702,7 +9715,7 @@ medio |&gt;
 * geom_histogram()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-267-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-268-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 &lt;/div&gt;
@@ -9719,7 +9732,7 @@ medio |&gt;
 * geom_boxplot()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-268-1.png" width="87%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-269-1.png" width="87%" style="display: block; margin: auto;" /&gt;
 ]
 
 &lt;/div&gt;
@@ -9740,7 +9753,7 @@ medio |&gt;
 ]
 
 .pull-right[
-&lt;img src="index_files/figure-html/unnamed-chunk-270-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-271-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 &lt;/div&gt;
@@ -9775,7 +9788,7 @@ medio |&gt;
   geom_point()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-271-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-272-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -9792,7 +9805,7 @@ medio |&gt;
 * geom_smooth(method = "lm", se = FALSE)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-272-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-273-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -9883,7 +9896,7 @@ medio |&gt;
   geom_point() 
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-274-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-275-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -9900,7 +9913,7 @@ medio |&gt;
 * geom_smooth(method = "lm", se = FALSE)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-275-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-276-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -9990,7 +10003,7 @@ medio |&gt;
   geom_point() 
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-277-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-278-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -10007,7 +10020,7 @@ medio |&gt;
 * geom_smooth(method = "lm", se = FALSE)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-278-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-279-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -10308,7 +10321,7 @@ adh |&gt;
   geom_point() 
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-284-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-285-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -10325,7 +10338,7 @@ adh |&gt;
 * geom_smooth(method = "lm", se = FALSE)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-285-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-286-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -10413,7 +10426,7 @@ adh |&gt;
   geom_point() 
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-287-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-288-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -10430,7 +10443,7 @@ adh |&gt;
 * geom_smooth(method = "lm", se = FALSE)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-288-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-289-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -10557,7 +10570,7 @@ dados |&gt;
   scale_color_brewer(palette = "Set2")
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-292-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-293-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -10575,7 +10588,7 @@ dados |&gt;
   scale_color_brewer(palette = "Set2")
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-293-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-294-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -10627,7 +10640,7 @@ dados |&gt;
 * geom_smooth(method = "lm", se = FALSE) # linha de tendência para cada região do Brasil
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-294-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-295-1.png" width="100%" /&gt;
 ]
 
 &lt;span style='font-size:90%'&gt;Observa-se &lt;b&gt;variação na inclinação da relação entre pobreza extrema e crianças fora da escola entre as regiões&lt;/b&gt;. No Sul, essa associação é mais forte — indicando que o aumento da pobreza extrema está mais fortemente ligado à evasão escolar nessa faixa etária — enquanto no Nordeste o efeito é menos pronunciado.&lt;/span&gt;
@@ -10655,7 +10668,7 @@ dados |&gt;
 * geom_point(size = 4)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-295-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-296-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -10673,7 +10686,7 @@ dados |&gt;
 * geom_bar(stat = "identity", position = "dodge") # indica como as barras devem ser posicionadas
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-296-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-297-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -10775,7 +10788,7 @@ muni_dados |&gt;
 ]
 
 .pull-right[
-&lt;img src="index_files/figure-html/unnamed-chunk-301-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-302-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -10804,7 +10817,7 @@ muni_dados |&gt;
 ]
 
 .pull-right[
-&lt;img src="index_files/figure-html/unnamed-chunk-303-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-304-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -10833,7 +10846,7 @@ muni_dados |&gt;
 ]
 
 .pull-right[
-&lt;img src="index_files/figure-html/unnamed-chunk-305-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-306-1.png" width="100%" /&gt;
 ]
 
 &lt;/div&gt;
@@ -10862,7 +10875,7 @@ muni_dados |&gt;
 ]
 
 .pull-right[
-&lt;img src="index_files/figure-html/unnamed-chunk-307-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-308-1.png" width="100%" /&gt;
 ]
 
 
@@ -10964,7 +10977,7 @@ wage |&gt;
   geom_smooth(method = 'lm', se = FALSE) 
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-311-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-312-1.png" width="100%" /&gt;
 &lt;/div&gt;
 
 &lt;div class="panel"&gt;
@@ -11041,7 +11054,7 @@ wage |&gt;
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-313-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-314-1.png" width="100%" /&gt;
 &lt;/div&gt;
 
 &lt;div class="panel"&gt;
@@ -11123,7 +11136,7 @@ wage |&gt;
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-315-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-316-1.png" width="100%" /&gt;
 &lt;/div&gt;
 
 &lt;div class="panel"&gt;
@@ -11208,7 +11221,7 @@ wage |&gt;
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-317-1.png" width="100%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-318-1.png" width="100%" /&gt;
 &lt;/div&gt;
 
 &lt;div class="panel"&gt;
@@ -11369,7 +11382,7 @@ name: para-saber-mais-regressao
   "highlightStyle": "github",
   "highlightLines": true,
   "ratio": "16:9",
-  "countIncrementalSlides": true
+  "countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));

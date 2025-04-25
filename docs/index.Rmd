@@ -1,19 +1,20 @@
 ---
 title: "Análise de dados com R"
-subtitle: "Minicurso" 
-author: 
-  - "Luísa Gisele Böck"
-  # - "Garrick Aden-Buie"
-date: '25/04/2025'
+subtitle: "Introdução a Linguagem R" 
+author: "Luísa Gisele Böck"
+date: "Abril de 2025"
+encoding: "UTF-8"
 output:
   xaringan::moon_reader:
+    seal: false
     css: ["xaringan-themer.css", "custom.css"]
     nature:
       slideNumberFormat: "%current%/%total%"
       highlightStyle: github
       highlightLines: true
       ratio: 16:9
-      countIncrementalSlides: true
+      countIncrementalSlides: false
+      titleSlideClass: ["title-slide"]
 ---
 
 ```{r setup, include=FALSE}
@@ -58,6 +59,37 @@ xaringanExtra::use_tile_view()
 xaringanExtra::use_tachyons()
 xaringanExtra::use_panelset()
 ```
+
+.pull-left[
+<br>
+<br>
+## Análise de dados com R
+
+<br>
+
+### Introdução a <br> Linguagem R
+
+<br>
+<br>
+
+**[Luísa Gisele Böck](https://luisa.rbind.io/)**&nbsp;&nbsp;    <a href='mailto:luisa.bock@acad.ufsm.br'><i class="far fa-envelope"></i></a> &nbsp;   <a href='https://github.com/lgiselebock'><i class="fab fa-github"></i></a>
+
+__.can-edit[Abril de 2025]__
+
+]
+
+.pull-right[
+<br>
+<br>
+<br>
+```{r echo=FALSE, out.width="400px"}
+knitr::include_graphics("img/00-intro-allison-horst.png")
+```
+
+.center[Ilustração por [Allison Horst](https://allisonhorst.com/)]
+]
+
+---
 
 name: sumario
 # Sumário 

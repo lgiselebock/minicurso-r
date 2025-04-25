@@ -139,7 +139,7 @@ A <- 4
 resultado <- 33 / 11
 
 # Atualizar um objeto
-resultado1 <- resultado * 5
+resultado <- resultado * 5
 
 # Salvar uma base de dados em um objeto
 carros <- mtcars

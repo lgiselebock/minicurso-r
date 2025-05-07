@@ -34,7 +34,7 @@ select(pinguins, island:body_mass_g)
 # ends_with(): para colunas que terminam com um texto padrão
 # contains(): para colunas que contêm um texto padrão
 
-# seleciona todas as colunas que terminam com "bico"
+# seleciona todas as colunas que terminam com "mm"
 select(pinguins, ends_with("mm"))
 
 # exclui as colunas ano e ensino
@@ -102,19 +102,19 @@ pinguins |>
   mutate(bill_length_cm = bill_length_mm/10)
 
 # é possível criar/modificar mais de uma coluna
-#dentro de um mesmo mutate()
+# dentro de um mesmo mutate()
 pinguins |>
   mutate(
     mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),
-    country = "Antarctica"
+    continent = "Antarctica"
   ) |>
-  select(species, mean_bill_length_mm, country)
+  select(species, mean_bill_length_mm, continent)
 
 
 # SUMMARISE() ou SUMMARIZE()
 # resume um conjunto de dados
 
-# resume a coluna ideb pela sua média
+# resume a coluna `body_mass_g` pela sua média
 pinguins |>
   summarise(mean_body_mass_g = mean(body_mass_g, na.rm = TRUE))
 
@@ -142,6 +142,11 @@ pinguins |>
 # sumariza uma coluna agrupada por
 # categorias de outra coluna
 
+# a única mudança que a função group_by() faz na base
+# é a marcação de que a base está agrupada
+pinguins |>
+  group_by(island)
+
 # calcula a média da massa dos pinguins para cada ilha
 pinguins |>
   group_by(island) |>
@@ -150,11 +155,14 @@ pinguins |>
   ) |>
   arrange(desc(mean_body_mass_g))
 
-
-# a única mudança que a função group_by() faz na base
-# é a marcação de que a base está agrupada
+# também é possivel agrupar
+# por mais de uma variável ao mesmo tempo
 pinguins |>
-  group_by(island)
+  group_by(island, species) |>
+  summarise(
+    mean_body_mass_g = mean(body_mass_g, na.rm = TRUE)
+  ) |>
+  arrange(desc(mean_body_mass_g))
 
 
 # RELOCATE()
@@ -180,10 +188,22 @@ pinguins |>
   slice_head(n = 8)
 
 
+# SLICE_TAIL()
+# seleciona as últimas linhas da tabela
+pinguins |>
+  slice_tail(n = 5)
+
+
 # SLICE_MAX()
 # seleciona linhas por valores de uma coluna
 pinguins |>
   slice_max(bill_depth_mm, n = 5)
+
+
+# SLICE_MIN()
+# seleciona linhas com os menores valores de uma coluna
+pinguins |>
+  slice_min(flipper_length_mm, n = 5)
 
 
 # SLICE_SAMPLE()

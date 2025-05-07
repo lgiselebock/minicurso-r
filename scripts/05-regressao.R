@@ -630,6 +630,27 @@ dados |>
 # e 6.55% entre os anos de 2000 e 2010.
 
 
+# Média da Taxa de Frequência Líquida da Pré-Escola por Região Brasileira em 1991, 2000 e 2010
+
+# gráfico de pontos
+
+dados |>
+  group_by(ano, nome_regiao) |>
+  summarise(media = mean(taxa_freq_liquida_pre, na.rm = TRUE)) |>
+  ggplot() +
+  aes(x = media, y = nome_regiao, color = as.factor(ano)) +
+  geom_point(size = 4)
+
+# gráfico de barras
+
+dados |>
+  group_by(ano, nome_regiao) |>
+  summarise(media = mean(taxa_freq_liquida_pre, na.rm = TRUE)) |>
+  ggplot() +
+  aes(x = nome_regiao, y = media, fill = as.factor(ano)) +
+  # indica como as barras devem ser posicionadas
+  geom_bar(stat = "identity", position = "dodge")
+
 ### Mapas
 
 # Para criar mapas, é necessário realizar o download dos dados espaciais

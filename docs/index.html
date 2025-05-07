@@ -5231,7 +5231,6 @@ Você pode combinar `select()` e `filter()` para trabalhar apenas com as **colun
 No exemplo abaixo:
 
 - Primeiro, selecionamos as colunas `species` e `flipper_length_mm`
-
 - Depois, filtramos apenas os pinguins com **nadadeiras maiores que 140 mm**.
 
 
@@ -5275,7 +5274,6 @@ Você pode aplicar **dois ou mais filtros** ao mesmo tempo, separando as condiç
 No exemplo abaixo, o código retorna apenas os pinguins que:
 
 - Estão na ilha de **Torgersen**
-
 - Têm **profundidade de bico maior que 15 mm**.
 
 
@@ -5361,7 +5359,6 @@ name: dplyr-mutate
 A função `mutate()` é usada para:
 
 - **Criar uma nova coluna**
-
 - Ou **modificar uma coluna existente**
 
 No exemplo abaixo, os valores da coluna `bill_length_mm` são divididos por 10, convertendo a unidade de **milímetros (mm)** para **centímetros (cm)**:
@@ -5449,7 +5446,6 @@ Com `mutate()`, você também pode realizar **qualquer operação** com uma ou m
 A única regra é que o resultado de cada operação:
 
 - tenha **o mesmo número de linhas** da base original
-
 - ou **um único valor** (que será repetido em todas as linhas)
 
 Também é possível **criar ou modificar várias colunas ao mesmo tempo** dentro de um mesmo `mutate()`.
@@ -6048,18 +6044,18 @@ pinguins |&gt;
 ## # A tibble: 12 × 8
 ##    species   island   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
 ##    &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
-##  1 Chinstrap Dream              45.2          16.6               191        3250
-##  2 Adelie    Torgers…           34.6          17.2               189        3200
-##  3 Gentoo    Biscoe             51.5          16.3               230        5500
-##  4 Adelie    Torgers…           38.8          17.6               191        3275
-##  5 Adelie    Dream              40.6          17.2               187        3475
-##  6 Adelie    Biscoe             36.5          16.6               181        2850
-##  7 Adelie    Dream              41.1          18.1               205        4300
-##  8 Chinstrap Dream              49.8          17.3               198        3675
-##  9 Gentoo    Biscoe             45.4          14.6               211        4800
-## 10 Gentoo    Biscoe             46.2          14.9               221        5300
-## 11 Adelie    Biscoe             38.1          17                 181        3175
-## 12 Adelie    Biscoe             41.6          18                 192        3950
+##  1 Gentoo    Biscoe             45.5          15                 220        5000
+##  2 Adelie    Biscoe             38.1          17                 181        3175
+##  3 Gentoo    Biscoe             50.7          15                 223        5550
+##  4 Gentoo    Biscoe             45.2          14.8               212        5200
+##  5 Gentoo    Biscoe             48.8          16.2               222        6000
+##  6 Adelie    Dream              38.1          17.6               187        3425
+##  7 Chinstrap Dream              52.7          19.8               197        3725
+##  8 Gentoo    Biscoe             46.1          15.1               215        5100
+##  9 Chinstrap Dream              49.6          18.2               193        3775
+## 10 Adelie    Biscoe             37.9          18.6               172        3150
+## 11 Adelie    Torgers…           38.6          21.2               191        3800
+## 12 Chinstrap Dream              50.2          18.8               202        3800
 ## # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;
 ```
 
@@ -9202,13 +9198,13 @@ summary(fundamental)
 ##                     3rd Qu.: 99.43   3rd Qu.:5.717   3rd Qu.: 1.3833  
 ##                     Max.   :100.00   Max.   :8.800   Max.   :20.8000  
 ##                     NA's   :76       NA's   :240                      
-##     hrs_aula           tdi             pib_pc        
-##  Min.   : 3.400   Min.   : 0.000   Min.   :    13.6  
-##  1st Qu.: 4.185   1st Qu.: 7.275   1st Qu.:  9950.1  
-##  Median : 4.400   Median :12.046   Median : 17632.7  
-##  Mean   : 4.602   Mean   :13.680   Mean   : 25032.0  
-##  3rd Qu.: 4.755   3rd Qu.:19.064   3rd Qu.: 32072.9  
-##  Max.   :10.300   Max.   :53.300   Max.   :591101.1  
+##     hrs_aula           tdi             pib_pc         
+##  Min.   : 3.400   Min.   : 0.000   Min.   :    13.61  
+##  1st Qu.: 4.185   1st Qu.: 7.275   1st Qu.:  9950.15  
+##  Median : 4.400   Median :12.046   Median : 17632.70  
+##  Mean   : 4.602   Mean   :13.680   Mean   : 25031.98  
+##  3rd Qu.: 4.755   3rd Qu.:19.064   3rd Qu.: 32072.85  
+##  Max.   :10.300   Max.   :53.300   Max.   :591101.11  
 ## 
 ```
 ]
@@ -9691,13 +9687,13 @@ summary(medio)
 ##                     3rd Qu.: 97.90   3rd Qu.:4.600   3rd Qu.: 7.1400  
 ##                     Max.   :100.00   Max.   :6.400   Max.   :50.1000  
 ##                     NA's   :132      NA's   :2138                     
-##     hrs_aula           tdi            pib_pc        
-##  Min.   : 3.000   Min.   : 0.00   Min.   :    13.6  
-##  1st Qu.: 4.333   1st Qu.:15.40   1st Qu.:  9948.5  
-##  Median : 4.800   Median :23.30   Median : 17596.6  
-##  Mean   : 5.231   Mean   :25.74   Mean   : 25023.3  
-##  3rd Qu.: 5.725   3rd Qu.:34.20   3rd Qu.: 32063.3  
-##  Max.   :15.500   Max.   :74.90   Max.   :591101.1  
+##     hrs_aula           tdi            pib_pc         
+##  Min.   : 3.000   Min.   : 0.00   Min.   :    13.61  
+##  1st Qu.: 4.333   1st Qu.:15.40   1st Qu.:  9948.53  
+##  Median : 4.800   Median :23.30   Median : 17596.65  
+##  Mean   : 5.231   Mean   :25.74   Mean   : 25023.35  
+##  3rd Qu.: 5.725   3rd Qu.:34.20   3rd Qu.: 32063.31  
+##  Max.   :15.500   Max.   :74.90   Max.   :591101.11  
 ## 
 ```
 ]
@@ -10702,7 +10698,7 @@ Os gráficos mostram duas formas de representar a **média da mortalidade infant
 
 **Reduções percentuais por região:**
 
-- **Centro-Oeste:** redução de 4.91 p.p. (1991—2000); redução 10.815515 p.p. (2000—2010)
+- **Centro-Oeste:** redução de 4.91 p.p. (1991—2000); redução 10.82 p.p. (2000—2010)
 
 - **Nordeste:** redução de 27.11 p.p. (1991–2000); redução de 21.9 p.p. (2000–2010)
 

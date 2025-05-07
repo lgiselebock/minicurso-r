@@ -4043,7 +4043,6 @@ Você pode combinar `select()` e `filter()` para trabalhar apenas com as **colun
 No exemplo abaixo:
 
 - Primeiro, selecionamos as colunas `species` e `flipper_length_mm`
-
 - Depois, filtramos apenas os pinguins com **nadadeiras maiores que 140 mm**.
 
 ```{r}
@@ -4069,7 +4068,6 @@ Você pode aplicar **dois ou mais filtros** ao mesmo tempo, separando as condiç
 No exemplo abaixo, o código retorna apenas os pinguins que:
 
 - Estão na ilha de **Torgersen**
-
 - Têm **profundidade de bico maior que 15 mm**.
 
 ```{r}
@@ -4117,7 +4115,6 @@ name: dplyr-mutate
 A função `mutate()` é usada para:
 
 - **Criar uma nova coluna**
-
 - Ou **modificar uma coluna existente**
 
 No exemplo abaixo, os valores da coluna `bill_length_mm` são divididos por 10, convertendo a unidade de **milímetros (mm)** para **centímetros (cm)**:
@@ -4167,7 +4164,6 @@ Com `mutate()`, você também pode realizar **qualquer operação** com uma ou m
 A única regra é que o resultado de cada operação:
 
 - tenha **o mesmo número de linhas** da base original
-
 - ou **um único valor** (que será repetido em todas as linhas)
 
 Também é possível **criar ou modificar várias colunas ao mesmo tempo** dentro de um mesmo `mutate()`.
@@ -8429,7 +8425,7 @@ Os gráficos mostram duas formas de representar a **média da mortalidade infant
 
 **Reduções percentuais por região:**
 
-- **Centro-Oeste:** redução de `r round(med_mort_inf_red_reg_bras$reducao[6], 2)` p.p. (1991—2000); redução `r med_mort_inf_red_reg_bras$reducao[11]` p.p. (2000—2010)
+- **Centro-Oeste:** redução de `r round(med_mort_inf_red_reg_bras$reducao[6], 2)` p.p. (1991—2000); redução `r round(med_mort_inf_red_reg_bras$reducao[11], 2)` p.p. (2000—2010)
 
 - **Nordeste:** redução de `r round(med_mort_inf_red_reg_bras$reducao[7], 2)` p.p. (1991–2000); redução de `r round(med_mort_inf_red_reg_bras$reducao[12], 2)` p.p. (2000–2010)
 
